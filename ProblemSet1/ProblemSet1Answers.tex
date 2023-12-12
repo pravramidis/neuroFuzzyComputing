@@ -1,0 +1,449 @@
+\documentclass{article}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{bm}
+
+\geometry
+{
+	headheight = 4ex,
+	includehead,
+	includefoot,
+	paper = a4paper,
+	inner = 2.5cm,
+	outer = 2.5cm,
+	bindingoffset = 0.5cm,
+	top = 2cm,
+	bottom = 1.5cm
+}
+
+
+\title{Problem Set 1}
+\author{Chara, Prodromos}
+
+\begin{document}
+
+\maketitle
+%Problem 1
+\noindent \textbf{Problem 1}
+
+\noindent Plot the contour lines of the following function: $f(x,y) = x^2+4xy+y^2$. Write it in quadratic form.\\ Then, find and characterize the (local) minima/maxima of this function (Show your analytic calculations).
+\\ \\ \\
+
+\noindent \underline{\textbf{\textit{Solution:}}}
+
+
+
+
+%Problem 2
+\newpage
+\noindent \textbf{Problem 2}
+
+\noindent Execute two iterations of the Gradient Descent to the function: $f(x_1,x_2) = (x_1+2x_2-7)^2 + (2x_1+ \\ x_2-5)^2$ with initial point: $x_0 = (-9.5,9.5)$. Show your analytic calculations
+ using the optimal $b_0$ in \\ each iteration\\ \\ \\
+\underline{\textbf{\textit{Solution:}}}
+
+\noindent\\$\frac{\partial f(x_1,x_2)}{\partial x_1} = 2(x_1+2x_2-7) + 4(2x_1+x_2-5)$, \hspace{1cm}  $\left. \frac{df}{dx_1} \right|_{x=x_0}= 5 - 58 = -53$
+\\ \\ \\$\frac{\partial f(x_1,x_2)}{\partial x_2} = 4(x_1+2x_2-7) + 2(2x_1+x_2-5)$, \hspace{1cm}  $\left. \frac{df}{dx_2} \right|_{x=x_0}= 10 - 29 = -19$ \\ \\ \\ \\
+\textbf{\textit{First iteration:}}
+\\ The gradient at $x_0 = (-9.5,9.5)$ is: \, $\nabla f(x_0) = [-53, -19]$ \\ \\Thus, \, $\|\nabla f(x_0)\| = \sqrt{(-53)^2+(-19)^2} \approx 56.3$
+\\ \\The direction of descending is: \, $s_0 = -\frac{\nabla f(x_0)}{\|\nabla f(x_0)\|} \approx [0.94, 0.34]$
+\\ \\ \\ \\In order to find the optimal $b_0$ we'll take the derivative $\frac{\partial f(x_0')}{\partial b_0}$ and set it to 0. Knowing that $x_0' = x_0 + b_0s_0$ the value of 
+$f(x_0')$ is: \\ \\ $f(x_0+b_0s_0) = f(-9.5+0.94b_0, 9.5+0.34b_0) = (-9.5+0.94b_0+19+0.68b_0-7)^2 + (-19+1.88b_0+9.5+0.34b_0-5)^2 = (2.5 + 1.62b_0)^2 + (-14.5+2.22b_0)^2$\\ \\ 
+\\ So the optimal $b_0$ is: \\ \\$\frac{\partial f(x_0+b_0s_0)}{\partial b_0} = 0 \Rightarrow 2*1.62(2.5+1.62b_0) + 2*2.22(-14.5+2.22b_0) = 0 \Rightarrow \\ \\
+\Rightarrow -56.28 +15.11b_0 = 0 \Rightarrow \bm{b_0 \approx 3.72}$ \, and \, $\bm{x_0' \approx [-6,10.76]}$\\ \\ \\
+
+
+
+\noindent \textbf{\textit{Second iteration::}}
+\\ \\ $\left. \frac{df}{dx_1} \right|_{x=x_0'}= 17.04 - 24.968 = -7.92$ \\ \\ \\$\left. \frac{df}{dx_2} \right|_{x=x_0'}= 34.08 - 12.48 = 21.6$
+\\ \\ \\ \\The gradient at $x_0' = (-6,10.76)$ is: \, $\nabla f(x_0') = [-7.92, 21.6]$ \\ \\Thus, \, $\|\nabla f(x_0)\| = \sqrt{(-7.92)^2+(21.6)^2} \approx 23$
+\\ \\The direction of descending is: \, $s_0' = -\frac{\nabla f(x_0')}{\|\nabla f(x_0')\|} \approx [0.34, -0.94]$
+\\ \\ \\ \\In order to find the optimal $b_0'$ we'll take the derivative $\frac{\partial f(x_0'')}{\partial b_0}$ and set it to 0. Knowing that $x_0'' = x_0' + b_0's_0'$ the value of 
+$f(x_0'')$ is: \\ \\ $f(x_0'+b_0's_0') = f(-6+0.34b_0', 10.76-0.94b_0') = (-6+0.34b_0'+21.52-1.88b_0'-7)^2 + (-12+0.68b_0'+10.76-0.94b_0'-5)^2 = (8.52-1.54b_0')^2 + (-6.24-0.26b_0')^2$\\ \\ 
+\\ So the optimal $b_0'$ is: \\ \\$\frac{\partial f(x_0'+b_0's_0')}{\partial b_0'} = 0 \Rightarrow 2(-1.54)(8.52-1.54b_0') + 2(-0.26)(-6.24-0.26b_0') = 0 \Rightarrow \\ \\
+\Rightarrow -22.99 +4.88b_0' = 0 \Rightarrow \bm{b_0' \approx 4.71}$ \, and \, $\bm{x_0'' \approx [-4.4,15.19]}$\\
+
+
+
+%Problem 4
+\newpage
+\noindent \textbf{Problem 4}
+
+\noindent Express the derivative dS/dx, denoted as S', of the following activation functions S in terms of the \\ original function S, i.e., determine f such that S' = f(S,x). 
+[The first three functions comprise well-\\established activation functions, known as logsig, tansig, and Google's Swish, respectively]. In particular, for the fourth activation
+function, recognize the relation of its derivative to the Swish activation function.\\
+\begin{enumerate}
+  \item $S = \frac{1}{1+e^{-x}}$ \\
+  \item $S = \frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}$ \\
+  \item $S = \frac{x}{1+e^{-x}}$ \\
+  \item $S = x*(tanh(ln(1+e^{x})))$ \\
+\end{enumerate}
+\noindent \\ \\ 
+\underline{\textbf{\textit{Solution:}}}
+
+\begin{enumerate}
+  \item $S' = (\frac{1}{1+e^{-x}})' = -\frac{1}{(1+e^{-x})^2}(-e^{-x}) = \frac{e^{-x}}{(1+e^{-x})^2} \Rightarrow S' = \frac{1}{1+e^{-x}} * \frac{1}{1+e^{-x}} * e^{-x}$ \hspace{0.5cm} [a] \\ \\
+    We know that $S = \frac{1}{1+e^{-x}} \Rightarrow 1+e^{-x} = \frac{1}{S}  \Rightarrow e^{-x} = \frac{1-S}{S}$ \hspace{3.2cm} [b]\\ \\ Using [b] on [a] we get: \\ \\
+    $S' = f(S,x) = S * S * \frac{1-S}{S} \Rightarrow \bm{S' = S(1-S)}$ \\ \\
+  \item $S' = (\frac{e^{x}-e^{-x}}{e^{x}+e^{-x}})' = \frac{(e^{x}+e^{-x})(e^{x}+e^{-x}) - (e^{x}-e^{-x})(e^{x}-e^{-x})}{(e^{x}+e^{-x})^2} = \frac{(e^{x}+e^{-x})^2 - (e^{x}+e^{-x})^2}{(e^{x}+e^{-x})^2}
+    = 1 - \frac{(e^{x}-e^{-x})^2}{(e^{x}+e^{-x})^2}$ \\ \\ So, $S' = f(S,x) \Rightarrow \bm{S' = 1 - S^2}$ \\ \\
+  \item Knowing that $s(x) = \frac{1}{1+e^{-x}}$ is the sigmoid function, we can write S as: \\ \\ $S = xs(x)$ \hspace{0.3cm} [c], \hspace{0.3cm} and S' as: $S' = (\frac{x}{1+e^{-x}})' = (xs(x))' = s(x) + xs'(x)$ 
+  \hspace{1cm} [d] \\ \\In (1) we prooved that s'(x) = s(x)(1-s(x)). By using that on [d] we get: \\ \\ $S' = s(x) + x(s(x)(1-s(x))) = xs(x) + s(x) -xs^2(x) = xs(x) + s(x)(1-xs(x))$ \\ \\ From [c] we know that 
+  $S = xs(x) \Rightarrow s(x) = \frac{S}{x}$. \\ \\ So, $S' = f(S,x) \Rightarrow \bm{S' = S + \frac{S}{x}(1-S)}$\\ \\
+  \item $S' = (x*(tanh(ln(1+e^{x}))))' = tanh(ln(1+e^{x})) + x(tanh(ln(1+e^{x})))'$ \\ \\ Knowing that $tanh(u) = \frac{e^{u}-e^{-u}}{e^{u}+e^{-u}}$ is the tansig function and having calculated it's derivative \\ 
+  in (2), we know that $(tanh(u))' = 1 - tanh^2(u)$. By using this information together with the chain rule we get: \\ \\ $S' = tanh(ln(1+e^{x})) + x(1 - tanh^2(ln(1+e^{x}))(ln(1+e^{x}))')$ \hspace{0.5cm} [e] \\ \\ \\
+  Let's calculate the derivative of $ln(1+e^{x})$: \\ \\$(ln(1+e^{x}))' = \frac{1}{1+e^{x}}e^x = \frac{1}{1+\frac{1}{e^x}} = \frac{1}{1+e^-x} = s(x)$ (sigmoid function)\hspace{0.3cm} [f]\\ \\ \\We also know that
+  $tanh(u) = 2s(2u)-1$ \hspace{0.3cm} [g]. \\ \\ Knowing that Swish = xs(x) and using [f] and [g] on [e] we get: \\ \\ \\$S' = (Swish,x) = tanh(ln(1+e^{x})) + x(1 - tanh^2(ln(1+e^{x}))s(x)) =\\ \\ tanh(ln(1+e^{x})) + xs(x) - xs(x)tanh^2(ln(1+e^{x}))
+  \Rightarrow \\ \\\bm{S' = Swish*(1 - tanh^2(ln(1+e^{x}))) +tanh(ln(1+e^{x}))}$
+\end{enumerate}
+
+
+
+
+%Problem 7
+\newpage
+\noindent \textbf{Problem 7}
+
+\noindent You are given the following activation function:
+\newline
+
+\[S(x) = \begin{cases}
+  x^k & \text{for } x > L \\
+  x^k * \frac{(L+x)^m}{(L+x)^m + (L-x)^m} & \text{for } |x| \leq L \\
+  0 & \text{for } x < -L
+\end{cases}\]
+
+\noindent where, k, L and m are trainable parameters, i.e., hyperparameters.
+\begin{enumerate}[label=\Alph*]
+  \item Show (graphically and analytically) how this activation function can approximate,
+   Swish, sigmoid, ReLU, and ELU, i.e., by proper selection of hyperparameter values.
+  \item Calculate the derivatives of S with respect to x, k, L and m. \\ \\
+\end{enumerate}
+
+\noindent \underline{\textbf{\textit{Solution:}}}
+
+\begin{enumerate}[label=\Alph*]
+  \item a here
+  \item Derivative of S with respect to x: \\ \\
+    \underline{For $x > L$:} \hspace{1.3cm} $S'(x) = kx^{(k-1)}$ \\ \\ \underline{For $x < -L$:} \hspace{1cm} $S'(x) = 0$ \\ \\ \underline{For $|x| \leq L$:} \\ \\ 
+    $S'(x) = kx^{(k-1)} \frac{(L+x)^m}{(L+x)^m + (L-x)^m} + x^k * \frac{m(L+x)^{m-1}((L+x)^m + (L-x)^m) - (L+x)^m(m(L+x)^{m-1}-m(L-x)^{m-1})}{((L+x)^m + (L-x)^m)^2} \\ \\
+    \\S'(x) = \frac{kx^{(k-1)}(L+x)^m((L+x)^m + (L-x)^m) + mx^k(L+x)^{m-1}((L+x)^m + (L-x)^m) - x^k(L+x)^m(m(L+x)^{m-1}-m(L-x)^{m-1})}{((L+x)^m + (L-x)^m)^2} \\ \\
+    \\S'(x) = \frac{((L+x)^m + (L-x)^m)(kx^{(k-1)}(L+x)^m +mx^k(L+x)^{m-1}) - mx^k(L+x)^m((L+x)^{m-1} - (L-x)^{m-1})}{((L+x)^m + (L-x)^m)^2}$
+    \\\\\\\\So, 
+    \[\frac{\partial S(x)}{\partial x} = \begin{cases}
+      kx^{(k-1)} & \text{for } x > L \\ \\
+      \frac{((L+x)^m + (L-x)^m)(kx^{(k-1)}(L+x)^m +mx^k(L+x)^{m-1}) - mx^k(L+x)^m((L+x)^{m-1} - (L-x)^{m-1})}{((L+x)^m + (L-x)^m)^2} & \text{for } |x| \leq L \\ \\
+      0 & \text{for } x < -L
+    \end{cases}\]
+    \newpage
+    
+    Derivative of S with respect to k: \\ \\ \underline{For $x > L$:} \hspace{1cm} $S'(x) = x^klnx$ \\ \\ \underline{For $x < L$:} \hspace{1cm} $S'(x) = 0$ \\ \\
+    \underline{For $|x| \leq L$:} \hspace{0.8cm} $S'(x) = x^klnx* \frac{(L+x)^m}{(L+x)^m + (L-x)^m}$ \\ \\ \\ \\ So,
+    \[\frac{\partial S(x)}{\partial k} = \begin{cases}
+      x^klnx & \text{for } x > L \\ \\
+      x^klnx* \frac{(L+x)^m}{(L+x)^m + (L-x)^m} & \text{for } |x| \leq L \\ \\
+      0 & \text{for} x < -L
+    \end{cases}\]\\ \\ \\ 
+    \\ \\Derivative of S with respect to L: \\ \\ \underline{For $x > L$:} \hspace{1cm} $S'(x) = 0$\\\\ \underline{For $x < -L$:} \hspace{0.7cm}
+    $S'(x) = 0$ \\ \\ \underline{For $|x| \leq L$:} \\ \\ $S'(x) = x^k * \frac{m(L+x)^{m-1}((L+x)^m + (L-x)^m) - (L+x)^m(m(L+x)^{m-1} + m(L-x)^{m-1})}{((L+x)^m + (L-x)^m)^2} \\ \\
+    \\S'(x) = mx^k * \frac{(L+x)^{2m-1} + (L+x)^{m-1}(L-x)^m - (L+x)^{2m-1} - (L+x)^m(L-x)^{m-1}}{((L+x)^m + (L-x)^m)^2} \\ \\
+    \\S'(x) = mx^k * \frac{(L+x)^{m-1}(L-x)^m - (L+x)^m(L-x)^{m-1}}{((L+x)^m + (L-x)^m)^2}$\\ \\ \\ \\ \\So,
+    \[\frac{\partial S(x)}{\partial L} = \begin{cases}
+      0 & \text{for } x > L \\ \\
+      mx^k * \frac{(L+x)^{m-1}(L-x)^m - (L+x)^m(L-x)^{m-1}}{((L+x)^m + (L-x)^m)^2} & \text{for } |x| \leq L \\ \\
+      0 & \text{for} x < -L
+    \end{cases}\] \\ \\ \\ \\
+    \\ \\ \\ \\ \\Derivative of S with respect to m: \\ \\ \underline{For $x > L$:} \hspace{1cm} $S'(x) = 0$ \\\\ \underline{For $x < -L$:} \hspace{0.7cm}
+    $S'(x) = 0$ \\ \\ \underline{For $|x| \leq L$:} \\ \\ $S'(x) = x^k * \frac{ln(L+x)(L+x)^m((L+x)^m + (L-x)^m) - (L+x)^m(ln(L+x)(L+x)^m + ln(L-x)(L-x)^m)}{((L+x)^m + (L-x)^m)^2} \\ \\
+    \\S'(x) = x^k * \frac{ln(L+x)(L+x)^{2m} + ln(L+x)(L+x)^m(L-x)^m - ln(L+x)(L+x)^{2m} - ln(L-x)(L-x)^m(L+x)^m}{((L+x)^m + (L-x)^m)^2} \\ \\
+    \\S'(x) = \frac{x^k(L+x)^m(L-x)^m(ln(L+x) - ln(L-x))}{((L+x)^m + (L-x)^m)^2}$ \\ \\ \\ \\ So,
+    \[\frac{\partial S(x)}{\partial m} = \begin{cases}
+      0 & \text{for } x > L \\ \\
+      \frac{x^k(L+x)^m(L-x)^m(ln(L+x) - ln(L-x))}{((L+x)^m + (L-x)^m)^2} & \text{for } |x| \leq L \\ \\
+      0 & \text{for} x < -L
+    \end{cases}\] \\
+\end{enumerate}
+
+
+
+%Problem 8
+\newpage
+\noindent \textbf{Problem 8}
+
+\noindent Suppose that we have the following three reference patterns and their targets: \\ \\
+\noindent $\left\{ p_1 = \begin{bmatrix}
+  2 \\
+  4 \\
+\end{bmatrix}, \ t_1 = [26] \right\}$
+\noindent ,$\left\{ p_2 = \begin{bmatrix}
+  4 \\
+  2 \\
+\end{bmatrix}, \ t_2 = [26] \right\}$
+\noindent ,$\left\{ p_3 = \begin{bmatrix}
+  -2 \\
+  -2 \\
+\end{bmatrix}, \ t_3 = [-26] \right\}$
+
+\noindent \\ \\ The probability of vector $p_1$ is 0.20, the probability of vector $p_2$ is 0.70, and the probability of vector $p_3$ is 0.10.
+\begin{enumerate}[label=\Alph*]
+  \item  Draw the network diagram for an ADALINE network with no bias that could be 
+  trained on these patterns.
+  \item Sketch the contour plot of the mean square error performance index.
+  \item Show the optimal decision boundary (for the weights that minimize mean square error), and verify that it separates the patterns into the appropriate categories.
+  \item Find the maximum stable learning rate for the LMS algorithm. If the target values are changed from 26 and -26 to 11 and -11, how would this change the maximum 
+  stable learning rate?
+  \item Perform one iteration of the LMS algorithm, starting with all weights equal to zero, 
+  and presenting input vector $p_1$. Use a learning rate of a=0.05. \\ \\
+\end{enumerate}
+
+\noindent \underline{\textbf{\textit{Solution:}}}
+
+\begin{enumerate}[label=\Alph*]
+  \item Since we have two inputs, one neural is enough. The following network diagram could be trained on the given patterns. 
+    \begin{figure}[h]
+      \centering
+      \includegraphics[width=0.4\textwidth]{pr8.png}
+      \caption{This is the caption of the image.}
+    \end{figure}
+  \item We need to calculate the various terms of the quadratic function. We know that $F(x) = c - 2x^Th+x^TRx$, where $x = 
+    \begin{bmatrix}
+      w_{1,1} \\
+      w_{1,2} \\
+    \end{bmatrix}$. Therefore we need to calculate c, h, and R \\ \\ \\ The expected value of the square of the target is: \\ \\$c = E[t^2] = P(p_1)t_1^2 + P(p_2)t_2^2 + P(p_3)t_3^2 
+    = 0.2*26^2 + 0.7*26^2 + 0.1 * (-26)^2 = 26^2 \Rightarrow \bm{c = 676}$ \\ \\ \\The cross-correlation between the input and the target can be calculated: \\ \\
+    $h = E[tp] = P(p_1)t_1p_1 + P(p_2)t_2p_2 + P(p_3)t_3p_3 = 0.2*26*
+    \begin{bmatrix}
+      2 \\
+      4 \\
+    \end{bmatrix} + 0.7*26*
+    \begin{bmatrix}
+      4 \\
+      2 \\
+    \end{bmatrix} + 0.1*(-26)*
+    \begin{bmatrix}
+      -2 \\
+      -2 \\
+    \end{bmatrix} = \\
+    \begin{bmatrix}
+      10.4 \\
+      20.8 \\
+    \end{bmatrix}+
+    \begin{bmatrix}
+      72.8 \\
+      36.4 \\
+    \end{bmatrix}+
+    \begin{bmatrix}
+      5.2 \\
+      5.2 \\
+    \end{bmatrix} \Rightarrow \bm{h=}
+    \begin{bmatrix}
+      \bm{88.4} \\
+      \bm{62.4} \\
+    \end{bmatrix}$ \\ \\ \\ \\The input correlation matrix R is: \\ \\ $R = E[pp^t] = P(p_1)p_1p_1^T + P(p_2)p_2p_2^T + P(p_3)p_3p_3^T = \\ \\0.2
+    \begin{bmatrix}
+      2 \\
+      4 \\
+    \end{bmatrix}\begin{bmatrix}
+      2 & 4
+    \end{bmatrix} + 0.7
+    \begin{bmatrix}
+      4 \\
+      2 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+      4 & 2
+    \end{bmatrix} + 0.1
+    \begin{bmatrix}
+      -2 \\
+      -2 \\
+    \end{bmatrix}\begin{bmatrix}
+      -2 & -2
+    \end{bmatrix} = \\ \\ \\
+    \begin{bmatrix}
+      0.8 & 1.6 \\
+      1.6 & 3.2 \\
+    \end{bmatrix} + 
+    \begin{bmatrix}
+      11.2 & 5.6 \\
+      5.6 & 2.8 \\
+    \end{bmatrix} + 
+    \begin{bmatrix}
+      0.4 & 0.4 \\
+      0.4 & 0.4 \\
+    \end{bmatrix} \Rightarrow \bm{R =}
+    \begin{bmatrix}
+      \bm{12.4} & \bm{7.6} \\
+      \bm{7.6} & \bm{6.4} \\
+    \end{bmatrix}$ \\ \\ \\ \\Therefore the mean square error index is: \\ \\$F(x) = 676 - 2
+    \begin{bmatrix}
+      w_{1,1} & w_{1,2} \\
+    \end{bmatrix}
+    \begin{bmatrix}
+      88.4 \\
+      62.4 \\
+    \end{bmatrix} + 
+    \begin{bmatrix}
+      w_{1,1} & w_{1,2} \\
+    \end{bmatrix}
+    \begin{bmatrix}
+      12.4 & 7.6 \\
+      7.6 & 6.4 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+      w_{1,1} \\
+      w_{1,2} \\
+    \end{bmatrix} \\ \\ \\ \Rightarrow \bm{F(x) = 676 - 176.8w_{1,1} - 124.8w_{1,2} + 12.4w_{1,1}^2 + 15.2w_{1,1}w_{1,2} + 6.4w_{1.2}^2}$
+    \\ \\ \\ \\In order to find the center of the contours we must find the minimum point, we need to solve: \\ \\
+    $x^* = R^{-1}h = 
+    \begin{bmatrix}
+      12.4 & 7.6 \\
+      7.6 & 6.4 \\
+    \end{bmatrix}^{-1}
+    \begin{bmatrix}
+      88.4 \\
+      62.4 \\
+    \end{bmatrix} = \frac{1}{21.6}
+    \begin{bmatrix}
+      6.4 & -7.6 \\
+      -7.6 & 12.4 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+      88.4 \\
+      62.4 \\
+    \end{bmatrix} \Rightarrow \bm{x^* \approx} 
+    \begin{bmatrix}
+      \bm{4.24} \\
+      \bm{4.72} \\
+    \end{bmatrix}$ \\ \\ \\Thus we have a minimum at $\bm{w_{1,1} \approx 4.24, w_{1,2} \approx 4.72}$ \\ \\ \\ \\
+    The resulting contour plot of the MSE is: \\
+    \begin{figure}[h]
+      \centering
+      \includegraphics[width=0.5\textwidth]{pr8_b.png}
+      \caption{This is the caption of the image.}
+    \end{figure} \\
+  \item The decision boundary is defined by the equation:\\ \\ $x^Tp = 0$, where $x = 
+    \begin{bmatrix}
+      w_{1,1} \\
+      w_{1,2} \\
+    \end{bmatrix}$ and $p = 
+    \begin{bmatrix}
+      p_{1,1} \\
+      p_{1,2} \\
+    \end{bmatrix}$.\\ \\ The optimal decision boundary can be found by using $x^*$ which we already calculated in B. So, by using the weights that minimize the mean square error we get: \\ \\
+    $\begin{bmatrix}
+      4.24 & 4.72
+    \end{bmatrix} 
+    \begin{bmatrix}
+      p_{1,1} \\
+      p_{1,2} \\
+    \end{bmatrix} = 0 \Rightarrow 4.24p_{1,1} + 4.72p_{1,2} = 0 \Rightarrow p_{1,2} = -\frac{4.24}{4.72}p_{1,1}$ \\ \\ \\This represents a line in the two-dimensional input space. In order to verify
+    that this specific boundary separates the patterns we will calculate $y^{(\bm{p})} = x*^Tp^{(\bm{p})}$, where $\bm{p} = 1,2,3$ \\\\ For $p_1 = 
+    \begin{bmatrix}
+      2 \\
+      4 \\
+    \end{bmatrix}$: $y^{(1)} = 4.24*2 + 4.72*4 = 27.36 > 0$ \\ \\ \\For $p_2 = 
+    \begin{bmatrix}
+      4 \\
+      2 \\
+    \end{bmatrix}$: $y^{(2)} = 4.24*4 + 4.72*2 = 26.4 > 0$ \\ \\ \\For $p_3 = 
+    \begin{bmatrix}
+      -2 \\
+      -2 \\
+    \end{bmatrix}$: $y^{(3)} = 4.24(-2) + 4.72(-2) = -17.88 < 0$ \\ \\ \\ We can see that patterns $p_1$ and $p_2$ have positive outputs indicating that they belong to the category associated with 
+    targets $t_1$, $t_2$, whereas pattern $p_3$ has negative output, indicating that it belongs to the category associated with target $t_3$. So, we verified that the patterns are separated in appropriate 
+    categories. \\ \\ The optimal decision boundary and the appropriate separation can be seen in the following figure:
+    \begin{figure}[h]
+      \centering
+      \includegraphics[width=0.2\textwidth]{pr8_c.png}
+      \caption{This is the caption of the image.}
+    \end{figure} 
+
+
+  \item d here
+  \item We know that $w(k+1) = w(k) + 2ae(k)p^T(k)$, $w(0) = 
+    \begin{bmatrix}
+      0 & 0
+    \end{bmatrix}$ and $a = 0.05$ \\ \\ Presenting input vector is $p_1$, so one iteration of the Least Mean Square algorithm is: \\ \\
+    $a(0) =$ purelin $
+    \begin{bmatrix}
+      \begin{bmatrix}
+        0 & 0
+      \end{bmatrix}
+      \begin{bmatrix}
+        2 \\
+        4 \\
+      \end{bmatrix}
+    \end{bmatrix} = 0$ \\ \\ \\However, $t_1 = 26 \neq 0$, so we need to calculate the error: \\ \\
+    $e(0) = t(0) - a(0) = 26 - 0 = 26$ \\ \\ \\ We can now calculate w(1): \\ \\ $w(1) = w(0) +2ae(0)p_1^T = 0 + 2 * 0.05 * 26
+    \begin{bmatrix}
+      2 & 4
+    \end{bmatrix} = 
+    \begin{bmatrix}
+      5.2 & 10.4
+    \end{bmatrix}$
+    
+  
+\end{enumerate}
+
+
+
+
+%Problem 11
+\newpage
+\noindent \textbf{Problem 11}
+
+\noindent "very" is used as an adjective to reduce vagueness on fuzzy set membership. The interpretation is \\ that if the statement "A is true" has truth value equal to x, then the statement 
+"A is very true" has \\ truth value $x^2$, because the "very true" is more demanding. \newline "more or less" is used as an adjective to increase vagueness - the interpretation is that if
+"A is true" \\ has truth value x, then "A is more or less true" has truth vlaue $\sqrt{x}$.
+\begin{enumerate}
+  \item True of false(explain your answer): Let "S" be a fuzzy set. Then "Very S" is a fuzzy subset of "S".
+  \item True or false (explain your answer): Let "S" be a fuzzy set. Then "S" is a fuzzy subset of "more or less S".
+  \item Using the definitions just given, is it true that "not very S" is a subset of "more or less S", or vice versa, or is it impossible to say?
+  \item Is "not more or less S" a subset of "very S", or vice versa, or is it impossible to say? \\ \\
+\end{enumerate}
+
+
+\noindent \underline{\textbf{\textit{Solution:}}}
+
+
+%Problem 12
+\newpage
+\noindent \textbf{Problem 12}
+
+\noindent Suppose that A(x) and B(x) have the following truth functions: \\
+\noindent \newline
+\begin{minipage}{0.45\textwidth}
+  \[ A(x) = \begin{cases}
+      1 & \text{for } x \leq 2 \\
+      1 - \frac{x-2}{3} & \text{for } 2 < x < 5 \\
+      0 & \text{for } x \geq 5
+  \end{cases} \]
+\end{minipage}
+\hfill and
+\begin{minipage}{0.45\textwidth}
+  \[ B(x) = \begin{cases}
+      0 & \text{for } x \leq 3 \\
+      \frac{x-3}{4} & \text{for } 3 < x < 7 \\
+      1 & \text{for } x \geq 7
+  \end{cases} \]
+\end{minipage}
+
+\noindent \newline \\ \\ Find the values of $x$ for which the proposition not(A(x) OR B(x)) has the maximum possible truth value\\ \\ \\
+\underline{\textbf{\textit{Solution:}}}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{pr12.png}
+    \caption{This is the caption of the image.}
+    
+\end{figure}
+
+\noindent \newline We know that the maximum possible truth value is 1 and that not(y) has truth value equal to 1 when y is 0. So in order to 
+maximize the truth value of not(A(x) OR B(x)) we should minimize the truth value of A(x) OR B(x). 
+
+
+
+
+\end{document}
