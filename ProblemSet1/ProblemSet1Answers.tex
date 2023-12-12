@@ -4,6 +4,8 @@
 \usepackage{graphicx}
 \usepackage{enumitem}
 \usepackage{bm}
+% added this to stop hbadness warning
+\hbadness = 5000000
 
 \geometry
 {
@@ -20,12 +22,17 @@
 
 
 \title{Problem Set 1}
-\author{Chara, Prodromos}
+\author{Chara Tsirka 03315, Prodromos Avramidis 03291}
 
 \begin{document}
 
 \maketitle
+\begin{center}
+\vspace{5cm}
+\includegraphics[width=0.7\textwidth]{uthlogo.png}
+\end{center}
 %Problem 1
+\newpage
 \noindent \textbf{Problem 1}
 
 \noindent Plot the contour lines of the following function: $f(x,y) = x^2+4xy+y^2$. Write it in quadratic form.\\ Then, find and characterize the (local) minima/maxima of this function (Show your analytic calculations).
@@ -204,7 +211,7 @@ function, recognize the relation of its derivative to the Swish activation funct
   \item Since we have two inputs, one neural is enough. The following network diagram could be trained on the given patterns. 
     \begin{figure}[h]
       \centering
-      \includegraphics[width=0.4\textwidth]{pr8.png}
+      % \includegraphics[width=0.4\textwidth]{pr8.png}
       \caption{This is the caption of the image.}
     \end{figure}
   \item We need to calculate the various terms of the quadratic function. We know that $F(x) = c - 2x^Th+x^TRx$, where $x = 
@@ -320,7 +327,7 @@ function, recognize the relation of its derivative to the Swish activation funct
     The resulting contour plot of the MSE is: \\
     \begin{figure}[h]
       \centering
-      \includegraphics[width=0.5\textwidth]{pr8_b.png}
+      % \includegraphics[width=0.5\textwidth]{pr8_b.png}
       \caption{This is the caption of the image.}
     \end{figure} \\
   \item The decision boundary is defined by the equation:\\ \\ $x^Tp = 0$, where $x = 
@@ -356,7 +363,7 @@ function, recognize the relation of its derivative to the Swish activation funct
     categories. \\ \\ The optimal decision boundary and the appropriate separation can be seen in the following figure:
     \begin{figure}[h]
       \centering
-      \includegraphics[width=0.2\textwidth]{pr8_c.png}
+      % \includegraphics[width=0.2\textwidth]{pr8_c.png}
       \caption{This is the caption of the image.}
     \end{figure} 
 
@@ -435,7 +442,7 @@ function, recognize the relation of its derivative to the Swish activation funct
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.4\textwidth]{pr12.png}
+    % \includegraphics[width=0.4\textwidth]{pr12.png}
     \caption{This is the caption of the image.}
     
 \end{figure}
