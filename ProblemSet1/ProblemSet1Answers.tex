@@ -78,7 +78,7 @@ $f(x_0'')$ is: \\ \\ $f(x_0'+b_0's_0') = f(-6+0.34b_0', 10.76-0.94b_0') = (-6+0.
 \newpage
 \noindent \textbf{Problem 4}
 
-\noindent Express the derivative dS/dx, denoted as S', of the following activation functions S in terms of the \\ original function S, i.e., determine f such that S' = f(S,x). 
+\noindent Express the derivative dS/dx, denoted as S', of the following activation functions S in terms of the \\ original function S, i.e., determine ${\phi}$ such that S' = ${\phi}$(S,x). 
 [The first three functions comprise well-\\established activation functions, known as logsig, tansig, and Google's Swish, respectively]. In particular, for the fourth activation
 function, recognize the relation of its derivative to the Swish activation function.\\
 \begin{enumerate}
@@ -413,6 +413,17 @@ function, recognize the relation of its derivative to the Swish activation funct
 
 
 \noindent \underline{\textbf{\textit{Solution:}}}
+\\ \\For a set A to be a subset of another set B in X${\rightarrow}$ [0 ... 1] then it must be true that  ${I_A(x) \leq I_B(x)}$  for all x in X
+\begin{enumerate}
+  \item True: If "Very S" is ${x^2}$ and "S" is x then ${I_A(x) \leq I_B(x)}$ for every x${\rightarrow}$ [0 ... 1], then "Very S" is a subset of "S"
+  \\ \begin{center} \includegraphics[width=0.5\textwidth]{Problem11_1.png} \end{center}
+  \item True: If "S" is x and "more or less S" is ${\sqrt{x}}$ then ${I_A(x) \leq I_B(x)}$ for every x${\rightarrow}$ [0 ... 1], then "S" is a subset of "more or less S"
+  \\ \begin{center} \includegraphics[width=0.5\textwidth]{Problem11_2.png} \end{center}
+  \item False: If "Very S" is ${x^2}$ then "not very S" is the complement ${1-x^2}$ and "more or less S" is ${\sqrt{x}}$ then "not very S" is not a subset of "more or less S"
+  \\ \begin{center} \includegraphics[width=0.5\textwidth]{Problem11_3.png} \end{center} 
+  \item False: if "more or less S" is  ${\sqrt{x}}$ then "not more or less S" is the complement ${1-\sqrt{x}}$ and "very S" is ${x^2}$ then "not more or less S" is not a subset of "very S"
+  \\ \begin{center} \includegraphics[width=0.5\textwidth]{Problem11_4.png} \end{center}
+\end{enumerate}
 
 
 %Problem 12
