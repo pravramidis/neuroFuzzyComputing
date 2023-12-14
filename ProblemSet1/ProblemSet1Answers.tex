@@ -103,7 +103,7 @@ function, recognize the relation of its derivative to the Swish activation funct
   in (2), we know that $(tanh(u))' = 1 - tanh^2(u)$. By using this information together with the chain rule we get: \\ \\ $S' = tanh(ln(1+e^{x})) + x(1 - tanh^2(ln(1+e^{x}))(ln(1+e^{x}))')$ \hspace{0.5cm} [e] \\ \\ \\
   Let's calculate the derivative of $ln(1+e^{x})$: \\ \\$(ln(1+e^{x}))' = \frac{1}{1+e^{x}}e^x = \frac{1}{1+\frac{1}{e^x}} = \frac{1}{1+e^-x} = s(x)$ (sigmoid function)\hspace{0.3cm} [f]\\ \\ \\We also know that
   $tanh(u) = 2s(2u)-1$ \hspace{0.3cm} [g]. \\ \\ Knowing that Swish = xs(x) and using [f] and [g] on [e] we get: \\ \\ \\$S' = (Swish,x) = tanh(ln(1+e^{x})) + x(1 - tanh^2(ln(1+e^{x}))s(x)) =\\ \\ tanh(ln(1+e^{x})) + xs(x) - xs(x)tanh^2(ln(1+e^{x}))
-  \Rightarrow \\ \\\bm{S' = Swish*(1 - tanh^2(ln(1+e^{x}))) +tanh(ln(1+e^{x}))}$
+  \Rightarrow \\ \\{S' = Swish*(1 - tanh^2(ln(1+e^{x}))) +tanh(ln(1+e^{x})) \Rightarrow}$ \\ \\$\bm{S' = Swish*(1-\frac{S^2}{x^2}) + \frac{S}{x}}$
 \end{enumerate}
 
 
