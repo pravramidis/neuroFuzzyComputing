@@ -367,8 +367,32 @@ function, recognize the relation of its derivative to the Swish activation funct
       \caption{This is the caption of the image.}
     \end{figure} 
 
+    
+  \item In order for the learning rate of the LMS algorithm to be stable ${1-a\lambda_i > -1}$ where ${\lambda_i}$ are the eigenvalues of the R matrix. Because ${\lambda_i > 0}$ the condition becomes
+  ${a < \frac{1}{\lambda_i}}$ or ${0 < a < \frac{1}{\lambda_i}}$. For the algorithm to be at the maximum stable learning rate then ${a = \frac{1}{\lambda_i}}$. 
+  \\ \\ $R = \begin{bmatrix}
+    12.4 & 7.6 \\
+    7.6 & 6.4
+  \end{bmatrix} $
+  and the eigen values of R are ${|R - \lambda*I|}$ \\
+  \\$\det \left ( \begin{bmatrix}
+    12.4 & 7.6 \\
+    7.6 & 6.4
+  \end{bmatrix} 
+  -\begin{bmatrix}
+    \lambda & 0 \\
+    0 & \lambda
+  \end{bmatrix} \right )  = 
+  \det \left (\begin{bmatrix}
+    12.4-\lambda & 7.6 \\
+    7.6 & 6.4-\lambda
+\end{bmatrix} \right ) = (12.4-\lambda)(6.4-\lambda) = \\ \\ =\lambda^2 - 18.8\lambda + 21.6$
+. So ${\lambda = \frac{47 - \sqrt{1669} }{5}}$ (not possible since ${lambda > 0})$ or ${\lambda = \frac{47 + \sqrt{1669} }{5}}$.
+\\ \\ ${a = \frac{1}{\lambda_i} \Rightarrow a= \frac{1}{\frac{47 + \sqrt{1669} }{5}}} \Rightarrow a = \frac{5}{47+\sqrt{1669}} \Rightarrow a \approx 0.0569 $
 
-  \item d here
+If we change the target value from 26 to -26 and from 11 to -11 then the input correlation matrix 
+$R = E[pp^t] = P(p_1)p_1p_1^T + P(p_2)p_2p_2^T + P(p_3)p_3p_3^T$ will not be affected and so the maximum stable learning rate will also remain the same ${a \approx 0.0569}$.
+
   \item We know that $w(k+1) = w(k) + 2ae(k)p^T(k)$, $w(0) = 
     \begin{bmatrix}
       0 & 0
@@ -459,7 +483,13 @@ function, recognize the relation of its derivative to the Swish activation funct
 \end{figure}
 
 \noindent \newline We know that the maximum possible truth value is 1 and that not(y) has truth value equal to 1 when y is 0. So in order to 
-maximize the truth value of not(A(x) OR B(x)) we should minimize the truth value of A(x) OR B(x). 
+maximize the truth value of not(A(x) OR B(x)) we should minimize the truth value of A(x) OR B(x). By looking at the graph we can tell that the points that could have the minimum value are the following: \\
+\begin{enumerate}
+  \item For x = 3, A(3) + B(3) = 0.66 + 0 = 0.66
+  \item For x = 5 , A(5) + B(5) = 0 + 0.5 = 0.5
+  \item For x = 4.14, A(4.14) + B(4.14) = 0.29 + 0.29 = 0.58
+\end{enumerate}
+So the maximum truth value for the proposition not(A(x) or B(x)) is for x = 5
 
 
 
