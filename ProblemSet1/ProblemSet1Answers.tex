@@ -72,6 +72,51 @@ $f(x_0'')$ is: \\ \\ $f(x_0'+b_0's_0') = f(-6+0.34b_0', 10.76-0.94b_0') = (-6+0.
 \\ So the optimal $b_0'$ is: \\ \\$\frac{\partial f(x_0'+b_0's_0')}{\partial b_0'} = 0 \Rightarrow 2(-1.54)(8.52-1.54b_0') + 2(-0.26)(-6.24-0.26b_0') = 0 \Rightarrow \\ \\
 \Rightarrow -22.99 +4.88b_0' = 0 \Rightarrow \bm{b_0' \approx 4.71}$ \, and \, $\bm{x_0'' \approx [-4.4,15.19]}$\\
 
+%Problem 3
+\newpage
+\noindent \textbf{Problem 3}
+\\ \\
+Consider the dynamical system called Henon map defined by the following recursive equation:
+\begin{center}
+  ${x_k+1 = f(x_k) = 1-ax_k^2+bx_{k-1}}$.
+\end{center}
+Many dynamical systems transition into chaos as we increase a control or gain parameter
+such as ${x_0}$. Select (a,b)=(0.3, 0.4) and use the two choices of initial conditions, $x_0$=0 and
+$x_0$=0.00001, to generate $x_1$,…. Plot the two trajectories. Are they aperiodic (chaotic) or
+periodic? For the series of the following questions, we need to plot the sequence of
+generated values and also record your observations.
+\begin{enumerate} [label=\Alph*]
+  \item $[x_0=0]$ Test the generated sequence of $x_i$ with b=0, and various values for a. 
+              What doyou observe? chaos or some fixed-point(s)?
+  \item Test for various values of $x_0$ and b, but a being between 0 and 0.32
+  \item $[x_0=0]$ Test the case of values (a,b)=(0.3675, 0.3). What do you observe?
+  \item $[x_0=0]$  Test the case of values (a,b)=(0.2, 0.4), (a,b)=(0.5, 0.4) and (a,b)=(0.9, 0.4). What do you observe?
+\end{enumerate}
+\noindent \\ \\ 
+\underline{\textbf{\textit{Solution:}}}
+\begin{enumerate} [label=\Alph*]
+  \item We observed fixed points following a repeating pattern that is different for each value of a. Some examples: 
+  \\ \begin{center} \includegraphics[width=0.5\textwidth]{Problem3_a0.3.png} \end{center}
+  \begin{center} \includegraphics[width=0.5\textwidth]{Problem3_a0.7.png} \end{center}
+  \begin{center} \includegraphics[width=0.5\textwidth]{Problem3_a1.png} \end{center}
+  \begin{center} \includegraphics[width=0.5\textwidth]{Problem3_a1.4.png} \end{center}
+  \begin{center} \includegraphics[width=0.5\textwidth]{Problem3_a2.png} \end{center}
+
+  \newpage
+  \item Here are some of the tests:
+  \begin{center} \includegraphics[width=0.5\textwidth]{Problem3_B_1.png} \end{center}
+  \begin{center} \includegraphics[width=0.5\textwidth]{Problem3_B_2.png} \end{center}
+  \begin{center} \includegraphics[width=0.5\textwidth]{Problem3_B_3.png} \end{center}
+  
+  \newpage
+  \item We observe that the points reapeat at a smaller width with each repetition: 
+  \begin{center} \includegraphics[width=0.5\textwidth]{Problem3_C.png} \end{center}
+  \newpage
+  \item We observe that the for each of the value pairs the points start at a different widt that slowly decreases:
+  \begin{center} \includegraphics[width=0.5\textwidth]{Problem3_D_1.png} \end{center}
+  \begin{center} \includegraphics[width=0.5\textwidth]{Problem3_D_2.png} \end{center}
+  \begin{center} \includegraphics[width=0.5\textwidth]{Problem3_D_3.png} \end{center}
+\end{enumerate}
 
 
 %Problem 4
