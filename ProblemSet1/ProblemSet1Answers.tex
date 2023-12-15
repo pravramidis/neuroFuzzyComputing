@@ -39,6 +39,71 @@
 \\ \\ \\
 
 \noindent \underline{\textbf{\textit{Solution:}}}
+\\
+The contour lines of the function are:
+  \begin{center} \includegraphics[width=0.5\textwidth]{Problem1_Contour.png} \end{center}
+The generic quadratic function form is:
+  ${F(x) = c + d^Tx + \frac{1}{2}x^TAx}$
+  We can write our function in this form:
+  $
+  \frac{1}{2}
+  \begin{bmatrix}
+    x & y
+  \end{bmatrix}
+  \begin{bmatrix}
+    2 & 4 \\
+    4 & 2
+  \end{bmatrix}
+  \begin{bmatrix}
+    x \\
+    y
+  \end{bmatrix}
+  $
+  where $ x = 
+  \begin{bmatrix}
+    x \\
+    y
+  \end{bmatrix}$
+  and A is the symetric matrix $A =   
+  \begin{bmatrix}
+    2 & 4 \\
+    4 & 2
+  \end{bmatrix}$. \\ 
+
+  \noindent The gradient is $\nabla f=
+  \begin{bmatrix}
+    \frac{\partial f}{\partial x} \\
+    \frac{\partial f}{\partial y}
+  \end{bmatrix} =
+  \begin{bmatrix}
+    2x+4y \\
+    4x+2y
+  \end{bmatrix}
+  $. \\To find the local minima and maxima we need to do $\nabla F=0 \Rightarrow 
+  \begin{bmatrix}
+    2x+4y \\
+    4x+2y
+  \end{bmatrix} =
+  \begin{bmatrix}
+    0 \\ 0
+  \end{bmatrix} \Rightarrow x=0, y=0
+  $
+  So f(0,0) is a critical point. In order to find if it is a local minimum or a maximum we need to calculate the eigenvalues of A:\\
+  ${det(A - \lambda*I)} = \det \left ( \begin{bmatrix}
+    2 & 4 \\
+    4 & 2
+  \end{bmatrix} 
+  -\begin{bmatrix}
+    \lambda & 0 \\
+    0 & \lambda
+  \end{bmatrix} \right )  = 
+  \det \left (\begin{bmatrix}
+    2-\lambda & 4 \\
+    4 & 2-\lambda
+\end{bmatrix} \right ) = (2-\lambda)(2-\lambda)-16=\\4-4\lambda+\lambda^2-16=\lambda^2-4\lambda-12$ 
+So $\lambda = -2 $ or $\lambda = 6$
+
+
 
 
 
@@ -151,7 +216,8 @@ function, recognize the relation of its derivative to the Swish activation funct
   \Rightarrow \\ \\{S' = Swish*(1 - tanh^2(ln(1+e^{x}))) +tanh(ln(1+e^{x})) \Rightarrow}$ \\ \\$\bm{S' = Swish*(1-\frac{S^2}{x^2}) + \frac{S}{x}}$
 \end{enumerate}
 
-
+%Problem 6
+\noindent \textbf{Problem 6}
 
 
 %Problem 7
