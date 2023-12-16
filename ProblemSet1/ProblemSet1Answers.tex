@@ -177,7 +177,7 @@ generated values and also record your observations.
   \item We observe that the points reapeat at a smaller width with each repetition: 
   \begin{center} \includegraphics[width=0.5\textwidth]{Problem3_C.png} \end{center}
   \newpage
-  \item We observe that the for each of the value pairs the points start at a different widt that slowly decreases:
+  \item We observe that the for each of the value pairs the points start at a different width that slowly decreases:
   \begin{center} \includegraphics[width=0.5\textwidth]{Problem3_D_1.png} \end{center}
   \begin{center} \includegraphics[width=0.5\textwidth]{Problem3_D_2.png} \end{center}
   \begin{center} \includegraphics[width=0.5\textwidth]{Problem3_D_3.png} \end{center}
@@ -217,8 +217,25 @@ function, recognize the relation of its derivative to the Swish activation funct
 \end{enumerate}
 
 %Problem 6
+\newpage
 \noindent \textbf{Problem 6}
 
+\noindent We are interested in comparing the gradient descent optimizer for several values of the
+batch size, i.e., $n_b=1\rightarrow$SGD, $n_b=n\rightarrow$GD, $n_b=\phi(n)<<n\rightarrow$BGD. While applying these
+variants on a given problem with an objective function F, we observed that when $n_b=1$,
+we get better convergence than $n_b=n$, while increasing the batch size from $n_b=1$ to
+$n_b=n/10$ consistently improves the results, in that the method converges faster and to a
+smaller value of the objective function F. We then observe that the convergence slows
+down as we increase the batch size from n/10 to n.
+Explain these observations. \\ \\
+
+\noindent \underline{\textbf{\textit{Solution:}}}
+
+\noindent \\Using SGD we get a better convergence than using GD because the smaller batch size means updating the model for each datapoint. 
+This introduces randomness that can help escape from local minima thus getting a better convergence. 
+GD uses the whole dataset and may get stuck at a local minima thus giving a worse convergence. 
+Using 1/10 as the batch size is a good middle ground between SGD and GD allowing the method to escape the local minima while also providing a quick convergence.
+However increasing the batch size further slows down the convergence because we have more datapoints to analyse and that makes each update smaller thus taking more time to converge.
 
 %Problem 7
 \newpage
@@ -243,7 +260,12 @@ function, recognize the relation of its derivative to the Swish activation funct
 \noindent \underline{\textbf{\textit{Solution:}}}
 
 \begin{enumerate}[label=\Alph*]
-  \item a here
+  \item 
+  Swish: L = 2.8, k = 1, m = 1.2 \\
+  sigmoid: L = 5, k = 2.5, m = 0 \\
+  ReLU: L = 0, k = 1, m is not relevant \\
+  ELU: ?
+
   \item Derivative of S with respect to x: \\ \\
     \underline{For $x > L$:} \hspace{1.3cm} $S'(x) = kx^{(k-1)}$ \\ \\ \underline{For $x < -L$:} \hspace{1cm} $S'(x) = 0$ \\ \\ \underline{For $|x| \leq L$:} \\ \\ 
     $S'(x) = kx^{(k-1)} \frac{(L+x)^m}{(L+x)^m + (L-x)^m} + x^k * \frac{m(L+x)^{m-1}((L+x)^m + (L-x)^m) - (L+x)^m(m(L+x)^{m-1}-m(L-x)^{m-1})}{((L+x)^m + (L-x)^m)^2} \\ \\
@@ -322,7 +344,7 @@ function, recognize the relation of its derivative to the Swish activation funct
   \item Since we have two inputs, one neural is enough. The following network diagram could be trained on the given patterns. 
     \begin{figure}[h]
       \centering
-      % \includegraphics[width=0.4\textwidth]{pr8.png}
+      \includegraphics[width=0.4\textwidth]{pr8.png}
       \caption{This is the caption of the image.}
     \end{figure}
   \item We need to calculate the various terms of the quadratic function. We know that $F(x) = c - 2x^Th+x^TRx$, where $x = 
@@ -438,7 +460,7 @@ function, recognize the relation of its derivative to the Swish activation funct
     The resulting contour plot of the MSE is: \\
     \begin{figure}[h]
       \centering
-      % \includegraphics[width=0.5\textwidth]{pr8_b.png}
+      \includegraphics[width=0.5\textwidth]{pr8_b.png}
       \caption{This is the caption of the image.}
     \end{figure} \\
   \item The decision boundary is defined by the equation:\\ \\ $x^Tp = 0$, where $x = 
@@ -474,7 +496,7 @@ function, recognize the relation of its derivative to the Swish activation funct
     categories. \\ \\ The optimal decision boundary and the appropriate separation can be seen in the following figure:
     \begin{figure}[h]
       \centering
-      % \includegraphics[width=0.2\textwidth]{pr8_c.png}
+      \includegraphics[width=0.2\textwidth]{pr8_c.png}
       \caption{This is the caption of the image.}
     \end{figure} 
 
@@ -485,7 +507,7 @@ function, recognize the relation of its derivative to the Swish activation funct
     12.4 & 7.6 \\
     7.6 & 6.4
   \end{bmatrix} $
-  and the eigen values of R are ${|R - \lambda*I|}$ \\
+  and the eigenvalues of R are ${|R - \lambda*I|}$ \\
   \\$\det \left ( \begin{bmatrix}
     12.4 & 7.6 \\
     7.6 & 6.4
@@ -588,7 +610,7 @@ $R = E[pp^t] = P(p_1)p_1p_1^T + P(p_2)p_2p_2^T + P(p_3)p_3p_3^T$ will not be aff
 
 \begin{figure}[h]
     \centering
-    % \includegraphics[width=0.4\textwidth]{pr12.png}
+    \includegraphics[width=0.4\textwidth]{pr12.png}
     \caption{This is the caption of the image.}
     
 \end{figure}
