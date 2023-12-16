@@ -77,7 +77,8 @@ for iter = 1:iterations
 
     errors = predictions - y;
 
-    W = W - (alpha / size(X, 1)) * X' * errors;
+    %W = W - (alpha / size(X, 1)) * X' * errors;
+    W = W - 2*(alpha / size(X, 1)) * X' * errors;
     
     W_history(iter, :) = W;
 end
@@ -100,7 +101,7 @@ hold on;
 
 
 % Plot the trajectory
-plot(W_history(:, 1), W_history(:, 2), 'r*-', 'MarkerSize', 2, 'LineWidth', 1);
+plot(W_history(:, 1), W_history(:, 2), 'r*-', 'MarkerSize', 3, 'LineWidth', 1);
 axis equal;
 xlabel('W0');
 ylabel('W1');

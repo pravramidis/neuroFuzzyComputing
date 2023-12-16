@@ -551,6 +551,34 @@ $R = E[pp^t] = P(p_1)p_1p_1^T + P(p_2)p_2p_2^T + P(p_3)p_3p_3^T$ will not be aff
   
 \end{enumerate}
 
+%Problem 9
+
+\newpage
+\noindent \textbf{Problem 9}
+\\ \\
+Suppose that we have the following two reference patterns and their targets:
+\begin{center}
+  ${\left \{p1 = \begin{bmatrix} 1 \\ 2\end{bmatrix}, t1 = [-1] \right \} }$, 
+  ${\left \{p2 = \begin{bmatrix} -2 \\ 1\end{bmatrix}, t1 = [11] \right \} }$
+\end{center}
+The vectors are equiprobable. We want to train an ADALINE network without a bias on this data set.
+\begin{enumerate} [label=\Alph*]
+  \item Sketch the contour plot of the mean square error performance index.
+  \item Sketch the optimal decision boundary.
+  \item Sketch the trajectory of the LMS algorithm on your contour plot. 
+        Assume alearning rate equal to 0.025, and start with initial weights W(0) = [3 1].
+\end{enumerate}
+
+\noindent \underline{\textbf{\textit{Solution:}}}
+
+\begin{enumerate} [label=\Alph*]
+  \item \leavevmode \begin{center} \includegraphics[width=0.9\textwidth]{Problem9_A.png} \end{center}
+  \item \leavevmode \begin{center} \includegraphics[width=0.9\textwidth]{Problem9_B.png} \end{center} 
+  \item \leavevmode \begin{center} \includegraphics[width=0.9\textwidth]{Problem9_C.png} \end{center} 
+\end{enumerate}
+
+
+
 
 
 
