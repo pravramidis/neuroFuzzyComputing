@@ -101,7 +101,8 @@ The generic quadratic function form is:
     2-\lambda & 4 \\
     4 & 2-\lambda
 \end{bmatrix} \right ) = (2-\lambda)(2-\lambda)-16=\\4-4\lambda+\lambda^2-16=\lambda^2-4\lambda-12$ 
-So $\lambda = -2 $ or $\lambda = 6$
+So $\lambda = -2 $ or $\lambda = 6$. \\
+Because the eigenvalues have opposite signs the critical point f(0,0) is a Saddle point and the function has no minimum or maximum.
 
 
 
@@ -215,6 +216,10 @@ function, recognize the relation of its derivative to the Swish activation funct
   $tanh(u) = 2s(2u)-1$ \hspace{0.3cm} [g]. \\ \\ Knowing that Swish = xs(x) and using [f] and [g] on [e] we get: \\ \\ \\$S' = (Swish,x) = tanh(ln(1+e^{x})) + x(1 - tanh^2(ln(1+e^{x}))s(x)) =\\ \\ tanh(ln(1+e^{x})) + xs(x) - xs(x)tanh^2(ln(1+e^{x}))
   \Rightarrow \\ \\{S' = Swish*(1 - tanh^2(ln(1+e^{x}))) +tanh(ln(1+e^{x})) \Rightarrow}$ \\ \\$\bm{S' = Swish*(1-\frac{S^2}{x^2}) + \frac{S}{x}}$
 \end{enumerate}
+
+%Problem 5
+\newpage
+\noindent \textbf{Problem 5}
 
 %Problem 6
 \newpage
