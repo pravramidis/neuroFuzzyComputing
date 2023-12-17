@@ -266,10 +266,15 @@ However increasing the batch size further slows down the convergence because we 
 
 \begin{enumerate}[label=\Alph*]
   \item 
-  Swish: L = 2.8, k = 1, m = 1.2 \\
-  sigmoid: L = 5, k = 2.5, m = 0 \\
-  ReLU: L = 0, k = 1, m is not relevant \\
-  ELU: ?
+  \begin{enumerate}
+  \item Swish: L = 2.8, k = 1, m = 1.2
+  \begin{center} \includegraphics[width=0.9\textwidth]{Problem7_swish.png} \end{center}
+  \item sigmoid: L = 5, k = 2.5, m = 0
+  \begin{center} \includegraphics[width=0.9\textwidth]{Problem7_sigmoid.png} \end{center}
+  \item ReLU: L = 0, k = 1, m is not relevant. \\ As we can see the apporoximation is so good the Relu function is not visible.
+  \begin{center} \includegraphics[width=0.9\textwidth]{Problem7_relu.png} \end{center}
+  \item ELU: ?
+  \end{enumerate}
 
   \item Derivative of S with respect to x: \\ \\
     \underline{For $x > L$:} \hspace{1.3cm} $S'(x) = kx^{(k-1)}$ \\ \\ \underline{For $x < -L$:} \hspace{1cm} $S'(x) = 0$ \\ \\ \underline{For $|x| \leq L$:} \\ \\ 
