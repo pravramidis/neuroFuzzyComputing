@@ -238,8 +238,15 @@ generated values and also record your observations.
   \end{figure}
 
   \clearpage 
-  \item We observe that the points reapeat at a smaller width with each repetition: 
-  \begin{center} \includegraphics[width=0.5\textwidth]{Problem3_C.png} \end{center}
+  \item We observe that the points reapeat at a smaller width with each repetition:
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{Problem3_C.png}
+    \caption{a=0.3675, b=0.3, $x_0$=0}
+    \label{fig:a2}
+  \end{figure}
+
+  
   \item We observe that the for each of the value pairs the points start at a different width that slowly decreases:
   
   \begin{figure}[h]
@@ -306,7 +313,7 @@ function, recognize the relation of its derivative to the Swish activation funct
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.4\textwidth]{pr5_a.png}
-  \caption{This is the caption of the image.}
+  
 \end{figure}
 
 \noindent with $w^1_{1,1} = -2, w^1_{2,1} = -1, b^1_1 = -0.5, b^1_2 = -0.75, w^2_{1,1} = 2, w^2_{1,2} = 1, b^2 = 0.5$. 
@@ -384,13 +391,14 @@ However increasing the batch size further slows down the convergence because we 
   \item 
   \begin{enumerate}
   \item Swish: L = 2.8, k = 1, m = 1.2
-  \begin{center} \includegraphics[width=0.9\textwidth]{Problem7_swish.png} \end{center} \newpage
+  \begin{center} \includegraphics[width=0.8\textwidth]{Problem7_swish.png} \end{center} \newpage
   \item sigmoid: L = 5, k = 2.5, m = 0
-  \begin{center} \includegraphics[width=0.9\textwidth]{Problem7_sigmoid.png} \end{center}
+  \begin{center} \includegraphics[width=0.8\textwidth]{Problem7_sigmoid.png} \end{center}
   \item ReLU: L = 0, k = 1, m is not relevant. \\ As we can see the apporoximation is so good the Relu function is not visible.
-  \begin{center} \includegraphics[width=0.9\textwidth]{Problem7_relu.png} \end{center}
+  \begin{center} \includegraphics[width=0.8\textwidth]{Problem7_relu.png} \end{center}
+  \newpage
   \item ELU: L = 50, k = 1, m = 6.5
-  \item \begin{center} \includegraphics[width=0.9\textwidth]{Problem7_elu.png} \end{center}
+  \begin{center} \includegraphics[width=0.8\textwidth]{Problem7_elu.png} \end{center}
   \end{enumerate}
 
   \item Derivative of S with respect to x: \\ \\
@@ -471,8 +479,8 @@ However increasing the batch size further slows down the convergence because we 
   \item Since we have two inputs, one neural is enough. The following network diagram could be trained on the given patterns. 
     \begin{figure}[h]
       \centering
-      \includegraphics[width=0.4\textwidth]{pr8.png}
-      \caption{This is the caption of the image.}
+      \includegraphics[width=0.5\textwidth]{Problem8_arch.png}
+      
     \end{figure}
   \item We need to calculate the various terms of the quadratic function. We know that $F(x) = c - 2x^Th+x^TRx$, where $x = 
     \begin{bmatrix}
@@ -508,7 +516,7 @@ However increasing the batch size further slows down the convergence because we 
     \begin{bmatrix}
       \bm{88.4} \\
       \bm{62.4} \\
-    \end{bmatrix}$ \\ \\ \\ \\The input correlation matrix R is: \\ \\ $R = E[pp^t] = P(p_1)p_1p_1^T + P(p_2)p_2p_2^T + P(p_3)p_3p_3^T = \\ \\0.2
+    \end{bmatrix}$ \\ \\ \\ \\ \\The input correlation matrix R is: \\ \\ $R = E[pp^t] = P(p_1)p_1p_1^T + P(p_2)p_2p_2^T + P(p_3)p_3p_3^T = \\ \\0.2
     \begin{bmatrix}
       2 \\
       4 \\
@@ -588,8 +596,8 @@ However increasing the batch size further slows down the convergence because we 
     \begin{figure}[h]
       \centering
       \includegraphics[width=0.5\textwidth]{pr8_b.png}
-      \caption{This is the caption of the image.}
-    \end{figure} \\
+      
+    \end{figure} \\ \\ \\
   \item The decision boundary is defined by the equation:\\ \\ $x^Tp = 0$, where $x = 
     \begin{bmatrix}
       w_{1,1} \\
@@ -624,7 +632,6 @@ However increasing the batch size further slows down the convergence because we 
     \begin{figure}[h]
       \centering
       \includegraphics[width=0.2\textwidth]{pr8_c.png}
-      \caption{This is the caption of the image.}
     \end{figure} 
 
     
@@ -647,11 +654,12 @@ However increasing the batch size further slows down the convergence because we 
     12.4-\lambda & 7.6 \\
     7.6 & 6.4-\lambda
 \end{bmatrix} \right ) = (12.4-\lambda)(6.4-\lambda) = \\ \\ \\=\lambda^2 - 18.8\lambda + 21.6$
-. So ${\lambda = \frac{47 - \sqrt{1669} }{5}}$ (not possible since ${lambda > 0})$ or ${\lambda = \frac{47 + \sqrt{1669} }{5}}$.
-\\ \\ ${a = \frac{1}{\lambda_i} \Rightarrow a= \frac{1}{\frac{47 + \sqrt{1669} }{5}}} \Rightarrow a = \frac{5}{47+\sqrt{1669}} \Rightarrow a \approx 0.0569 $
+. So ${\lambda = \frac{47 - \sqrt{1669} }{5}} \approx 1.23$ or ${\lambda = \frac{47 + \sqrt{1669} }{5}} \approx 17.57$. \\ \\ \\In order to get the maximum
+learning rate we should choose the minimum lambda. So,
+\\ \\ ${a = \frac{1}{\lambda_i} \Rightarrow a= \frac{1}{\frac{47 - \sqrt{1669} }{5}}} \Rightarrow a = \frac{5}{47-\sqrt{1669}} \Rightarrow a \approx 0.814 $\\ \\
 
-If we change the target value from 26 to -26 and from 11 to -11 then the input correlation matrix 
-$R = E[pp^t] = P(p_1)p_1p_1^T + P(p_2)p_2p_2^T + P(p_3)p_3p_3^T$ will not be affected and so the maximum stable learning rate will also remain the same ${a \approx 0.0569}$.
+If we change the target value from 26 to -26 and from 11 to -11 then the input correlation matrix
+$R = E[pp^t] = P(p_1)p_1p_1^T + P(p_2)p_2p_2^T + P(p_3)p_3p_3^T$ will not be affected and so the maximum \\stable learning rate will also remain the same ${a \approx 0.0569}$.
 
   \item We know that $w(k+1) = w(k) + 2ae(k)p^T(k)$, $w(0) = 
     \begin{bmatrix}
@@ -700,7 +708,7 @@ The vectors are equiprobable. We want to train an ADALINE network without a bias
 \noindent \underline{\textbf{\textit{Solution:}}}
 
 \begin{enumerate} [label=\Alph*]
-  \item \leavevmode \begin{center} \includegraphics[width=0.9\textwidth]{Problem9_A.png} \end{center}
+  \item \leavevmode \begin{center} \includegraphics[width=0.8\textwidth]{Problem9_A.png} \end{center}
   \newpage
   \item \leavevmode \begin{center} \includegraphics[width=0.7\textwidth]{Problem9_B.png} \end{center} 
   \item \leavevmode \begin{center} \includegraphics[width=0.9\textwidth]{Problem9_C.png} \end{center} 
@@ -717,7 +725,7 @@ The vectors are equiprobable. We want to train an ADALINE network without a bias
   \item Draw the patterns in a 2-D diagram. Are the categories linearly separable?
   \item For the aforementioned patterns design the architecture of an ADALINE neural network which will separate the classes.
   \item Starting with initial weights/biases equal to 0.5 calculate the final (after convergence) weights/biases of the ADALINE using the LMS training algorithm
-        with learning rate=0.01.
+        with learning rate=0.01.\\ \\ \\
 \end{enumerate}
 
 \noindent \underline{\textbf{\textit{Solution:}}}
@@ -725,7 +733,14 @@ The vectors are equiprobable. We want to train an ADALINE network without a bias
 \begin{enumerate} [label=\Alph*]
   \item As we can see from the plot the categories are linearly separable. The green line is a hypothetical decision boundary.
   \begin{center} \includegraphics[width=0.9\textwidth]{Problem10_A.png} \end{center}
-  \item Placeholder
+  \newpage
+  \item The architecture of an ADALINE that will separate the classes is: \\
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Problem10.png}
+    
+  \end{figure}
+
   \item The final weights are: w1 = -0.655181028588977, w2 = 0.604562000875011 
         and the final bias is b = 0.843268. The decision boundary is shown in the plot:
         \begin{center} \includegraphics[width=0.9\textwidth]{Problem10_C.png} \end{center}
@@ -792,7 +807,7 @@ The vectors are equiprobable. We want to train an ADALINE network without a bias
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.4\textwidth]{pr12.png}
-    \caption{This is the caption of the image.}
+    
     
 \end{figure}
 
