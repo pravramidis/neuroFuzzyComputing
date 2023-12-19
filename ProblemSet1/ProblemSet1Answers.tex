@@ -636,7 +636,7 @@ However increasing the batch size further slows down the convergence because we 
 
     
   \item In order for the learning rate of the LMS algorithm to be stable, it must \\be true that: \\ \\${1-2a\lambda_i > -1}$, where ${\lambda_i}$ are the eigenvalues of the R matrix. Knowing that ${\lambda_i > 0}$ the condition on stability is
-  ${a < \frac{1}{\lambda_i}}$ or ${0 < a < \frac{1}{\lambda_i}}$. Therefore we get the maximum stable learning rate when ${a = \frac{1}{\lambda_i}}$. 
+  ${a < \frac{1}{\lambda_i}}$ or ${0 < a < \frac{1}{\lambda_i}}$. Therefore we get the maximum stable learning rate when ${a = \frac{1}{\lambda_{max}}}$. 
   \\ \\ $R = \begin{bmatrix}
     12.4 & 7.6 \\
     7.6 & 6.4
@@ -655,8 +655,8 @@ However increasing the batch size further slows down the convergence because we 
     7.6 & 6.4-\lambda
 \end{bmatrix} \right ) = (12.4-\lambda)(6.4-\lambda) = \\ \\ \\=\lambda^2 - 18.8\lambda + 21.6$
 . So ${\lambda = \frac{47 - \sqrt{1669} }{5}} \approx 1.23$ or ${\lambda = \frac{47 + \sqrt{1669} }{5}} \approx 17.57$. \\ \\ \\In order to get the maximum
-learning rate we should choose the minimum lambda. So,
-\\ \\ ${a = \frac{1}{\lambda_i} \Rightarrow a= \frac{1}{\frac{47 - \sqrt{1669} }{5}}} \Rightarrow a = \frac{5}{47-\sqrt{1669}} \Rightarrow a \approx 0.814 $\\ \\
+learning rate we should choose the maximum lambda. So,
+\\ \\ ${a = \frac{1}{\lambda_{max}} \Rightarrow a= \frac{1}{\frac{47 + \sqrt{1669} }{5}}} \Rightarrow a = \frac{5}{47+\sqrt{1669}} \Rightarrow a \approx 0.0569 $\\ \\
 
 If we change the target value from 26 to -26 and from 11 to -11 then the input correlation matrix
 $R = E[pp^t] = P(p_1)p_1p_1^T + P(p_2)p_2p_2^T + P(p_3)p_3p_3^T$ will not be affected and so the maximum \\stable learning rate will also remain the same ${a \approx 0.0569}$.
