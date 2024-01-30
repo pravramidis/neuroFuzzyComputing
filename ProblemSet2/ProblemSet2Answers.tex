@@ -182,12 +182,48 @@ Consider the following function:
 \newpage
 \noindent \textbf{Problem 10} \\
 
+\noindent You are given the description of the following optimization method, where $ \alpha, \beta, \nu \in R, (\alpha $
+is the learning rate):
+
 \begin{center}
 $g_{t+1} \leftarrow \beta \cdot g_t + (1 - \beta) \cdot \nabla L_t(\theta_t) $
 \end{center}
 \begin{center}
 $\theta_{t+1} \leftarrow \theta_t - \alpha \left[ (1 - \nu) \cdot \nabla L_t(\theta_t) + \nu \cdot g_{t+1} \right] $
 \end{center}
+
+\noindent For which values of $ \beta $ and $\nu$ you get optimization methods familiar to you (described in
+our lectures)? Name them, and write the respective equations.
+
+\noindent \underline{\textbf{\textit{Solution:}}} \\ 
+
+The above equations can represent 3 different optimization methods:
+
+\begin{enumerate}
+  \item For $\beta = 0$ and $\nu = 0$  we get the standard gradient descent optimization method
+    \begin{center}
+    $g_{t+1} \leftarrow \nabla L_t(\theta_t) $
+    \end{center}
+    \begin{center}
+    $\theta_{t+1} \leftarrow \theta_t - \alpha \cdot \nabla L_t(\theta_t)$
+    \end{center}
+    
+  \item For $\beta \neq 0$ and $\nu = 0$ we get the SGD with monmentum optimization method
+    \begin{center}
+    $g_{t+1} \leftarrow \beta \cdot g_t + (1 - \beta) \cdot \nabla L_t(\theta_t) $
+    \end{center}
+    \begin{center}
+      $\theta_{t+1} \leftarrow \theta_t - \alpha \cdot \nabla L_t(\theta_t)$
+    \end{center}
+    
+  \item For $\beta \neq 0$ and $\nu \neq 0$ we get the Nesterov Accelerated Gradient optimization method
+  \begin{center}
+    $g_{t+1} \leftarrow \beta \cdot g_t + (1 - \beta) \cdot \nabla L_t(\theta_t) $
+    \end{center}
+    \begin{center}
+    $\theta_{t+1} \leftarrow \theta_t - \alpha \cdot \nu \cdot g_{t+1} $
+    \end{center}
+\end{enumerate}
 
 
 
