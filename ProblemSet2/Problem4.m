@@ -1,11 +1,11 @@
 function Problem4
     % Experiment parameters
     S1_values = [2, 8, 12]; % Different sizes of the hidden layer
-    learning_rates = [0.01, 0.1]; % Different learning rates
+    learning_rates = [0.01, 0.1, 0.2]; % Different learning rates
     num_epochs = 10000; % Number of training epochs
 
     % Generate training data
-    p = linspace(-2, 2, 100)';
+    p = linspace(-5, 5, 100)';
     t = 1 + sin(p * 3 * pi / 8);
 
     % Experiment with different configurations

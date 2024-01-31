@@ -126,6 +126,77 @@ $w^2(1) = w^2(0) - as^2(a^1)^T = -1 -1 * (-1.462 * 10 ^{-8}) * (-0.2689) \Righta
 $\\ \\ \\ w^1(1) = w^1(0) -as^1(a^0)^T = -3 -1 * (1.057 * 10^{-9}) * $ 
 \\ \\$b^1(1) = b^1(0) - as^1 = 2 - 1 * 1.057 * 10^{-9} \Rightarrow \bm{b^1(1) \approx 1.999}$\\ 
 
+%Problem 4
+\newpage
+\noindent \textbf{Problem 4} \\
+
+\noindent 
+Write a (MATLAB/python/Keras/…) program to implement the backpropagation
+algorithm for a $1-S^1-1$ network (logsig-ReLU). Write the program using matrix
+operations, as we did in the class lecture. Choose the initial weights and biases to be
+random numbers uniformly distributed between -0.5 and 0.5, and train the network to
+approximate the function:
+\begin{center}
+  $ g(p)=1+sin[p(3 \pi /8)] for -2 \leq p \leq 2.$
+\end{center}
+
+Use $S^1=2, S^1=8, s^1=12$  Experiment with several different values for the learning
+rate a (make sure you experiment with a = 0.1), and use several different initial conditions.
+Discuss the convergence properties and the accuracy of the algorithm as the learning rate
+changes, and as the capacity (in terms of number of hidden neurons) increases. \\
+
+\noindent \underline{\textbf{\textit{Solution:}}} \\ 
+
+\noindent We experimented with 3 learning rates:
+\begin{enumerate}
+  \item For a = 0.01: \\
+  \includegraphics[width=0.3\textwidth]{Problem4_2_0.01.png}
+  \includegraphics[width=0.3\textwidth]{Problem4_8_0.01.png}
+  \includegraphics[width=0.3\textwidth]{Problem4_12_0.01.png}
+  \item For a = 0.1: \\
+  \includegraphics[width=0.3\textwidth]{Problem4_2_0.1.png}
+  \includegraphics[width=0.3\textwidth]{Problem4_8_0.1.png}
+  \includegraphics[width=0.3\textwidth]{Problem4_12_0.1.png}
+  \item For a = 0.2: \\
+  \includegraphics[width=0.3\textwidth]{Problem4_2_0.2.png}
+  \includegraphics[width=0.3\textwidth]{Problem4_8_0.2.png}
+  \includegraphics[width=0.3\textwidth]{Problem4_12_0.2.png}
+\end{enumerate}
+
+\noindent From the graphs we can see that the more neurons a network has the more accurate it is.
+There are however diminishing returns so the more neurons we add the less noticable the difference in accuracy.
+\\
+We can also observe that if the learning rate is too small or too big then the graph is also inacurate.
+
+%Problem 5
+\newpage
+\noindent \textbf{Problem 5} \\
+
+In the setting with $S^1= 12$ and learning rate a=0.1 of the previous exercise, apply the
+dropout technique (https://jmlr.org/papers/v15/srivastava14a.html) with dropout
+probability $\theta$ of hidden-layer neurons equal to $\theta=0.15$, then with $\theta=0.25$, and then with
+$\theta=0.35$. Apply the dropout during the training phase only, and only on the hidden layer
+units (not of course to the input neuron). Discuss the convergence properties of the
+algorithm, as well as its accuracy, and contrast your findings with those of the previous
+exercise. Perform any additional experiments to figure out the operation of dropout as a
+generalization technique. \\
+
+\noindent \underline{\textbf{\textit{Solution:}}} \\ 
+
+For each of the $\theta$ values we get the following graphs:
+\begin{enumerate}
+  \item For $\theta=0.15$ \\
+  \includegraphics[width=0.3\textwidth]{Problem5_0.15.png}
+  \item For $\theta=0.25$ \\
+  \includegraphics[width=0.3\textwidth]{Problem5_0.25.png}
+  \item For $\theta=0.35$ \\
+  \includegraphics[width=0.3\textwidth]{Problem5_0.35.png}
+\end{enumerate}
+
+We can observe the algorithm is not as accurate as in Problem 4 however out goal of preventing overfitting has been accomplished
+
+
+
 
 %Problem 7
 \newpage

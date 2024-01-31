@@ -1,4 +1,4 @@
-function Problem4
+function Problem5
     % Experiment parameters
     S1_values = [12]; % Different sizes of the hidden layer
     learning_rates = [0.01, 0.1]; % Different learning rates
