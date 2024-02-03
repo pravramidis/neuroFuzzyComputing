@@ -3,7 +3,7 @@ syms w1 w2
 F = w1^2 + w2^2 + (0.5*w1 + w2)^2 + (0.5*w1 + w2)^4;
 
 % Set initial point
-x0 = [1; 1];
+x0 = [3; 3];
 
 % Set convergence criterion
 epsilon = 1e-7;
