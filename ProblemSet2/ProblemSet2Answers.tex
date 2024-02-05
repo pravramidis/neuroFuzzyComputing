@@ -432,27 +432,44 @@ our lectures)? Name them, and write the respective equations.\\ \\ \\
 \noindent \underline{\textbf{\textit{Solution:}}} \\ 
 
 \begin{enumerate} [label=\Alph*]
-    \item The output is:
+    \item In order to get the output of the convolution layer with stride = (1,1), we need to follow the steps described below: \\
+          \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.5\textwidth]{prob11_a.png} \\      
+          \end{figure}
+          \newpage
+          \noindent The output will be a 4x4 table where the first element's value (out[1,1]) is calculated by multiplying each element of kernel with the corresponding 
+          element of the red subtable and then adding them all together. Knowing that the given stride is (1,1) we will then repeat the same process using the blue subtable in 
+          order to calculate out[1,2]. After completing the same process for the first row of I, we will then proceed to calculate the values of out in the second row. We will follow 
+          the same process described above, using the green subtable for out[2,1] and so on. \\ \\ 
+          So $out[1,1] = 1*20 + 1*35 + 1*35 + 1*29 + 0*46 + 1*44 + 1*16 + 1*25 + 1*21 \Rightarrow \bm{out[1,1] = 225}$\\ \\
+          The rest of the element are calculated likewise. The output is:
         \begin{center}
-        $ I = \begin{bmatrix}
+        $ out = \begin{bmatrix}
             225 & 258 & 250 & 209 \\
             458 & 566 & 552 & 372 \\
             708 & 981 & 887 & 802 \\
             1000 & 1488 & 1320 & 1224 
-        \end{bmatrix}$ 
+        \end{bmatrix}$ \\
         \end{center}
-
-    \item After the max pooling layer: 
+        
+    
+    \item  Applying a max pooling layer with stride = (2,2) and window shape = (2,2) results in a 2x2 max-pooled output, where the first element is equal to the element of maximum value in the first subtable shown below and so on. 
+        \begin{figure}[h]
+          \centering
+          \includegraphics[width=0.4\textwidth]{prob11_b.png} \\      
+        \end{figure}
+        \newline So the output after the max pooling layer is:
         \begin{center}
-        $ I = \begin{bmatrix}
+        $ max-pooled = \begin{bmatrix}
             566 & 552 \\
             1488 & 1320
         \end{bmatrix}$ 
         \end{center}
-
+    
     \item The image after each of the kernels: \\
         \begin{center}
-            \includegraphics[width=0.4\textwidth]{problem11images.png}
+            \includegraphics[width=0.8\textwidth]{problem11images.png}
         \end{center}
         F1 appears to detect horizontal edges , F2 detects edges in all directions and F3 detects edges on a diagonal.
         
