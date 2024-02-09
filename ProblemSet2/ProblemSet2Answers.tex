@@ -603,6 +603,18 @@ The structure of the network is as follows:
 
 \noindent \underline{\textbf{\textit{Solution:}}} \\ 
 
+\begin{itemize}
+  \item For the first layer we have $5*5 = 25$ weights per filter. We also have 100 filters so $25*100=2500$ total weights and 100 biases.
+  \item For the second layer we have $5*5=25$ weights per filter and we have 100 input channels and 100 filters for each channel so $25*100*100=250000$ total weights and 100 biases.
+  \item For the third layer no weights are required as it is a max pooling layer.
+  \item For the fourth layer we have 100 input channels and an image size of 50x50 so $50*50*100=250000$ total inputs.
+        Because this is a dense layer each of them must connect to all 100 ouptut units. So we have $250000*100=25000000$ total weiths and 100 biases (one for each output unit).
+  \item For the fifth layer we have a dense layer where each of our 100 input units must connect with all 100 output units. So $100*100=10000$ total weights and 100 biases.
+  \item For the last layer our 100 input units must connect to the single output unit so we have 100 weights and one bias. 
+\end{itemize}
+
+Now we need to add the weights for each layer. In total we have $2500+250000+25000000+10000+100 = 2762600$ weights and 401 biases.
+
 %Problem 15
 \newpage
 \noindent \textbf{Problem 15}
