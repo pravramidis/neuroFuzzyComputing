@@ -620,6 +620,33 @@ measure the execution time of the two alternatives. Comment on your results.
 
 \noindent \underline{\textbf{\textit{Solution:}}} \\ 
 
+
+\noindent 
+\begin{enumerate} [label = \Alph*]
+  \item The latter is preferable for a number of reasons:
+  \begin{itemize}
+    \item By reading larger strips the alogrithm needs to access the memory less times speeding up the process.
+    \item By computing a $\Delta$-wide output strip we may be able to compute the output in parallel using more cpu cores.
+    \item Accessing continuous blocks of data improves cache efficiency.
+  \end{itemize}
+  However there is a limit to how large $\Delta$ can be. A large $\Delta$ requires a lot of memory and may also require computing overhead to manage all the opperations.
+  This is why it is important to find a balance.
+
+  \item For the experiment we have created and run both alogrithm. The results can be seen in the graphs below.
+  We run the first algorithm 20 times and ploted the average. We also run the second algorithm 20 times for each delta and plotted the average:
+
+  \begin{itemize}
+    \item For the kernel of size 3x3 the graph shows the optimal $\Delta$ value is 2: \\
+    \includegraphics[width=0.8\textwidth]{Problem15_3.png}
+    \item For the kernel of size 7x7 the graph shows the optimal $\Delta$ value is 5: \\
+    \includegraphics[width=0.8\textwidth]{Problem15_7.png}
+    \item For the kernel of size 11x11 the graph shows the optimal $\Delta$ value is 8: \\
+    \includegraphics[width=0.8\textwidth]{Problem15_11.png}
+  \end{itemize}
+  From our results we observe that there is a different optimal $\Delta$ value for each kernel size and that after a certain point 
+  increasing the $\Delta$ further produces worst results.
+\end{enumerate}
+
 \end{document}
 
 
