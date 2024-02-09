@@ -552,6 +552,11 @@ biases and how many weights are needed for each of these two convolutional layer
 
 \noindent \textit{First convolution layer:} \\ \\
 
+\begin{itemize}
+  \item  For the first hidden layer we have 3 input channels and a kernel of size 3 with 4 channels so $3*3^2*4=108$ weights and 4 biases (one for each filter channel).
+  \item  For the second hidden layer we have 4 input channels and a kernel of size 5 with 10 chennels so $4*5^2*10=1000$ weiths and 10 biases.
+\end{itemize}
+In total we have $1000+108=1108$ weights and $4+10=14$ biases.  
 
 
 
