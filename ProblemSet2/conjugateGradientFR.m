@@ -13,7 +13,7 @@ hessianMatrix = hessian(f,[x,y]);
 
 x0 = [3; 3];    % Initial guess
 tol = 1e-6;     % Tolerance
-max_iter = 5;   % Maximum number of iterations
+max_iter = 6;   % Maximum number of iterations
    
 
 % Initialize variables

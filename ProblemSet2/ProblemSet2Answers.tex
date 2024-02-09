@@ -48,7 +48,7 @@
 \noindent \textbf{Problem 1}
 
 \noindent Find the minimum of the two-dimensional function: $F(w) = w_1^2+w_2^2+(0.5w_1+w_2)^2+(0.5w_1+w_2)^4$
-\\ 
+
 
 \begin{figure}[h]
   \centering
@@ -65,6 +65,67 @@ show your analytic calculations. \\ \\ \\
 
 
 \noindent \underline{\textbf{\textit{Solution:}}}
+
+\noindent In order to find the minimum of the given function with the Conjugate Gradient(Fletcher-Reeves) we first need to calculate \( \nabla f \). \\ \\
+\( \nabla f \) = $ \begin{bmatrix}
+  \frac{\partial f}{\partial w_1} \\
+  \frac{\partial f}{\partial w_2} 
+\end{bmatrix} = \begin{bmatrix}
+  2w_1 + 2*(0.5w_1+w_2)*0.5 +4*(0.5w_1+w_2)^3 * 0.5 \\
+  2w_2 +2*(0.5w_1+w_2) +4*(0.5w_1+w_2)^3 
+\end{bmatrix} \hspace*{1cm}(1)$ \\ \\
+
+\vspace{0.5cm}
+\noindent In every step we need to calculate:
+\begin{itemize}
+  \item \( \nabla f_k \) using $w_k$ and $(1)$
+  \item $s_k$ = -\( \nabla f_k \)
+  \item $\lambda_k = \frac{(\nabla f_k)^T (\nabla f_k)}{s_k^T H s_k}$
+  \item $x_{k+1} = x_k + \lambda_k*s_k$
+  \item $s_{k+1} = -(\nabla f_{k+1}) + b_k \cdot s_k$, where $b_k = \frac{(\nabla f_{k+1})^T (\nabla f_{k+1})}{(\nabla f_{k})^T (\nabla f_{k})}$
+  
+\end{itemize}
+\vspace{1cm}
+\noindent First iteration:\\\\ $w_0 = [3,3]^T$, \( \nabla f_0 \) = $ \begin{bmatrix} 
+  192.75 \\
+  379.5 
+\end{bmatrix}$, $ s_0 = \begin{bmatrix} 
+  -192.75 \\
+  -379.5 
+\end{bmatrix}$, $\lambda_0 \approx 0.003$\\ \\ \\ So, $w_1 \approx [2.375, 1.769]^T$ and $s_1 \approx [-76.655 -146.81]^T$
+\newpage
+
+\noindent Second iteration:\\\\ $w_1 = \approx [2.375, 1.769]^T$, \( \nabla f_1 \) = $ \begin{bmatrix} 
+  76.655 \\
+  146.81 
+\end{bmatrix}$, $ s_1 = \begin{bmatrix} 
+  -76.655 \\
+  -146.81
+\end{bmatrix}$, $\lambda_1 \approx 0.007$\\ \\ \\ So, $w_2 \approx [1.809, 0.685]^T$ and $s_2 \approx [-16.085, -26.064]^T$ \\ \\
+
+\noindent Third iteration:\\\\ $w_2 = [1.809, 0.685]^T$, \( \nabla f_2 \) = $ \begin{bmatrix} 
+  16.085\\
+  26.064 
+\end{bmatrix}$, $ s_2 = \begin{bmatrix} 
+  -16.085\\
+  -26.064
+\end{bmatrix}$, $\lambda_2 \approx 0.0238$\\ \\ \\ So, $w_3 \approx [1.426, 0.064]^T$ and $s_3 \approx [-5.465, -5.016]^T$ \\ \\
+
+\noindent Fourth iteration:\\\\ $w_3 = \approx [1.426, 0.064]^T$, \( \nabla f_3 \) = $ \begin{bmatrix} 
+  5.465\\
+  5.016 
+\end{bmatrix}$, $ s_3 = \begin{bmatrix} 
+  -5.465\\
+  -5.016
+\end{bmatrix}$, $\lambda_3 \approx 0.088$\\ \\ \\ So, $w_4 \approx [0.947, -0.375]^T$ and $s_4 \approx [-16.085, -26.064]^T$ \\ \\
+
+\noindent Fifth iteration:\\\\ $w_4 = \approx [0.947, -0.375]^T$, \( \nabla f_4 \) = $ \begin{bmatrix} 
+  16.085\\
+  26.064 
+\end{bmatrix}$, $ s_4 = \begin{bmatrix} 
+  -16.085\\
+  -26.064
+\end{bmatrix}$, $\lambda_4 \approx 0.476$\\ \\ \\ So, $w_5 \approx [-0.335, -0.418]^T$ and $s_5 \approx [-5.052, 2.586]^T$ \\ \\
 
 %Problem 2
 \newpage
