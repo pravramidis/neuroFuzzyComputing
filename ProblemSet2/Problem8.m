@@ -11,7 +11,7 @@
     w = [1; 1]; % Adjust as needed
 
     % Adadelta parameters
-    alpha = 3;
+    alpha = 0.4;
     rho = 0.95;
     epsilon = 1e-6;
     delta_w = zeros(size(w));
@@ -28,7 +28,7 @@
     figure; contour(W1, W2, F_val, 50); hold on;
 
     % Optimization loop
-    for iter = 1:100000
+    for iter = 1:100
         % Compute gradient
         g = gradF(w);
 

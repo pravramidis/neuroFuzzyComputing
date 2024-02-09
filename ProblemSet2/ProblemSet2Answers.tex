@@ -664,6 +664,18 @@ The structure of the network is as follows:
 
 \noindent \underline{\textbf{\textit{Solution:}}} \\ 
 
+\begin{itemize}
+  \item For the first layer we have $5*5 = 25$ weights per filter. We also have 100 filters so $25*100=2500$ total weights and 100 biases.
+  \item For the second layer we have $5*5=25$ weights per filter and we have 100 input channels and 100 filters for each channel so $25*100*100=250000$ total weights and 100 biases.
+  \item For the third layer no weights are required as it is a max pooling layer.
+  \item For the fourth layer we have 100 input channels and an image size of 50x50 so $50*50*100=250000$ total inputs.
+        Because this is a dense layer each of them must connect to all 100 ouptut units. So we have $250000*100=25000000$ total weiths and 100 biases (one for each output unit).
+  \item For the fifth layer we have a dense layer where each of our 100 input units must connect with all 100 output units. So $100*100=10000$ total weights and 100 biases.
+  \item For the last layer our 100 input units must connect to the single output unit so we have 100 weights and one bias. 
+\end{itemize}
+
+Now we need to add the weights for each layer. In total we have $2500+250000+25000000+10000+100 = 2762600$ weights and 401 biases.
+
 %Problem 15
 \newpage
 \noindent \textbf{Problem 15}
@@ -680,6 +692,33 @@ measure the execution time of the two alternatives. Comment on your results.
 \end{enumerate}
 
 \noindent \underline{\textbf{\textit{Solution:}}} \\ 
+
+
+\noindent 
+\begin{enumerate} [label = \Alph*]
+  \item The latter is preferable for a number of reasons:
+  \begin{itemize}
+    \item By reading larger strips the alogrithm needs to access the memory less times speeding up the process.
+    \item By computing a $\Delta$-wide output strip we may be able to compute the output in parallel using more cpu cores.
+    \item Accessing continuous blocks of data improves cache efficiency.
+  \end{itemize}
+  However there is a limit to how large $\Delta$ can be. A large $\Delta$ requires a lot of memory and may also require computing overhead to manage all the opperations.
+  This is why it is important to find a balance.
+
+  \item For the experiment we have created and run both alogrithm. The results can be seen in the graphs below.
+  We run the first algorithm 20 times and ploted the average. We also run the second algorithm 20 times for each delta and plotted the average:
+
+  \begin{itemize}
+    \item For the kernel of size 3x3 the graph shows the optimal $\Delta$ value is 2: \\
+    \includegraphics[width=0.8\textwidth]{Problem15_3.png}
+    \item For the kernel of size 7x7 the graph shows the optimal $\Delta$ value is 5: \\
+    \includegraphics[width=0.8\textwidth]{Problem15_7.png}
+    \item For the kernel of size 11x11 the graph shows the optimal $\Delta$ value is 8: \\
+    \includegraphics[width=0.8\textwidth]{Problem15_11.png}
+  \end{itemize}
+  From our results we observe that there is a different optimal $\Delta$ value for each kernel size and that after a certain point 
+  increasing the $\Delta$ further produces worst results.
+\end{enumerate}
 
 \end{document}
 
