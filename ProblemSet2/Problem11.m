@@ -13,7 +13,6 @@ test = [
     16, 25, 21, 19;
     28, 25, 19, 58;
     ];
-% imshow(test, []);
 
 kernel = [
     1, 1, 1;
@@ -42,17 +41,12 @@ f3 = [
     ];
 
 
-% imshow(imageArray, []);
 
 convolvedImage = conv2(imageArray,kernel,"same");
 convolvedF1 = conv2(imageArray,f1,"same");
 convolvedF2 = conv2(imageArray,f2,"same");
 convolvedF3 = conv2(imageArray,f3,"same");
 
-
-% subplot(1, 2, 2);
-% imshow(convolvedF1,[]);
-% % imshow(convolvedF2,[]);
 
 figure;
 

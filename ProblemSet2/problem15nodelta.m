@@ -1,4 +1,4 @@
-function output = problem15(image, kernel)
+function output = problem15nodelta(image, kernel)
     [rows, cols] = size(image);
     k = size(kernel, 1);
     pad = floor(k / 2);

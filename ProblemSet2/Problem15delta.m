@@ -1,4 +1,4 @@
-function output = Problem15b(image, kernel, delta)
+function output = Problem15delta(image, kernel, delta)
     [rows, cols] = size(image);
     k = size(kernel, 1);
     pad = floor(k / 2);
@@ -8,7 +8,7 @@ function output = Problem15b(image, kernel, delta)
     for row = 1:rows
         col = 1;
         while col <= cols
-            deltaCols = min(delta, cols - col + 1); % Ensure we don't go beyond the image boundary
+            deltaCols = min(delta, cols - col + 1);
             for d = 0:deltaCols-1
                 region = paddedImage(row:row+k-1, col+d:col+d+k-1);
                 output(row, col+d) = sum(sum(region .* kernel));
