@@ -127,6 +127,8 @@ show your analytic calculations. \\ \\ \\
   -26.064
 \end{bmatrix}$, $\lambda_4 \approx 0.476$\\ \\ \\ So, $w_5 \approx [-0.335, -0.418]^T$ and $s_5 \approx [-5.052, 2.586]^T$ \\ \\
 
+
+
 %Problem 2
 \newpage
 \noindent \textbf{Problem 2}
@@ -338,18 +340,18 @@ Consider the following function:
 \noindent \underline{\textbf{\textit{Solution:}}} 
 
 \begin{enumerate}
-    \item For a = 0.4:
+    \item For a = 0.4 converged after 870 iterations:
           \begin{figure}[h]
             \centering
             \includegraphics[width=0.5\textwidth]{problem80.4.png}      
           \end{figure}
-    \item For a = 3:
+    \item For a = 3 converged after 223 iterations:
           \begin{figure}[h]
             \centering
             \includegraphics[width=0.5\textwidth]{problem83.png}            
           \end{figure} 
           \newpage
-    \item Adadelta, fucntion rotated by 45 degrees:
+    \item Adadelta, fucntion rotated by 45 degrees with a = 3 converged after 223 iterations:
           \begin{figure}[h]
             \centering
             \includegraphics[width=0.5\textwidth]{problem8rotated.png}            
@@ -422,33 +424,26 @@ our lectures)? Name them, and write the respective equations.\\ \\ \\
 
 \noindent \underline{\textbf{\textit{Solution:}}}
 
-\noindent The above equations can represent 3 different optimization methods:
+\noindent The above equations can represent 2 different optimization methods:
 
 \begin{enumerate}
-  \item For $\beta = 0$ and $\nu = 0$  we get the standard gradient descent optimization method
+  \item For $\beta = 0$ and $\nu = 1$  we get the standard gradient descent optimization method
     \begin{center}
     $g_{t+1} \leftarrow \nabla L_t(\theta_t) $
     \end{center}
     \begin{center}
-    $\theta_{t+1} \leftarrow \theta_t - \alpha \cdot \nabla L_t(\theta_t)$
+    $\theta_{t+1} \leftarrow \theta_t - \alpha \cdot g_{t+1}$
     \end{center}
     
-  \item For $\beta \neq 0$ and $\nu = 0$ we get the SGD with monmentum optimization method
+  \item For $\beta \neq 0$ and $\nu = 1$ we get the SGD with monmentum optimization method
     \begin{center}
     $g_{t+1} \leftarrow \beta \cdot g_t + (1 - \beta) \cdot \nabla L_t(\theta_t) $
     \end{center}
     \begin{center}
-      $\theta_{t+1} \leftarrow \theta_t - \alpha \cdot \nabla L_t(\theta_t)$
+      $\theta_{t+1} \leftarrow \theta_t - \alpha \cdot g_{t+1} $
     \end{center}
-    
-  \item For $\beta \neq 0$ and $\nu \neq 0$ we get the Nesterov Accelerated Gradient optimization method
-  \begin{center}
-    $g_{t+1} \leftarrow \beta \cdot g_t + (1 - \beta) \cdot \nabla L_t(\theta_t) $
-    \end{center}
-    \begin{center}
-    $\theta_{t+1} \leftarrow \theta_t - \alpha \cdot \nu \cdot g_{t+1} $
-    \end{center}
-\end{enumerate}
+  \end{enumerate}
+  
 
 
 
@@ -575,6 +570,11 @@ biases and how many weights are needed for each of these two convolutional layer
 
 \noindent \textit{First convolution layer:} \\ \\
 
+\begin{itemize}
+  \item  For the first hidden layer we have 3 input channels and a kernel of size 3 with 4 channels so $3*3^2*4=108$ weights and 4 biases (one for each filter channel).
+  \item  For the second hidden layer we have 4 input channels and a kernel of size 5 with 10 chennels so $4*5^2*10=1000$ weiths and 10 biases.
+\end{itemize}
+In total we have $1000+108=1108$ weights and $4+10=14$ biases.  
 
 
 
@@ -657,9 +657,75 @@ biases and how many weights are needed for each of these two convolutional layer
           \end{bmatrix}$
 
           \item 
+          For both the 2x2 and 3x3 the number of channels depends on the number of input channels. In the examples we have only 1 input channel.\\
+          For a 2x2 convolution let's use this example of a matrix I and we will need to use 2 F fitlers: \\
+          \[
+            I = \begin{bmatrix}
+                1 & 8\\
+                5 & 6 \\
+            \end{bmatrix}
+            \quad
+            \hspace{1cm}
+            F = \begin{bmatrix}
+                1 \\ -1
+            \end{bmatrix} 
+            \]
 
-          For a 2x2 convolution we need:
-          For a 3x3 convolution we need:
+            we apply each filter to the first 2 columns and we get $1-5=-4$ and $8-6=2$ so 
+            by applying a ReLU layer and adding the second element
+            on both the results we get that the 5 is the first max and 8 the second max.
+            $Result = \begin{bmatrix}
+              5 & 8
+            \end{bmatrix}$ 
+            Now to get the max of theese 2 we use a filter 
+            $ F2 = \begin{bmatrix}
+              1 & -1
+            \end{bmatrix}$ and we get $5-8=-3$ by using a ReLU operation and adding the second element we get that the max is 8.
+            We have successfully max pooled a 2x2 convolution using a convolution layer with 2 filters then a ReLU layer and then 
+            a convolution layer with 1 filter and then 1 ReLU layer. So in total we have 2 convolutional and 2 ReLU layers.\\
+
+            For a 3x3 convolution let's use this example of a matrix I and we will need to use 3 F fitlers:
+            \[
+              I = \begin{bmatrix}
+                  1 & 8 & 15\\
+                  5 & 6 & 18\\
+                  7 & 3 & 11
+              \end{bmatrix}
+              \quad
+              \hspace{1cm}
+              F = \begin{bmatrix}
+                  1 \\ -1
+              \end{bmatrix} 
+              \]
+
+            We apply each filter to the first and second row of the first 3 columns and we get $1-5=-4$, $8-6=2$ and $15-18=-3$. Then we apply a ReLU
+            operation to each result to get the max of each pair.
+            Then we do the same for the second and and third rows and we get $5-7=-2$, $6-3=3$, $18-11=7$ 
+            $Result = \begin{bmatrix}
+              5 & 8 & 18 \\
+              7 & 6 & 18
+            \end{bmatrix}$ 
+
+            Now we use this filter on the first and second row
+            $F = \begin{bmatrix}
+              1 & -1
+            \end{bmatrix}$
+            So we get $5-8=-3$, $7-6=1$. After a ReLU operation and adding the second element we get max 8 and 7.
+            Now we compare this with the third column:
+            $Result = \begin{bmatrix}
+              8 & 18 \\
+              7 & 18
+            \end{bmatrix}$ 
+            we apply the filter both filters again  so $8-18=-10$ and $7-18=-11$. After ReLU operation and adding the second element the max is 18 and 18.
+            The last step is to use the filter again: 
+            $Result = \begin{bmatrix}
+              18 & 18
+            \end{bmatrix}$ 
+            we get $18-18=0$ and by ReLU and adding the second element we get 18 as the max of all 9 elements.
+            By adding all the layers we need we have 4 convolution layers and 4 ReLU layers.
+
+             
+
 
           
 
