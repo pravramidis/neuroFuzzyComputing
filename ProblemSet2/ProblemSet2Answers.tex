@@ -66,7 +66,7 @@ show your analytic calculations. \\ \\ \\
 
 \noindent \underline{\textbf{\textit{Solution:}}}
 
-\noindent In order to find the minimum of the given function with the Conjugate Gradient(Fletcher-Reeves) we first need to calculate \( \nabla f \). \\ \\
+\noindent In order to find the minimum of the given function with the \textbf{Conjugate Gradient(Fletcher-Reeves)} we first need to calculate \( \nabla f \). \\ \\
 \( \nabla f \) = $ \begin{bmatrix}
   \frac{\partial f}{\partial w_1} \\
   \frac{\partial f}{\partial w_2} 
@@ -125,10 +125,10 @@ show your analytic calculations. \\ \\ \\
 \end{bmatrix}$, $ s_4 = \begin{bmatrix} 
   -16.085\\
   -26.064
-\end{bmatrix}$, $\lambda_4 \approx 0.476$\\ \\ \\ So, $w_5 \approx [-0.335, -0.418]^T$ and $s_5 \approx [-5.052, 2.586]^T$ \\ \\
+\end{bmatrix}$, $\lambda_4 \approx 0.476$\\ \\ \\ So, $w_5 \approx [-0.335, -0.418]^T$ and $s_5 \approx [-5.052, 2.586]^T$ \\ \\ \\ \\
 
 
-\noindent We will now use the gradient descent method: \\
+\noindent We will now use the \textbf{gradient descent method:} \\
 As we previously calculated the gradient is\\ \\
 \( \nabla f \) = $ \begin{bmatrix}
   \frac{\partial f}{\partial w_1} \\
@@ -138,10 +138,12 @@ As we previously calculated the gradient is\\ \\
   2w_2 +2*(0.5w_1+w_2) +4*(0.5w_1+w_2)^3 
 \end{bmatrix} \hspace*{1cm}(1)$ \\ \\
 
-\noindent For each iteration we need to take the following steps: \\
-Find the gradient for the current W $\nabla f(w)$ \\
-Then updates the weights accordingly W = $\lambda * \nabla f(w)$
-Where $\lambda= 0.01$ \\ \\
+\noindent For each iteration we need to take the following steps:
+\begin{itemize}
+  \item Find the gradient $\nabla f(w)$ for the current w 
+  \item Update the weights accordingly w = $\lambda * \nabla f(w)$, where $\lambda= 0.01$ \\ \\
+\end{itemize}
+
 
 \noindent First iteration: \\ \\
 Starting w0 = [3,3] \\ \\
@@ -150,43 +152,39 @@ w1 = [1.073, -0.795], F(w1) = 1.854 \\ \\
 
 \noindent Second iteration: \\ \\
 $\nabla f(w1)= [1.852,-2.177]$ \\ \\
-w2 = [1.054, -0.773], F(w) = 1.773 \\ \\
-
-\noindent Second iteration: \\ \\
-$\nabla f(w1)= [1.857,-2.177]$ \\ \\
-w2 = [1.053984, -0.773232], F(w) = 1.773081 \\ \\
+w2 = [1.054, -0.773], F(w2) = 1.773 \\ \\
 
 \noindent Third iteration: \\ \\
 $\nabla f(w2)= [1.832,-2.099]$ \\ \\
-w3 = [1.036, -0.752], F(w) = 1.696 \\ \\
+w3 = [1.036, -0.752], F(w3) = 1.696 \\ \\
 
 \noindent Fourth iteration: \\ \\
 $\nabla f(w3)= [1.811,-2.025]$ \\ \\
-w4 = [1.018, -0.732], F(w) = 1.624 \\ \\
+w4 = [1.018, -0.732], F(w4) = 1.624 \\ \\
 
 \noindent Fifth iteration: \\ \\
 $\nabla f(w4)= [1.790,-1.955]$ \\ \\
-w5 = [0.100, -0.712], F(w) = 1.554 \\ \\
+w5 = [0.100, -0.712], F(w5) = 1.554 \\ \\
 
 \noindent Sixth iteration: \\ \\
 $\nabla f(w5)= [1.767,-1.889]$ \\ \\
-w6 = [0.982, -0.694], F(w) = 1.488 \\ \\
+w6 = [0.982, -0.694], F(w6) = 1.488 \\ \\
 
 \noindent Seventh iteration: \\ \\
 $\nabla f(w6)= [1.745,-1.826]$ \\ \\
-w7 = [0.965, -0.675], F(w) = 1.425 \\ \\
+w7 = [0.965, -0.675], F(w7) = 1.425 \\ \\
 
 \noindent Eighth iteration: \\ \\
 $\nabla f(w7)= [1.722,-1.765]$ \\ \\
-w8 = [0.947, -0.658], F(w) = 1.365 \\ \\
+w8 = [0.947, -0.658], F(w8) = 1.365 \\ \\
 
 \noindent Ninth iteration: \\ \\
 $\nabla f(w8)= [1.698,-1.708]$ \\ \\
-w8 = [0.930, -0.641], F(w) = 1.308 \\ \\
+w9 = [0.930, -0.641], F(w9) = 1.308 \\ \\
 
 \noindent Tenth iteration: \\ \\
-$\nabla f(w7)= [1.674,-1.654]$ \\ \\
-w10 = [0.914, -0.624], F(w) = 1.253 \\ \\
+$\nabla f(w9)= [1.674,-1.654]$ \\ \\
+w10 = [0.914, -0.624], F(w10) = 1.253 \\ \\
 
 
 
@@ -195,7 +193,7 @@ w10 = [0.914, -0.624], F(w) = 1.253 \\ \\
 
 
 %Problem 2
-\newpage
+\vspace {2cm}
 \noindent \textbf{Problem 2}
 
 \noindent Find the minimum of the previous function using the Newton method and fixed step $ \lambda_k = 1$ (even though this is not a quadratic form). \\
@@ -207,7 +205,7 @@ w10 = [0.914, -0.624], F(w) = 1.253 \\ \\
 
 
 %Problem 3
-\vspace{2cm}
+\newpage
 \noindent \textbf{Problem 3}
 
 \noindent For the neural network shown below
@@ -358,6 +356,25 @@ generalization technique. \\ \\ \\
 \end{enumerate} 
 \noindent \\While the algorithm may not be as accurate as in Problem 4, we have successfully achieved our goal of preventing overfitting.
 
+%Problem 6
+\vspace{2cm}
+\noindent \textbf{Problem 6}
+
+\noindent Consider the network shown in the figure below, where the inputs to the neuron involve 
+both the original inputs and their product \\
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.3\textwidth]{pr6.png}
+\end{figure}
+\newline
+\noindent A. Find a learning rule for the network parameters, using the steepest descent algorithm 
+(as we have done in the class for backpropagation).\\\\
+B. For the following initial parameter values, inputs and target, perform one iteration of 
+your learning rule with learning rate $\alpha$ = 1:$w_1= 1, w_2= -1, w_{1,2}= 0.5, b_1 = 1, and p_1= 0, p_2= 1, t= 0.75$. \\ \\
+
+
+\noindent \underline{\textbf{\textit{Solution:}}}
+\noindent Code attached.  
 
 
 
