@@ -1,7 +1,7 @@
 
     % Objective function
-    F = @(w) 0.1*w(1)^2 + 2*w(2)^2;
-    %F = @(w) 0.1*(w(1)+w(2))^2 + 2*(w(1) - w(2))^2;
+    %F = @(w) 0.1*w(1)^2 + 2*w(2)^2;
+    F = @(w) 0.1*(w(1)+w(2))^2 + 2*(w(1) - w(2))^2;
 
 
     % Gradient of the objective function
@@ -11,7 +11,7 @@
     w = [1; 1]; % Adjust as needed
 
     % Adadelta parameters
-    alpha = 0.4;
+    alpha = 3;
     rho = 0.95;
     epsilon = 1e-6;
     delta_w = zeros(size(w));
@@ -28,7 +28,7 @@
     figure; contour(W1, W2, F_val, 50); hold on;
 
     % Optimization loop
-    for iter = 1:100
+    for iter = 1:100000
         % Compute gradient
         g = gradF(w);
 

@@ -315,18 +315,18 @@ Consider the following function:
 \noindent \underline{\textbf{\textit{Solution:}}} 
 
 \begin{enumerate}
-    \item For a = 0.4:
+    \item For a = 0.4 converged after 870 iterations:
           \begin{figure}[h]
             \centering
             \includegraphics[width=0.5\textwidth]{problem80.4.png}      
           \end{figure}
-    \item For a = 3:
+    \item For a = 3 converged after 223 iterations:
           \begin{figure}[h]
             \centering
             \includegraphics[width=0.5\textwidth]{problem83.png}            
           \end{figure} 
           \newpage
-    \item Adadelta, fucntion rotated by 45 degrees:
+    \item Adadelta, fucntion rotated by 45 degrees with a = 3 converged after 223 iterations:
           \begin{figure}[h]
             \centering
             \includegraphics[width=0.5\textwidth]{problem8rotated.png}            
@@ -423,7 +423,7 @@ our lectures)? Name them, and write the respective equations.\\ \\ \\
     $g_{t+1} \leftarrow \beta \cdot g_t + (1 - \beta) \cdot \nabla L_t(\theta_t) $
     \end{center}
     \begin{center}
-    $\theta_{t+1} \leftarrow \theta_t - \alpha \cdot \nu \cdot g_{t+1} $
+      $\theta_{t+1} \leftarrow \theta_t - \alpha \left[ (1 - \nu) \cdot \nabla L_t(\theta_t) + \nu \cdot g_{t+1} \right] $
     \end{center}
 \end{enumerate}
 
