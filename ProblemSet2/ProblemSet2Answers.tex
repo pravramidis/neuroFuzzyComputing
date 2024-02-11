@@ -207,7 +207,7 @@ w10 = [0.914, -0.624], F(w) = 1.253 \\ \\
 
 
 %Problem 3
-\newpage
+\vspace{2cm}
 \noindent \textbf{Problem 3}
 
 \noindent For the neural network shown below
@@ -238,13 +238,13 @@ w10 = [0.914, -0.624], F(w) = 1.253 \\ \\
 \end{cases}. \]\\
 
 \noindent \textbf{\textit{First iteration of backpropagation:}}
-\noindent \\ \\The output of the first layer is: \\ \\$n^1 = w^1p + b^1 = (-3)*1 + 2 \Rightarrow \bm{n^1 = -1}$
+\noindent \\ \\ \\ \\The output of the first layer is: \\ \\$n^1 = w^1p + b^1 = (-3)*1 + 2 \Rightarrow \bm{n^1 = -1}$
 \\ \\$a^1 = F_1(n^1) = \frac{-1}{1+e} \Rightarrow \bm{a^1 \approx -0.2689}$
 
 \noindent \\ \\The output of the second layer is: \\ \\$n^2 = w^2a^1 + b^2 = (-1)(-0.2689) + (-1) \Rightarrow \bm{n^2 \approx -0.731}$
 \\ \\$a^2 = F_2(n^2) = 0.001(-0.731) \Rightarrow \bm{a^2 \approx -7.31 * 10^{-4}}$
-\\ \\ \\The error is: \\$e = t - a^2 = 0 - (-7.31 * 10^{-4}) \Rightarrow \bm{e \approx 7.31 * 10^{-4}}$ 
-\newpage 
+\\ \\ \\The error is: \\$e = t - a^2 = 0 - (-7.31 * 10^{-4}) \Rightarrow \bm{e \approx 7.31 * 10^{-4}}$ \\ \\
+ 
 \noindent We can now perform the backpropagation. The starting point is found at the second layer: \\ \\
 $s^2 = -2F_2'(n^2)(t-a) = -2 * 0.001 * 7.31 * 10^{-4} \Rightarrow \bm{s^2 \approx -1.462 * 10^{-6}}$
 \\\\ The first layer sensitivity is then computed by backpropagating the sensitivity from the second layer: \\ \\ $s^1 = F_1'(n^1)(w^2)^Ts^2 = \frac{1+e+(-1)e}{(1+e)^2} * (-1) *(-1.462 * 10^{-6}) \Rightarrow \bm{s^1 \approx 1.057 * 10^{-7}}$
@@ -262,11 +262,12 @@ $\\ \\ \\ w^1(1) = w^1(0) -as^1(p)^T = -3 -1 * (1.057 * 10^{-7}) * 1 \Rightarrow
 \\ \\$a^2(2) = F_2(n^2(2)) = 0.001(-0.729) \Rightarrow \bm{a^2 \approx -7.29 * 10^{-4}}$
 \\ \\ \\The error is: \\$e(2) = t - a^2(2) = 0 - (-7.29 * 10^{-4}) \Rightarrow \bm{e \approx 7.29 * 10^{-4}}$ \\\\
 
+\newpage
 \noindent We can now perform the backpropagation. The starting point is found at the second layer: \\ \\
 $s^2(2) = -2F_2'(n^2(2))(t-a) = -2 * 0.001 * 7.29 * 10^{-4} \Rightarrow \bm{s^2 \approx -1.458 * 10^{-6}}$
-\\\\ The first layer sensitivity is then computed by backpropagating the sensitivity from the second layer: \\ \\ $s^1(2) = F_1'(n^1(2))(w^2(1))^Ts^2(2) = \frac{1+e^{-1.001}+(-1.001)e^{-1.001}}{(1+e^{-1.001})^2} * (-1.000000393) *(-1.458 * 10^{-6}) \\\Rightarrow \bm{s^1(2) \approx 7.79 * 10^{-7}}$
+\\\\ The first layer sensitivity is then computed by backpropagating the sensitivity from the second layer: \\ \\ $s^1(2) = F_1'(n^1(2))(w^2(1))^Ts^2(2) = \frac{1+e^{-1.001}+(-1.001)e^{-1.001}}{(1+e^{-1.001})^2} * (-1.000000393) *(-1.458 * 10^{-6}) \\\\\Rightarrow \bm{s^1(2) \approx 7.79 * 10^{-7}}$
 \\\\ \\Finally, weight update takes place as follows: \\\\
-$w^2(2) = w^2(1) - as^2(2)(a^1(2))^T = -1.000000393 -1 * (-1.458 * 10 ^{-6}) * (-0.269) \Rightarrow \bm{w^2(1) \approx -1.000000785}$
+$w^2(2) = w^2(1) - as^2(2)(a^1(2))^T = -1.000000393 -1 * (-1.458 * 10 ^{-6}) * (-0.269) \newline \\\Rightarrow \bm{w^2(1) \approx -1.000000785}$
 \\ \\ $b^2(2) = b^2(1) -as^2(2) = -0.999 -1 * (-1.458 * 10 ^ {-6}) \Rightarrow \bm{b^2(1) \approx -0.998}$
 $\\ \\ \\ w^1(2) = w^1(1) -as^1(2)(p)^T = -3.000000106 -1 * (7.79 * 10^{-7}) * 1 \Rightarrow \bm{w^1(1) \approx -3.000000885} $ 
 \\ \\$b^1(2) = b^1(1) - as^1(2) = 1.999 - 1 * 7.79 * 10^{-7} \Rightarrow \bm{b^1(1) \approx 1.998}$\\ \\ \\
@@ -364,7 +365,7 @@ generalization technique. \\ \\ \\
 \newpage
 \noindent \textbf{Problem 7}
 
-\noindent Show that an MLP using only ReLU (or pReLU) constructs a continuous piecewise linear function. \\ \\ \\
+\noindent Show that an MLP using only ReLU (or pReLU) constructs a continuous piecewise linear function. \\ \\
 
 \noindent \underline{\textbf{\textit{Solution:}}}  
 
@@ -374,15 +375,15 @@ In an MLP, each neuron computes a weighted sum of its inputs and applies an acti
 with input x weight w and bias b the output before activation is w * x + b and after activation with ReLU it is max(0, w*x + b) while after pReLU it is max(a(w*x+b), w*x+b). \\
 
 \noindent$\bm{Continuity:} $\\
-Both the ReLU and pReLU functions are continuous functions. The MLP applies a continuous function for each layer so the overall function is also continuous.\\
+Both the ReLU and pReLU functions are continuous functions. The MLP applies a continuous function for each layer so the overall function is also continuous.\\\\
 
 \noindent$\bm{Piecewise}$ $ \bm{Linearity:} $\\
-The ReLU function is piecewise linear, being linear (with a slope of 1) for positive inputs and zero elsewhere. \\
-The pReLU function is also piecewise linear but with two linear pieces – one with a positive slope (usually 1) and another with a smaller positive slope (the parameter a). \\
-In an MLP, each neuron applies a linear transformation (weighted sum) followed by a piecewise linear activation (ReLU/pReLU). This makes the output of each neuron piecewise linear. \\
+The ReLU function is piecewise linear, being linear (with a slope of 1) for positive inputs and zero elsewhere. \\\\
+The pReLU function is also piecewise linear but with two linear pieces, one with a positive slope (usually 1) and another with a smaller positive slope (the parameter a). \\\\
+In an MLP, each neuron applies a linear transformation (weighted sum) followed by a piecewise linear activation (ReLU/pReLU). This makes the output of each neuron piecewise linear. \\\\
 The composition of piecewise linear functions remains piecewise linear. Thus, the entire network, being a composition of linear transformations and piecewise linear activations, represents a piecewise linear function.
 
-\noindent In conclusion an MLP using only ReLU or pReLU constructs a continuous piecewise linear function.
+\noindent \\In conclusion an MLP using only ReLU or pReLU constructs a continuous piecewise linear function.
 
 
 %Problem 8
@@ -449,23 +450,25 @@ square. Make sure you label the three arrows in your answer.
   \item The plot after one gradient step for the Standard gradient method:
         \begin{figure}[h]
           \centering
-          \includegraphics[width=0.6\textwidth]{pr9_a.png}
+          \includegraphics[width=0.5\textwidth]{pr9_a.png}
           
         \end{figure}
         
   \item The plot after one gradient step for the Natural gradient method:
         \begin{figure}[h]
           \centering
-          \includegraphics[width=0.6\textwidth]{pr9_b.png}
+          \includegraphics[width=0.5\textwidth]{pr9_b.png}
           
         \end{figure}
   \item The plot after one gradient step for the Adagrad or RMSprop method:
         \begin{figure}[h]
           \centering
-          \includegraphics[width=0.6\textwidth]{pr9_c.png}
+          \includegraphics[width=0.5\textwidth]{pr9_c.png}
           
         \end{figure}
 \end{enumerate}
+\noindent All the methods take a step in the direction of the negative gradient 
+of the function at the current point. The step for the Natural gradient method is larger than the steps of the other methods. Adagrad/RMSprop method has the smallest step.
 
 
 
@@ -611,11 +614,17 @@ our lectures)? Name them, and write the respective equations.\\ \\ \\
         \end{bmatrix}$ 
         \end{center}
     
-    \item The image after each of the kernels: \\
+    \item In the image below we can see the result of applying each kernel to the input image: \\
         \begin{center}
             \includegraphics[width=0.8\textwidth]{problem11images.png}
         \end{center}
-        F1 appears to detect horizontal edges , F2 detects edges in all directions and F3 detects edges on a diagonal.
+        Features extracted from the image:
+        \begin{itemize}
+          \item F1 kernel appears to detect horizontal edges
+          \item F2 kernel detects edges in all directions
+          \item F3 kernel detects edges on a diagonal.
+        \end{itemize}
+        
         
             
 \end{enumerate}\
@@ -623,7 +632,7 @@ our lectures)? Name them, and write the respective equations.\\ \\ \\
 
 
 %Problem 12
-\newpage
+\vspace{2cm}
 \noindent \textbf{Problem 12}
 
 \noindent Consider a 1D convolutional network where the input has three channels. The first 
@@ -633,13 +642,11 @@ biases and how many weights are needed for each of these two convolutional layer
 
 \noindent \underline{\textbf{\textit{Solution:}}} \\ 
 
-\noindent \textit{First convolution layer:} \\ \\
-
 \begin{itemize}
-  \item  For the first hidden layer we have 3 input channels and a kernel of size 3 with 4 channels so $3*3^2*4=108$ weights and 4 biases (one for each filter channel).
-  \item  For the second hidden layer we have 4 input channels and a kernel of size 5 with 10 chennels so $4*5^2*10=1000$ weiths and 10 biases.
+  \item  For the first hidden layer we have 3 input channels and a kernel of size 3 with 4 channels. \\So $3*3^2*4=108$ weights and 4 biases (one for each filter channel).
+  \item  For the second hidden layer we have 4 input channels and a kernel of size 5 with 10 chennels. So $4*5^2*10=1000$ weigths and 10 biases.
 \end{itemize}
-In total we have $1000+108=1108$ weights and $4+10=14$ biases.  
+In total we need $1000+108=\bm{1108}$ \textbf{weights} and $4+10=\bm{14}$ \textbf{biases}.  
 
 
 
@@ -722,8 +729,8 @@ In total we have $1000+108=1108$ weights and $4+10=14$ biases.
           \end{bmatrix}$
 
           \item 
-          For both the 2x2 and 3x3 the number of channels depends on the number of input channels. In the examples we have only 1 input channel.\\
-          For a 2x2 convolution let's use this example of a matrix I and we will need to use 2 F fitlers: \\
+          For both the 2x2 and 3x3 convolutions, the number of channels needed depends on the number of input channels. In the examples given below we have only 1 input channel.\\\\
+          For a 2x2 convolution let's use an input matrix I and filter F: \\
           \[
             I = \begin{bmatrix}
                 1 & 8\\
@@ -736,20 +743,22 @@ In total we have $1000+108=1108$ weights and $4+10=14$ biases.
             \end{bmatrix} 
             \]
 
-            we apply each filter to the first 2 columns and we get $1-5=-4$ and $8-6=2$ so 
-            by applying a ReLU layer and adding the second element
-            on both the results we get that the 5 is the first max and 8 the second max.
-            $Result = \begin{bmatrix}
+            By applying F to the 2 columns of I, we get $1-5=-4$ and $8-6=2$. \\So, out = 
+            $\begin{bmatrix}
+              -4 &2 \\
+            \end{bmatrix} $
+            \\ \\By applying a ReLU layer we get: outReLu = $
+            \begin{bmatrix}
+              0&2
+            \end{bmatrix}$.
+            \\ Adding the second row elements of I to outReLU, we get $Result = \begin{bmatrix}
               5 & 8
-            \end{bmatrix}$ 
-            Now to get the max of theese 2 we use a filter 
+            \end{bmatrix}$, which are the max values of each column of I. \\ \\
+            In order to get the max value of Result we use another convolution layer with filter:\\
             $ F2 = \begin{bmatrix}
               1 & -1
-            \end{bmatrix}$ and we get $5-8=-3$ by using a ReLU operation and adding the second element we get that the max is 8.
-            We have successfully max pooled a 2x2 convolution using a convolution layer with 2 filters then a ReLU layer and then 
-            a convolution layer with 1 filter and then 1 ReLU layer. So in total we have 2 convolutional and 2 ReLU layers.\\
-
-            For a 3x3 convolution let's use this example of a matrix I and we will need to use 3 F fitlers:
+            \end{bmatrix}$. By applying F2 we get $5-8=-3$. Using a ReLU operation and adding the second element of Result we get the max value which is 8.\\\\
+            So, in total we have 2 convolution layers and 2 ReLU layers.\\ \\\\For a 3x3 convolution let's use an input matrix I and filter F:
             \[
               I = \begin{bmatrix}
                   1 & 8 & 15\\
@@ -763,31 +772,47 @@ In total we have $1000+108=1108$ weights and $4+10=14$ biases.
               \end{bmatrix} 
               \]
 
-            We apply each filter to the first and second row of the first 3 columns and we get $1-5=-4$, $8-6=2$ and $15-18=-3$. Then we apply a ReLU
-            operation to each result to get the max of each pair.
-            Then we do the same for the second and and third rows and we get $5-7=-2$, $6-3=3$, $18-11=7$ 
+            By applying F we get: out=$ 
+            \begin{bmatrix}
+              1-5& 8-6 & 15-18 \\
+              5-7& 6-3 &18-11             
+            \end{bmatrix} =\begin{bmatrix}
+              -4 & 2 & -3\\
+              -2 & 3 & 7
+            \end{bmatrix}$ 
+            \\ \\ Then we apply a ReLU operation to each result: \\ \\
+            outReLU = $
+            \begin{bmatrix}
+              0 & 2 & 0\\
+              0 & 3 & 7
+            \end{bmatrix}$. \\\\Adding the last 2 rows of I to outReLU we get:
+             
             $Result = \begin{bmatrix}
               5 & 8 & 18 \\
               7 & 6 & 18
             \end{bmatrix}$ 
 
-            Now we use this filter on the first and second row
+            We then use another convolution layer using filter
             $F = \begin{bmatrix}
               1 & -1
-            \end{bmatrix}$
-            So we get $5-8=-3$, $7-6=1$. After a ReLU operation and adding the second element we get max 8 and 7.
-            Now we compare this with the third column:
-            $Result = \begin{bmatrix}
-              8 & 18 \\
-              7 & 18
-            \end{bmatrix}$ 
-            we apply the filter both filters again  so $8-18=-10$ and $7-18=-11$. After ReLU operation and adding the second element the max is 18 and 18.
-            The last step is to use the filter again: 
-            $Result = \begin{bmatrix}
+            \end{bmatrix}$.
+            So, we get $out = \begin{bmatrix}
+                -3 & -10 \\
+                1 & -12
+              \end{bmatrix}$. \\ \\ After a ReLU operation we get outReLU =$\begin{bmatrix}
+                0& 0 \\
+                1 & 0
+              \end{bmatrix}$\\ \\Adding the last 2 columns of Result to outReLU we get $Result' =\begin{bmatrix}
+                8 & 18 \\
+                7 & 18
+              \end{bmatrix}$
+            \\\\ By applying F and a ReLU operation we get:
+            $out = \begin{bmatrix}
               18 & 18
             \end{bmatrix}$ 
-            we get $18-18=0$ and by ReLU and adding the second element we get 18 as the max of all 9 elements.
-            By adding all the layers we need we have 4 convolution layers and 4 ReLU layers.
+            \\\\ The final step is to apply another convolution layer using F. Repeating the same process, we get the max value which is 18.
+            
+           So, in total we have 4 convolution layers and 4 ReLU layers.
 
              
 
@@ -816,19 +841,19 @@ The structure of the network is as follows:
 
 \noindent How many weights does this network have? \\
 
-\noindent \underline{\textbf{\textit{Solution:}}} \\ 
+\noindent \underline{\textbf{\textit{Solution:}}} 
 
 \begin{itemize}
   \item For the first layer we have $5*5 = 25$ weights per filter. We also have 100 filters so $25*100=2500$ total weights and 100 biases.
-  \item For the second layer we have $5*5=25$ weights per filter and we have 100 input channels and 100 filters for each channel so $25*100*100=250000$ total weights and 100 biases.
+  \item For the second layer we have $5*5=25$ weights per filter. We also have 100 input channels and 100 filters for each channel so $25*100*100=250000$ total weights and 100 biases.
   \item For the third layer no weights are required as it is a max pooling layer.
   \item For the fourth layer we have 100 input channels and an image size of 50x50 so $50*50*100=250000$ total inputs.
-        Because this is a dense layer each of them must connect to all 100 ouptut units. So we have $250000*100=25000000$ total weiths and 100 biases (one for each output unit).
+        Because this is a dense layer each of them must connect to all 100 ouptut units. So we have $250000*100=25000000$ total weigths and 100 biases (one for each output unit).
   \item For the fifth layer we have a dense layer where each of our 100 input units must connect with all 100 output units. So $100*100=10000$ total weights and 100 biases.
   \item For the last layer our 100 input units must connect to the single output unit so we have 100 weights and one bias. 
 \end{itemize}
 
-Now we need to add the weights for each layer. In total we have $2500+250000+25000000+10000+100 = 2762600$ weights and 401 biases.
+\noindent Adding the weights each layer has we have $2500+250000+25000000+10000+100 = \\\bm{2762600}$ \textbf{weights} and \textbf{401 biases}.
 
 %Problem 15
 \newpage
@@ -844,35 +869,38 @@ and compute a $\Delta$-wide output strip.
 measure the execution time of the two alternatives. Comment on your results.
 
 \end{enumerate}
+\vspace{1cm}
 
-\noindent \underline{\textbf{\textit{Solution:}}} \\ 
+\noindent \underline{\textbf{\textit{Solution:}}}
 
 
 \noindent 
 \begin{enumerate} [label = \Alph*]
   \item The latter is preferable for a number of reasons:
   \begin{itemize}
-    \item By reading larger strips the alogrithm needs to access the memory less times speeding up the process.
+    \item By reading larger strips the alogrithm needs to access the memory less times, speeding up the process.
     \item By computing a $\Delta$-wide output strip we may be able to compute the output in parallel using more cpu cores.
     \item Accessing continuous blocks of data improves cache efficiency.
   \end{itemize}
   However there is a limit to how large $\Delta$ can be. A large $\Delta$ requires a lot of memory and may also require computing overhead to manage all the opperations.
   This is why it is important to find a balance.
 
-  \item For the experiment we have created and run both alogrithm. The results can be seen in the graphs below.
+  \item For the experiment we have created and run both alogrithms. The results can be seen in the graphs below.
   We run the first algorithm 20 times and ploted the average. We also run the second algorithm 20 times for each delta and plotted the average:
 
   \begin{itemize}
-    \item For the kernel of size 3x3 the graph shows the optimal $\Delta$ value is 2: \\
-    \includegraphics[width=0.8\textwidth]{Problem15_3.png}
-    \item For the kernel of size 7x7 the graph shows the optimal $\Delta$ value is 5: \\
-    \includegraphics[width=0.8\textwidth]{Problem15_7.png}
-    \item For the kernel of size 11x11 the graph shows the optimal $\Delta$ value is 8: \\
+    \item For the kernel of size 3x3 the graph shows the optimal $\Delta$ value is 2: \\ \\
+    \includegraphics[width=0.8\textwidth]{Problem15_3.png} \newpage
+    \item For the kernel of size 7x7 the graph shows the optimal $\Delta$ value is 5: \\ \\
+    \includegraphics[width=0.8\textwidth]{Problem15_7.png}\newline \\
+    \item For the kernel of size 11x11 the graph shows the optimal $\Delta$ value is 8: \\ \\
     \includegraphics[width=0.8\textwidth]{Problem15_11.png}
   \end{itemize}
-  From our results we observe that there is a different optimal $\Delta$ value for each kernel size and that after a certain point 
-  increasing the $\Delta$ further produces worst results.
+  \noindent \\ We observe that there is a different optimal $\Delta$ value for each kernel size and that after a certain point 
+  increasing the $\Delta$ further produces worse results.
+  
 \end{enumerate}
+
 
 \end{document}
 
