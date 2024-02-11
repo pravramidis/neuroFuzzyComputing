@@ -14,9 +14,11 @@ alpha = 0.01;
 % Perform 10 iterations of the Gradient Descent algorithm
 for iter = 1:10
     % Update w using the gradient
+    gradRes = gradF(w);
     w = w - alpha * gradF(w);
     
     % Display the current state
+    fprintf('Iteration %d: gradres %f,%f\n', iter,gradRes(1), gradRes(2));
     fprintf('Iteration %d: w = [%f, %f], F(w) = %f\n', iter, w(1), w(2), F(w));
     
     % Stop if the change is smaller than the accuracy (three decimal points)

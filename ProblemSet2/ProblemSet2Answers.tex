@@ -128,6 +128,72 @@ show your analytic calculations. \\ \\ \\
 \end{bmatrix}$, $\lambda_4 \approx 0.476$\\ \\ \\ So, $w_5 \approx [-0.335, -0.418]^T$ and $s_5 \approx [-5.052, 2.586]^T$ \\ \\
 
 
+\noindent We will now use the gradient descent method: \\
+As we previously calculated the gradient is\\ \\
+\( \nabla f \) = $ \begin{bmatrix}
+  \frac{\partial f}{\partial w_1} \\
+  \frac{\partial f}{\partial w_2} 
+\end{bmatrix} = \begin{bmatrix}
+  2w_1 + 2*(0.5w_1+w_2)*0.5 +4*(0.5w_1+w_2)^3 * 0.5 \\
+  2w_2 +2*(0.5w_1+w_2) +4*(0.5w_1+w_2)^3 
+\end{bmatrix} \hspace*{1cm}(1)$ \\ \\
+
+\noindent For each iteration we need to take the following steps: \\
+Find the gradient for the current W $\nabla f(w)$ \\
+Then updates the weights accordingly W = $\lambda * \nabla f(w)$
+Where $\lambda= 0.01$ \\ \\
+
+\noindent First iteration: \\ \\
+Starting w0 = [3,3] \\ \\
+$\nabla f(w0)= [192.75 , 379.5]$ \\ \\
+w1 = [1.073, -0.795], F(w1) = 1.854 \\ \\
+
+\noindent Second iteration: \\ \\
+$\nabla f(w1)= [1.852,-2.177]$ \\ \\
+w2 = [1.054, -0.773], F(w) = 1.773 \\ \\
+
+\noindent Second iteration: \\ \\
+$\nabla f(w1)= [1.857,-2.177]$ \\ \\
+w2 = [1.053984, -0.773232], F(w) = 1.773081 \\ \\
+
+\noindent Third iteration: \\ \\
+$\nabla f(w2)= [1.832,-2.099]$ \\ \\
+w3 = [1.036, -0.752], F(w) = 1.696 \\ \\
+
+\noindent Fourth iteration: \\ \\
+$\nabla f(w3)= [1.811,-2.025]$ \\ \\
+w4 = [1.018, -0.732], F(w) = 1.624 \\ \\
+
+\noindent Fifth iteration: \\ \\
+$\nabla f(w4)= [1.790,-1.955]$ \\ \\
+w5 = [0.100, -0.712], F(w) = 1.554 \\ \\
+
+\noindent Sixth iteration: \\ \\
+$\nabla f(w5)= [1.767,-1.889]$ \\ \\
+w6 = [0.982, -0.694], F(w) = 1.488 \\ \\
+
+\noindent Seventh iteration: \\ \\
+$\nabla f(w6)= [1.745,-1.826]$ \\ \\
+w7 = [0.965, -0.675], F(w) = 1.425 \\ \\
+
+\noindent Eighth iteration: \\ \\
+$\nabla f(w7)= [1.722,-1.765]$ \\ \\
+w8 = [0.947, -0.658], F(w) = 1.365 \\ \\
+
+\noindent Ninth iteration: \\ \\
+$\nabla f(w8)= [1.698,-1.708]$ \\ \\
+w8 = [0.930, -0.641], F(w) = 1.308 \\ \\
+
+\noindent Tenth iteration: \\ \\
+$\nabla f(w7)= [1.674,-1.654]$ \\ \\
+w10 = [0.914, -0.624], F(w) = 1.253 \\ \\
+
+
+
+
+
+
+
 %Problem 2
 \newpage
 \noindent \textbf{Problem 2}
