@@ -127,6 +127,8 @@ show your analytic calculations. \\ \\ \\
   -26.064
 \end{bmatrix}$, $\lambda_4 \approx 0.476$\\ \\ \\ So, $w_5 \approx [-0.335, -0.418]^T$ and $s_5 \approx [-5.052, 2.586]^T$ \\ \\
 
+
+
 %Problem 2
 \newpage
 \noindent \textbf{Problem 2}
@@ -399,33 +401,26 @@ our lectures)? Name them, and write the respective equations.\\ \\ \\
 
 \noindent \underline{\textbf{\textit{Solution:}}}
 
-\noindent The above equations can represent 3 different optimization methods:
+\noindent The above equations can represent 2 different optimization methods:
 
 \begin{enumerate}
-  \item For $\beta = 0$ and $\nu = 0$  we get the standard gradient descent optimization method
+  \item For $\beta = 0$ and $\nu = 1$  we get the standard gradient descent optimization method
     \begin{center}
     $g_{t+1} \leftarrow \nabla L_t(\theta_t) $
     \end{center}
     \begin{center}
-    $\theta_{t+1} \leftarrow \theta_t - \alpha \cdot \nabla L_t(\theta_t)$
+    $\theta_{t+1} \leftarrow \theta_t - \alpha \cdot g_{t+1}$
     \end{center}
     
-  \item For $\beta \neq 0$ and $\nu = 0$ we get the SGD with monmentum optimization method
+  \item For $\beta \neq 0$ and $\nu = 1$ we get the SGD with monmentum optimization method
     \begin{center}
     $g_{t+1} \leftarrow \beta \cdot g_t + (1 - \beta) \cdot \nabla L_t(\theta_t) $
     \end{center}
     \begin{center}
-      $\theta_{t+1} \leftarrow \theta_t - \alpha \cdot \nabla L_t(\theta_t)$
+      $\theta_{t+1} \leftarrow \theta_t - \alpha \cdot g_{t+1} $
     \end{center}
-    
-  \item For $\beta \neq 0$ and $\nu \neq 0$ we get the Nesterov Accelerated Gradient optimization method
-  \begin{center}
-    $g_{t+1} \leftarrow \beta \cdot g_t + (1 - \beta) \cdot \nabla L_t(\theta_t) $
-    \end{center}
-    \begin{center}
-      $\theta_{t+1} \leftarrow \theta_t - \alpha \left[ (1 - \nu) \cdot \nabla L_t(\theta_t) + \nu \cdot g_{t+1} \right] $
-    \end{center}
-\end{enumerate}
+  \end{enumerate}
+  
 
 
 
