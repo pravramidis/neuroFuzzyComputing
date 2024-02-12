@@ -81,14 +81,26 @@ def expand_contractions(text, contractions_dict=contractions_dict):
 
 stemmer = PorterStemmer()
 tokenizer = get_tokenizer("basic_english")
-def preprocess_text(text):
-    text = expand_contractions(text)
+# def preprocess_text(text):
+#     text = expand_contractions(text)
     
 
-    doc = nlp(text.lower())
-    lemmatized_tokens = [token.lemma_ for token in doc if token.text not in stopwords and not token.is_punct]
+#     doc = nlp(text.lower())
+#     lemmatized_tokens = [token.lemma_ for token in doc if token.text not in stopwords and not token.is_punct]
     
-    return " ".join(lemmatized_tokens)
+#     return " ".join(lemmatized_tokens)
+
+def preprocess_text(text):
+
+    text = expand_contractions(text)
+    
+    
+    tokens = tokenizer(text.lower()) 
+    
+    filtered_tokens = [token for token in tokens if token not in stopwords and token.isalpha()]
+    
+    return " ".join(filtered_tokens)
+
 
 
 
@@ -147,23 +159,82 @@ def collate_batch(batch):
     return label_list.to(device), text_list.to(device), offsets.to(device)
 
 
+# class TextClassificationModel(nn.Module):
+#     def __init__(self, vocab_size, embed_dim, num_class):
+#         super(TextClassificationModel, self).__init__()
+#         self.embedding = nn.EmbeddingBag(vocab_size, embed_dim, sparse=False)
+#         self.fc = nn.Linear(embed_dim, num_class)
+#         self.init_weights()
+
+#     def init_weights(self):
+#         initrange = 0.5
+#         self.embedding.weight.data.uniform_(-initrange, initrange)
+#         self.fc.weight.data.uniform_(-initrange, initrange)
+#         self.fc.bias.data.zero_()
+
+#     def forward(self, text, offsets):
+#         embedded = self.embedding(text, offsets)
+#         return self.fc(embedded)
+
+# class TextClassificationModel(nn.Module):
+#     def __init__(self, vocab_size, embed_dim, hidden_dim, num_class):
+#         super(TextClassificationModel, self).__init__()
+#         self.embedding = nn.EmbeddingBag(vocab_size, embed_dim, sparse=True)
+#         self.fc1 = nn.Linear(embed_dim, hidden_dim)
+#         self.relu = nn.ReLU()
+#         self.dropout = nn.Dropout(0.5)
+#         self.batch_norm = nn.BatchNorm1d(hidden_dim)
+#         self.fc2 = nn.Linear(hidden_dim, num_class)
+#         self.init_weights()
+
+#     def init_weights(self):
+#         initrange = 0.5
+#         self.embedding.weight.data.uniform_(-initrange, initrange)
+#         self.fc1.weight.data.uniform_(-initrange, initrange)
+#         self.fc1.bias.data.zero_()
+#         self.fc2.weight.data.uniform_(-initrange, initrange)
+#         self.fc2.bias.data.zero_()
+
+#     def forward(self, text, offsets):
+#         embedded = self.embedding(text, offsets)
+#         x = self.fc1(embedded)
+#         x = self.batch_norm(x)
+#         x = self.relu(x)
+#         x = self.dropout(x)
+#         return self.fc2(x)
+import torch.nn as nn
+import torch.nn.functional as F
+
 class TextClassificationModel(nn.Module):
-    def __init__(self, vocab_size, embed_dim, num_class):
+    def __init__(self, vocab_size, embed_dim, hidden_dim, num_class):
         super(TextClassificationModel, self).__init__()
         self.embedding = nn.EmbeddingBag(vocab_size, embed_dim, sparse=False)
-        self.fc = nn.Linear(embed_dim, num_class)
+        
+        # First linear layer
+        self.fc1 = nn.Linear(embed_dim, hidden_dim)
+        
+        # Second linear layer that maps from hidden_dim to the number of classes
+        self.fc2 = nn.Linear(hidden_dim, num_class)
+        
         self.init_weights()
 
     def init_weights(self):
         initrange = 0.5
         self.embedding.weight.data.uniform_(-initrange, initrange)
-        self.fc.weight.data.uniform_(-initrange, initrange)
-        self.fc.bias.data.zero_()
+        self.fc1.weight.data.uniform_(-initrange, initrange)
+        self.fc1.bias.data.zero_()
+        self.fc2.weight.data.uniform_(-initrange, initrange)
+        self.fc2.bias.data.zero_()
 
     def forward(self, text, offsets):
+        # Get embeddings
         embedded = self.embedding(text, offsets)
-        return self.fc(embedded)
-
+        
+        # Pass embeddings through the first linear layer and apply ReLU
+        x = F.relu(self.fc1(embedded))
+        
+        # Output layer
+        return self.fc2(x)
 
 num_class = len(set([label for (label, text) in train_iter]))
 vocab_size = len(vocab)
