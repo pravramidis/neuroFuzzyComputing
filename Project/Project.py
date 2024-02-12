@@ -15,6 +15,7 @@ from sklearn.preprocessing import LabelEncoder
 import re
 from nltk.stem import PorterStemmer
 import spacy
+import torch.nn.functional as F
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -202,8 +203,7 @@ def collate_batch(batch):
 #         x = self.relu(x)
 #         x = self.dropout(x)
 #         return self.fc2(x)
-import torch.nn as nn
-import torch.nn.functional as F
+
 
 class TextClassificationModel(nn.Module):
     def __init__(self, vocab_size, embed_dim, hidden_dim, num_class):
@@ -239,7 +239,8 @@ class TextClassificationModel(nn.Module):
 num_class = len(set([label for (label, text) in train_iter]))
 vocab_size = len(vocab)
 emsize = 64
-model = TextClassificationModel(vocab_size, emsize, num_class).to(device)
+hidden_dim = 128  # Define the size of the hidden layer
+model = TextClassificationModel(vocab_size, emsize, hidden_dim ,num_class).to(device)
 
 
 def train(dataloader):
