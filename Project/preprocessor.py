@@ -1,47 +1,55 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split
+import re
+from nltk.tokenize import word_tokenize
+import nltk
+nltk.download('punkt')
 from sklearn.preprocessing import LabelEncoder
-from torchtext.data.utils import get_tokenizer
-from torchtext.vocab import build_vocab_from_iterator
 
-# Specify the file path and columns
-file_path = 'news-classification.csv'
-columns_to_keep = ['title', 'content', 'author', 'category_level_1']
+# Define the contractions dictionary
+contractions_dict = {
+    # Include all the contractions as defined in your initial script
+}
+
+def expand_contractions(text, contractions_dict=contractions_dict):
+    contractions_pattern = re.compile('(%s)' % '|'.join(map(re.escape, contractions_dict.keys())), flags=re.IGNORECASE|re.DOTALL)
+    def expand_match(contraction):
+        match = contraction.group(0)
+        if not match:  # Check if match is empty or None
+            return ''
+        first_char = match[0]
+        expanded_contraction = contractions_dict.get(match.lower(), match)
+        expanded_contraction = first_char + expanded_contraction[1:]
+        return expanded_contraction
+    expanded_text = contractions_pattern.sub(expand_match, text)
+    return expanded_text
+
+
+# Define the set of stopwords
+stopwords = set([
+    # Include all the stopwords as defined in your initial script
+])
+
+# Preprocess text function
+def preprocess_text(text):
+    text = expand_contractions(text)
+    tokens = word_tokenize(text.lower())
+    filtered_tokens = [token for token in tokens if token not in stopwords and token.isalpha()]
+    return " ".join(filtered_tokens)
 
 # Read the dataset
+file_path = 'news-classification.csv'
+columns_to_keep = ['title', 'content', 'author', 'category_level_1']
 data = pd.read_csv(file_path)
-selected_data = data[columns_to_keep]
+selected_data = data[columns_to_keep].copy()
 
-# Initialize the tokenizer and label encoders
-tokenizer = get_tokenizer("basic_english")
-category_label_encoder = LabelEncoder()
-author_label_encoder = LabelEncoder()
+# Add preprocessing and label encoding
+label_encoder = LabelEncoder()
+selected_data['encoded_labels'] = label_encoder.fit_transform(selected_data['category_level_1'])
+selected_data['preprocessed_text'] = selected_data.apply(
+    lambda row: preprocess_text(f"{row['author']} {row['title']} {row['content']}"), axis=1)
 
-# Function to yield tokens from the dataset for building a vocab
-def yield_tokens(data_iter):
-    for text in data_iter['title'].tolist() + data_iter['content'].tolist():  # Combine titles and contents for vocab
-        yield tokenizer(text)
+# Save preprocessed data to a new CSV file
+output_file_path = 'preprocessed_news_classification.csv'
+selected_data.to_csv(output_file_path, index=False)
 
-# Build the vocabulary from the training dataset
-train_data, _ = train_test_split(selected_data, test_size=0.2)
-vocab = build_vocab_from_iterator(yield_tokens(train_data), specials=["<unk>"])
-vocab.set_default_index(vocab["<unk>"])
-
-# Define the pipelines for text and label processing
-text_pipeline = lambda x: [vocab[token] for token in tokenizer(x)]
-category_label_pipeline = lambda x: category_label_encoder.fit_transform([x])[0]
-author_label_pipeline = lambda x: author_label_encoder.fit_transform([x])[0] if pd.notnull(x) else -1  # Handle missing authors
-
-# Process and encode labels and authors
-selected_data['encoded_category_labels'] = selected_data['category_level_1'].apply(category_label_pipeline)
-selected_data['encoded_authors'] = selected_data['author'].apply(author_label_pipeline)
-
-# Tokenize and convert text to indices for title and content
-selected_data['tokenized_title'] = selected_data['title'].apply(text_pipeline)
-selected_data['tokenized_content'] = selected_data['content'].apply(text_pipeline)
-
-# You can now store the DataFrame with the tokenized text, encoded labels, and authors
-preprocessed_file_path = 'preprocessed_news-classification.csv'
-selected_data.to_csv(preprocessed_file_path, index=False)
-
-print(f"Preprocessed data saved to {preprocessed_file_path}")
+print(f"Preprocessed data saved to {output_file_path}")
