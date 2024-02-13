@@ -160,50 +160,6 @@ def collate_batch(batch):
     return label_list.to(device), text_list.to(device), offsets.to(device)
 
 
-# class TextClassificationModel(nn.Module):
-#     def __init__(self, vocab_size, embed_dim, num_class):
-#         super(TextClassificationModel, self).__init__()
-#         self.embedding = nn.EmbeddingBag(vocab_size, embed_dim, sparse=False)
-#         self.fc = nn.Linear(embed_dim, num_class)
-#         self.init_weights()
-
-#     def init_weights(self):
-#         initrange = 0.5
-#         self.embedding.weight.data.uniform_(-initrange, initrange)
-#         self.fc.weight.data.uniform_(-initrange, initrange)
-#         self.fc.bias.data.zero_()
-
-#     def forward(self, text, offsets):
-#         embedded = self.embedding(text, offsets)
-#         return self.fc(embedded)
-
-# class TextClassificationModel(nn.Module):
-#     def __init__(self, vocab_size, embed_dim, hidden_dim, num_class):
-#         super(TextClassificationModel, self).__init__()
-#         self.embedding = nn.EmbeddingBag(vocab_size, embed_dim, sparse=False)
-#         self.fc1 = nn.Linear(embed_dim, hidden_dim)
-#         self.relu = nn.ReLU()
-#         self.dropout = nn.Dropout(0.5)
-#         self.batch_norm = nn.BatchNorm1d(hidden_dim)
-#         self.fc2 = nn.Linear(hidden_dim, num_class)
-#         self.init_weights()
-
-#     def init_weights(self):
-#         initrange = 0.5
-#         self.embedding.weight.data.uniform_(-initrange, initrange)
-#         self.fc1.weight.data.uniform_(-initrange, initrange)
-#         self.fc1.bias.data.zero_()
-#         self.fc2.weight.data.uniform_(-initrange, initrange)
-#         self.fc2.bias.data.zero_()
-
-#     def forward(self, text, offsets):
-#         embedded = self.embedding(text, offsets)
-#         x = self.fc1(embedded)
-#         x = self.batch_norm(x)
-#         x = self.relu(x)
-#         x = self.dropout(x)
-#         return self.fc2(x)
-
 class TextClassificationModelLSTM(nn.Module):
     def __init__(self, vocab_size, embed_dim, hidden_dim, num_class):
         super(TextClassificationModelLSTM, self).__init__()
@@ -306,11 +262,11 @@ def evaluate(dataloader):
 
 
 EPOCHS = 20  # epoch
-LR = 0.001  # learning rate
+LR = 0.01  # learning rate
 BATCH_SIZE = 64  # batch size for training
 
 criterion = torch.nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=LR)
+optimizer = torch.optim.AdamW(model.parameters(), lr=LR)
 scheduler = torch.optim.lr_scheduler.StepLR(optimizer, 1.0, gamma=0.1)
 total_accu = None
 #train_iter, test_iter = AG_NEWS()
