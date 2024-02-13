@@ -17,110 +17,41 @@ from nltk.stem import PorterStemmer
 import spacy
 import torch.nn.functional as F
 
+
+from torch.utils.data import Dataset
+
+
 nlp = spacy.load("en_core_web_sm")
 
-contractions_dict = {
-    "don't": "do not",
-    "won't": "will not",
-    "can't": "cannot",
-    "i'm": "i am",
-    "she's": "she is",
-    "he's": "he is",
-    "it's": "it is",
-    "that's": "that is",
-    "what's": "what is",
-    "where's": "where is",
-    "there's": "there is",
-    "who's": "who is",
-    "isn't": "is not",
-    "aren't": "are not",
-    "wasn't": "was not",
-    "weren't": "were not",
-    "haven't": "have not",
-    "hasn't": "has not",
-    "hadn't": "had not",
-    "doesn't": "does not",
-    "don't": "do not",
-    "didn't": "did not",
-    "won't": "will not",
-    "wouldn't": "would not",
-    "shouldn't": "should not",
-    "mightn't": "might not",
-    "mustn't": "must not"
-}
-
-stopwords = set([
-    "i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours",
-    "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers",
-    "herself", "it", "its", "itself", "they", "them", "their", "theirs", "themselves",
-    "what", "which", "who", "whom", "this", "that", "these", "those", "am", "is", "are",
-    "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does",
-    "did", "doing", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until",
-    "while", "of", "at", "by", "for", "with", "about", "against", "between", "into",
-    "through", "during", "before", "after", "above", "below", "to", "from", "up", "down",
-    "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here",
-    "there", "when", "where", "why", "how", "all", "any", "both", "each", "few", "more",
-    "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so",
-    "than", "too", "very", "s", "t", "can", "will", "just", "don", "should", "now", "d",
-    "ll", "m", "o", "re", "ve", "y", "ain", "aren", "couldn", "didn", "doesn", "hadn",
-    "hasn", "haven", "isn", "ma", "mightn", "mustn", "needn", "shan", "shouldn", "wasn",
-    "weren", "won", "wouldn, must"
-])
-
-def expand_contractions(text, contractions_dict=contractions_dict):
-    contractions_pattern = re.compile('(%s)' % '|'.join(contractions_dict.keys()),
-                                      flags=re.IGNORECASE | re.DOTALL)
-    def expand_match(contraction):
-        match = contraction.group(0)
-        first_char = match[0]
-        expanded_contraction = contractions_dict.get(match.lower() if contractions_dict.get(match.lower()) else match.lower())
-        expanded_contraction = first_char + expanded_contraction[1:]
-        return expanded_contraction
-    expanded_text = contractions_pattern.sub(expand_match, text)
-    return expanded_text
+class NewsDataset(Dataset):
+    def __init__(self, dataframe, vocab):
+        self.labels = dataframe['encoded_labels'].tolist()
+        self.texts = [torch.tensor([vocab.get(word, vocab.get("<unk>")) for word in text.split()], dtype=torch.long) for text in dataframe['preprocessed_text']]
+        
+    def __len__(self):
+        return len(self.labels)
+    
+    def __getitem__(self, idx):
+        return self.labels[idx], self.texts[idx]
 
 
 stemmer = PorterStemmer()
 tokenizer = get_tokenizer("basic_english")
-# def preprocess_text(text):
-#     text = expand_contractions(text)
-    
-
-#     doc = nlp(text.lower())
-#     lemmatized_tokens = [token.lemma_ for token in doc if token.text not in stopwords and not token.is_punct]
-    
-#     return " ".join(lemmatized_tokens)
-
-def preprocess_text(text):
-
-    text = expand_contractions(text)
-    
-    
-    tokens = tokenizer(text.lower()) 
-    
-    filtered_tokens = [token for token in tokens if token not in stopwords and token.isalpha()]
-    
-    return " ".join(filtered_tokens)
 
 
 
 
-
-
-file_path = 'news-classification.csv'
-columns_to_keep = ['title', 'content', 'author', 'source', 'category_level_1']
+# Load the preprocessed dataset
+file_path = 'preprocessed_news_classification.csv'  # Adjusted to the preprocessed file
 data = pd.read_csv(file_path)
+
+# Assuming 'preprocessed_text' and 'encoded_labels' are columns in your preprocessed dataset
+columns_to_keep = ['preprocessed_text', 'encoded_labels']
 selected_data = data[columns_to_keep].copy()
 
-# Add this part to encode labels
-label_encoder = LabelEncoder()
-selected_data['encoded_labels'] = label_encoder.fit_transform(selected_data['category_level_1'])
-
-selected_data['preprocessed_text'] = selected_data.apply(
-    lambda row: preprocess_text(f"{row['title']} {row['content']}"), axis=1)
 
 # Adjust the train_test_split to include the encoded labels
-train_set, test_set = train_test_split(selected_data[['preprocessed_text', 'author','source', 'encoded_labels']], test_size=0.2)
+train_set, test_set = train_test_split(data, test_size=0.2)
 
 
 
@@ -138,8 +69,6 @@ def yield_tokens(data_iter):
 vocab = build_vocab_from_iterator(yield_tokens(train_iter), specials=["<unk>"])
 vocab.set_default_index(vocab["<unk>"])
 
-def stem_text(text):
-    return " ".join([stemmer.stem(word) for word in text.split()])
 
 text_pipeline = lambda x: vocab([word for word in tokenizer(x) if word in vocab])
 
@@ -283,11 +212,11 @@ def evaluate(dataloader):
 
 
 EPOCHS = 20  # epoch
-LR = 1e-3  # learning rate
+LR = 5  # learning rate
 BATCH_SIZE = 64  # batch size for training
 
 criterion = torch.nn.CrossEntropyLoss()
-optimizer = torch.optim.AdamW(model.parameters(), lr=LR, weight_decay=1e-2)
+optimizer = torch.optim.SGD(model.parameters(), lr=LR)
 scheduler = torch.optim.lr_scheduler.StepLR(optimizer, 1.0, gamma=0.1)
 total_accu = None
 #train_iter, test_iter = AG_NEWS()
