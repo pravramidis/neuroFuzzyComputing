@@ -103,12 +103,25 @@ def preprocess_text(text):
     return " ".join(filtered_tokens)
 
 
+def preprocess_url(url):
+    cleaned_url = url.replace("http://", "").replace("https://", "").replace("/", " ").replace(".", " ").replace("-", " ").replace("com", "")
+
+    return preprocess_text(cleaned_url)
+
+def preprocess_data(row):
+    # Apply text preprocessing to title and content
+    preprocessed_text = preprocess_text(f"{row['title']} {row['content']}")
+    # Apply URL preprocessing
+    preprocessed_url = preprocess_url(row['url'])
+    # Combine preprocessed text and URL
+    return f"{preprocessed_text} {preprocessed_url}"
+
 
 
 
 
 file_path = 'news-classification.csv'
-columns_to_keep = ['title', 'content', 'author', 'source', 'category_level_1']
+columns_to_keep = ['title', 'content', 'author', 'source','url', 'category_level_1']
 data = pd.read_csv(file_path)
 selected_data = data[columns_to_keep].copy()
 
@@ -116,8 +129,7 @@ selected_data = data[columns_to_keep].copy()
 label_encoder = LabelEncoder()
 selected_data['encoded_labels'] = label_encoder.fit_transform(selected_data['category_level_1'])
 
-selected_data['preprocessed_text'] = selected_data.apply(
-    lambda row: preprocess_text(f"{row['title']} {row['content']}"), axis=1)
+selected_data['preprocessed_text'] = selected_data.apply(preprocess_data, axis=1)
 
 # Adjust the train_test_split to include the encoded labels
 train_set, test_set = train_test_split(selected_data[['preprocessed_text', 'author','source', 'encoded_labels']], test_size=0.2)
