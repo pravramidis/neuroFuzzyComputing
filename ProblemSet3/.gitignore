@@ -1,0 +1,8 @@
+# Ignore everything
+*
+
+# Except for .tex and .png files
+!*.tex
+!*.png
+!*.m
+!*.gitignore
