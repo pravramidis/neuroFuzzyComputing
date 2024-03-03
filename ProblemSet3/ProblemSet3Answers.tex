@@ -64,6 +64,54 @@ selection of weights and biases
 
 \noindent \underline{\textbf{\textit{Solution:}}}
 
+\noindent From the problem statement we know that the RBF network will have two inputs and one output.
+We will use two neurons in the first layer because we have 2 shaded regions. 
+The rows of the first layer weight matrix
+will create the centers for the two basis functions so that we can produce the maximum outpus there. 
+As we can see in the figure the center for the first shaded region
+is (-1, 1.5) and the center for the second shaded region is (2,2) so the first layer weights matrix will be: \\
+\begin{center}
+  
+$ W^1 = \begin{bmatrix}
+  - 1 & 1.5 \\
+  2 & 2
+\end{bmatrix} $
+\end{center}
+
+\noindent Now we need to choose a biases for the first layer. We see in the figure that the radius of the first 
+region is approximately 0.5 and the radius of the second region is approximately 0.25. 
+Because the first region is wider than the second region the first bias will be smaller than the second bias.
+If we choose biases 2 and 4 respectively we get:
+$a = e^{-n^2}= e^{-(1*0.5)^2} \approx 0.18 and a = e^{-n^2}= e^{-(2*0.25)^2} \approx 0.18$
+Therefore, each basis function will have a peak of 1 at the centers, and will drop to 0.18 at the edge of the regions
+So the first layer bias will be:
+\begin{center}
+  
+  $ b^1 = \begin{bmatrix}
+    1 \\
+    2 
+  \end{bmatrix} $
+  \end{center}
+
+  \noindent We want the output to be negative for inputs outside the shaded regions,
+  so we will use a bias of -1 for the second layer, and we will use a value of 2
+  for the second layer weights, in order to bring the peaks back up to 1. The second layer weights and bias are:
+
+  \begin{center}
+  
+    $ W^2 = \begin{bmatrix}
+      2 & 2
+    \end{bmatrix},
+     $
+    $ b^2 = \begin{bmatrix}
+      -1
+    \end{bmatrix} $
+
+    \end{center}
+  
+  
+
+
 
 %Problem 2
 \newpage
@@ -87,17 +135,27 @@ Train the network to approximate the function:
 
 \noindent \underline{\textbf{\textit{Solution:}}}
 
-\noindent random
-Sum Squared Error with 4 centers: 1.617
-Sum Squared Error with 8 centers: 0.22116
-Sum Squared Error with 12 centers: 0.28262
-Sum Squared Error with 20 centers: 0.29801
+\noindent 
+We run the program with a learning rate of a = 0.1 with random reference points and with uniformly distributed reference points:
 
-uniform
-Sum Squared Error with 4 centers: 0.48242
-Sum Squared Error with 8 centers: 0.048453
-Sum Squared Error with 12 centers: 0.17237
-Sum Squared Error with 20 centers: 0.044526
+\begin{itemize}
+	\item Random reference points: \\
+	The sum squared errors for 4,8,12 and 20 centers are 1.617, 0.22116, 0.28262 and 0.29801 respectively. The plots are: \\
+	\includegraphics[width=0.4\textwidth]{Problem2_4_random.png}
+	\includegraphics[width=0.4\textwidth]{Problem2_8_random.png} \\
+	\includegraphics[width=0.4\textwidth]{Problem2_12_random.png}
+	\includegraphics[width=0.4\textwidth]{Problem2_20_random.png}
+
+	\item Uniform reference points: 
+	The sum squared errors for 4,8,12 and 20 centers are 0.48242, 0.048453, 0.17237 and 0.044526 respectively. The plots are: \\
+	\includegraphics[width=0.4\textwidth]{Problem2_4_uniform.png}
+	\includegraphics[width=0.4\textwidth]{Problem2_8_uniform.png} \\
+	\includegraphics[width=0.4\textwidth]{Problem2_12_uniform.png}
+	\includegraphics[width=0.4\textwidth]{Problem2_20_uniform.png}
+\end{itemize}
+
+We can observe from the errors and the plots that the uniform reference points produce much better results.
+
 
 %Problem 3
 \newpage
@@ -251,6 +309,20 @@ Repeat the exercise above with a moving average model. \\ \\
 subset. The analogous definition, i.e., the ordinary relation of level $\alpha$ of a fuzzy relation, is 
 straightforward. Determine analytically and show graphically the ordinary relation of level 
 0.3 for the fuzzy relation with membership function: $\mu_{\utilde{R}}(x, y) = 1 - 1/(1+x^2+y^2)$.
+\\ \\
+\noindent \underline{\textbf{\textit{Solution:}}}
+
+\noindent Analytically we need to solve: \\
+$1-1/(1+x^2+y^2) \geq 0.3 $ \\ $\rightarrow 1+x^2+y^2 \geq 1/0.7 $ \\
+$ \rightarrow x^2 + y^2 \geq 3/7$
+\\ \\
+\noindent Graphically we get the following plot:
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{Problem8.png}
+\end{center}
+
+
 
 
 
@@ -266,12 +338,28 @@ $\mu_{\utilde{A}}(x)$, give the index v of fuzziness of $\utilde{A}$ for:
   \item $\mu_{\utilde{A}}(x) = 4x^2/\alpha^2$ if $0 \leq x\leq \alpha/2$ and $\mu_{\utilde{A}}(x) = 4(x-\alpha)^2/\alpha^2$ if $\alpha/2  <x \leq \alpha$
 \end{enumerate}
 
+\noindent \underline{\textbf{\textit{Solution:}}} \\
 
-%Problem 9
-\newpage
-\noindent \textbf{Problem 9}
+\noindent In order to calculate the index of fuzziness we will use the formula: $\nu = \frac{2}{n} * d(\utilde A,  \bar{ \utilde{ A}})$
 
-\noindent
-  
+
+\noindent First we will calculate the distance: \\ 
+$d(\utilde A,\utilde B) = \sum_{i=1}^{n} | \mu_A(x_i) -  \mu_B(x_i)|$
+  $\rightarrow d(\utilde A,\bar{ \utilde{ A}} ) = \sum_{i=1}^{n} | \mu_A(x_i) -  \mu_{\bar{ \utilde{ A}}}(x_i)|$ 
+  and $\mu_{\bar{ \utilde{ A}}}(x_i) = 1 - \mu_A(x_i)$ \\
+  So $ d(\utilde A,\bar{ \utilde{ A}} ) = \sum_{i=1}^{n} | 2* \mu_A(x_i) -  1| $ \\
+\begin{enumerate} [label = \Alph*]
+\item
+  For the given membership function we get:\\ \\
+  $ d(\utilde A,\bar{ \utilde{ A}} ) = \sum_{0}^{a} | 2* \frac{x^2}{a^2} -  1| = 2 $ \\
+  So $\nu = \frac{2}{\alpha}* d(\utilde A,\bar{ \utilde{ A}} ) = \frac{4}{a}$
+
+  \item For the given membership functions we get:\\ \\
+  $ d1(\utilde A,\bar{ \utilde{ A}} ) = \sum_{0}^{a/2} | 2* \frac{4*x^2}{a^2} -  1| = 8 $ \\
+  $ d2(\utilde A,\bar{ \utilde{ A}} ) = \sum_{a/2}^{a} | 2* \frac{4*(x-a)^2}{a^2} -  1| = -2 $ \\
+  $ d(\utilde A,\bar{ \utilde{ A}} ) = d1 + d2 = 6 $
+  So $\nu = \frac{2}{\alpha}* d(\utilde A,\bar{ \utilde{ A}} ) = \frac{12}{a}$
+
+\end{enumerate}
 
 \end{document}
