@@ -78,7 +78,7 @@ $ W^1 = \begin{bmatrix}
 \end{bmatrix} $
 \end{center}
 
-\noindent Now we need to choose a biases for the first layer. We see in the figure that the radius of the first 
+\noindent Now we need to choose the biases for the first layer. We see in the figure that the radius of the first 
 region is approximately 0.5 and the radius of the second region is approximately 0.25. 
 Because the first region is wider than the second region the first bias will be smaller than the second bias.
 If we choose biases 1 and 2 respectively we get:
@@ -307,81 +307,6 @@ $n_1^6 > n_2^6$, so $i^{*} = 1$ and $\alpha = \begin{bmatrix}
   0.94
 \end{bmatrix}$
 
-%Problem 4
-\newpage
-\noindent \textbf{Problem 4}
-
-\noindent Repeat Problem-03 for the following inputs and initial weights. Show the movements of 
-the weights graphically for the first six each steps. If the network is trained for a large 
-number of iterations, how will the three vectors be clustered in the final configuration?
-
-\begin{center}
-    $p_1 = \begin{bmatrix}
-        2\\
-        0
-      \end{bmatrix}, p_2 = \begin{bmatrix}
-        0\\
-        1
-      \end{bmatrix}, p_3 = \begin{bmatrix}
-        2\\
-        2
-      \end{bmatrix}$\\
-      \vspace{1cm}
-      $w_1 = \begin{bmatrix}
-        1\\
-        0
-      \end{bmatrix}, w_2 = \begin{bmatrix}
-        -1\\
-        0
-      \end{bmatrix}$
-      \vspace{1cm}
-
-\end{center}
-
-\noindent \underline{\textbf{\textit{Solution:}}}
-
-
-%Problem 5
-\newpage
-\noindent \textbf{Problem 5}
-
-\noindent You are asked to generate an Auto Regressive (AR) model and then create an RNN (such 
-as LSTM, or GRU) that predicts it. Generate samples of an Auto Regressive model of 
-the form: 
-\begin{center}
-    $X_t = a_1X_{t-1} + a_2X_{t-2} + a_3X_{t-3} + U_t$
-    
-\end{center}
-where $a_1= 0.5, a_2= -0.1, a_3= 0.2$ and $U_t$ is independent-identically distributed Uniform in 
-the interval (-0.25, 0.25). Now train an RNN of your choice that predicts the sequence. 
-
-\begin{enumerate} [label=\Alph*]
-    \item Apply the training algorithm on new samples and calculate the averaged cost square 
-    error cost function. Investigate different number of training samples. (You are not 
-    allowed to use your model knowledge when you design the RNN.)
-    \item Optional part: You may use the Yule-Walker equations to compare your RNN 
-    model. 
-    
-\end{enumerate}
-
-\vspace{1cm}
-
-\noindent \underline{\textbf{\textit{Solution:}}}
-
-
-%Problem 6
-\newpage
-\noindent \textbf{Problem 6}
-
-\noindent Consider the following Moving Average (MA) process:
-\begin{center}
-    $X_t = U_t + a_1U_{t-1} + a_2U_{t-2} + a_3U_{t-3} + a_4U_{t-4}+ a_5U_{t-5}+ a_6U_{t-6}$
-\end{center}
-\noindent where $a_1= a_2=5, a_3=a_4=a_5=a_6= -0.5$ and $U_t$ independent-identically distributed Uniform \\
-(0, 0.5). 
-Repeat the exercise above with a moving average model. \\ \\
-
-\noindent \underline{\textbf{\textit{Solution:}}}
 
 
 
