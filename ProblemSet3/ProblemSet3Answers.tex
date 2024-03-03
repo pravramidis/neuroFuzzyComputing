@@ -67,7 +67,7 @@ selection of weights and biases
 \noindent From the problem statement we know that the RBF network will have two inputs and one output.
 We will use two neurons in the first layer because we have 2 shaded regions. 
 The rows of the first layer weight matrix
-will create the centers for the two basis functions so that we can produce the maximum outpus there. 
+will create the centers for the two basis functions so that we can produce the maximum outputs there. 
 As we can see in the figure the center for the first shaded region
 is (-1, 1.5) and the center for the second shaded region is (2,2) so the first layer weights matrix will be: \\
 \begin{center}
@@ -81,9 +81,9 @@ $ W^1 = \begin{bmatrix}
 \noindent Now we need to choose a biases for the first layer. We see in the figure that the radius of the first 
 region is approximately 0.5 and the radius of the second region is approximately 0.25. 
 Because the first region is wider than the second region the first bias will be smaller than the second bias.
-If we choose biases 2 and 4 respectively we get:
-$a = e^{-n^2}= e^{-(1*0.5)^2} \approx 0.18 and a = e^{-n^2}= e^{-(2*0.25)^2} \approx 0.18$
-Therefore, each basis function will have a peak of 1 at the centers, and will drop to 0.18 at the edge of the regions
+If we choose biases 1 and 2 respectively we get:
+$a = e^{-n^2}= e^{-(1*0.5)^2} \approx 0.18$ and $a = e^{-n^2}= e^{-(2*0.25)^2} \approx 0.18$
+Therefore, each basis function will have a peak of 1 at the centers, and will drop to 0.18 at the edge of the regions.
 So the first layer bias will be:
 \begin{center}
   
@@ -203,8 +203,109 @@ Here are the initial weights of the network:
 
 \noindent \underline{\textbf{\textit{Solution:}}}
 
-\noindent Presenting the vectors in the given order we get: \\\\ \underline{$p_1$:}
-
+\noindent Presenting the vectors in the given order we get: \\\\ \underline{$p_1$:} \\\\$n_1^1 = -||w_1(0)-p_1|| = -1$ and $n_2^1 = -||w_2(0)-p_1|| = -1$ \\\\
+$n_1^1 = n_2^1$, so $i^{*} = 1$ and $\alpha = \begin{bmatrix}
+  1\\ 
+  0
+\end{bmatrix}$ \\\\ $w_1(1)=w_1(0) - \alpha(p_1-w_1(0)) = \begin{bmatrix}
+  0 \\
+  1
+\end{bmatrix} + 0.5 (\begin{bmatrix}
+  1\\
+  1
+\end{bmatrix} - \begin{bmatrix}
+  0\\
+  1
+\end{bmatrix}) =  \begin{bmatrix}
+  0.5\\
+  1
+\end{bmatrix}$
+\\\\ \underline{$p_2$:} \\\\$n_1^2 = -||w_1(1)-p_2|| \approx -1.803$ and $n_2^2 = -||w_2(1)-p_2|| approx -2.829$ \\\\
+$n_1^2 > n_2^2$, so $i^{*} = 1$ and $\alpha = \begin{bmatrix}
+  0\\ 
+  1
+\end{bmatrix}$ \\\\ $w_2(1)=w_2(0) - \alpha(p_2-w_2(0)) = \begin{bmatrix}
+  1 \\
+  0
+\end{bmatrix} - 0.5 (\begin{bmatrix}
+  -1\\
+  2
+\end{bmatrix} - \begin{bmatrix}
+  1\\
+  0
+\end{bmatrix}) =  \begin{bmatrix}
+  2\\
+  -1
+\end{bmatrix}$
+\newpage
+\noindent\underline{$p_3$:} \\\\$n_1^3 = -||w_1(2)-p_3|| = -70$ and $n_2^3 = -||w_2(2)-p_3|| = -5$ \\\\
+$n_1^3 > n_2^3$, so $i^{*} = 1$ and $\alpha = \begin{bmatrix}
+  1\\ 
+  0
+\end{bmatrix}$ \\\\ $w_1(2)=w_1(1) - \alpha(p_3-w_1(1)) = \begin{bmatrix}
+  0.5 \\
+  1
+\end{bmatrix} - 0.5 (\begin{bmatrix}
+  -2\\
+  2
+\end{bmatrix} - \begin{bmatrix}
+  0.5\\
+  1
+\end{bmatrix}) =  \begin{bmatrix}
+  1.75\\
+  0.5
+\end{bmatrix}$
+\\\\ \underline{$p_2$:} \\\\$n_1^4 = -||w_1(3)-p_2|| -3.13$ and $n_2^4 = -||w_2(3)-p_2|| \approx -4.24$ \\\\
+$n_1^4 > n_2^4$, so $i^{*} = 1$ and $\alpha = \begin{bmatrix}
+  1\\ 
+  0
+\end{bmatrix}$ \\\\ $w_1(3)=w_1(2) - \alpha(p_2-w_1(2)) = \begin{bmatrix}
+  1.75 \\
+  0.5
+\end{bmatrix} - 0.5 (\begin{bmatrix}
+  -1\\
+  2
+\end{bmatrix} - \begin{bmatrix}
+  1.75\\
+  0.5
+\end{bmatrix}) =  \begin{bmatrix}
+  0.375\\
+  1.25
+\end{bmatrix}$
+\\\\\underline{$p_3$:} \\\\$n_1^5 = -||w_1(4)-p_3|| = -2.95$ and $n_2^5 = -||w_2(4)-p_3|| = -5$ \\\\
+$n_2^5 > n_1^5$, so $i^{*} = 2$ and $\alpha = \begin{bmatrix}
+  1\\ 
+  0
+\end{bmatrix}$ \\\\ $w_1(4)=w_1(3) - \alpha(p_3-w_1(3)) = \begin{bmatrix}
+  0.375 \\
+  1.25
+\end{bmatrix} - 0.5 (\begin{bmatrix}
+  -2\\
+  2
+\end{bmatrix} - \begin{bmatrix}
+  0.375\\
+  1.25
+\end{bmatrix}) =  \begin{bmatrix}
+  1.5625\\
+  0.875
+\end{bmatrix}$
+\\\\ \underline{$p_1$:} \\\\$n_1^6 = -||w_1(5)-p_1|| = -0.57$ and $n_2^6 = -||w_2(5)-p_1|| = -2.23$ \\\\
+$n_1^6 > n_2^6$, so $i^{*} = 1$ and $\alpha = \begin{bmatrix}
+  1\\ 
+  0
+\end{bmatrix}$ \\\\ $w_1(5)=w_1(4) - \alpha(p_1-w_1(4)) = \begin{bmatrix}
+  1.5625 \\
+  0.875
+\end{bmatrix} - 0.5 (\begin{bmatrix}
+  1\\
+  1
+\end{bmatrix} - \begin{bmatrix}
+  1.5625 \\
+  0.875
+\end{bmatrix}) \approx  \begin{bmatrix}
+  1.28\\
+  0.94
+\end{bmatrix}$
 
 %Problem 4
 \newpage
@@ -298,7 +399,26 @@ Repeat the exercise above with a moving average model. \\ \\
 
 \vspace{1cm}
 
-\noindent \underline{\textbf{\textit{Solution:}}}
+\noindent \underline{\textbf{\textit{Solution:}}}\\
+\begin{enumerate} [label = \Alph*]
+  \item $\mu_{\utilde{A}}(x) = \begin{cases}
+    0 &\text{for } x \leq 100 \\
+    \frac{1}{1+\frac{1}{(x-100)^2}} &\text{for } x>100\\
+    
+  \end{cases}$, assuming that a large integer is an integer bigger than 100.\\\\
+  \item $\mu_{\utilde{B}}(x) = \begin{cases}
+    1 &\text{for } x \leq 0 \\
+    \frac{1}{1+\frac{1}{(x-0.0001)^2}} &\text{for } x>100\\
+  \end{cases}$ \\ \\
+  \item $\mu_{\utilde{C}}(x) = 
+    \frac{1}{1+\frac{1}{(x-75)^2}}$, assuming that a medium-weight man weights 75kg.\\\\
+  \item $\mu_{\utilde{D}}(x) = \begin{cases}
+    \frac{x^2}{100} & \text{for } x<10 \\
+    1 &\text{for } 10 \leq x \leq 20 \\
+    \frac{(x-30)^2}{100} &\text{for } x>20\\
+    
+  \end{cases}$,
+\end{enumerate}
 
 
 %Problem 8
@@ -323,9 +443,6 @@ $ \rightarrow x^2 + y^2 \geq 3/7$
 \end{center}
 
 
-
-
-
 %Problem 9
 \newpage
 \noindent \textbf{Problem 9}
@@ -338,7 +455,8 @@ $\mu_{\utilde{A}}(x)$, give the index v of fuzziness of $\utilde{A}$ for:
   \item $\mu_{\utilde{A}}(x) = 4x^2/\alpha^2$ if $0 \leq x\leq \alpha/2$ and $\mu_{\utilde{A}}(x) = 4(x-\alpha)^2/\alpha^2$ if $\alpha/2  <x \leq \alpha$
 \end{enumerate}
 
-\noindent \underline{\textbf{\textit{Solution:}}} \\
+\vspace{1cm}
+\noindent \underline{\textbf{\textit{Solution:}}}
 
 \noindent In order to calculate the index of fuzziness we will use the formula: $\nu = \frac{2}{n} * d(\utilde A,  \bar{ \utilde{ A}})$
 
@@ -361,5 +479,26 @@ $d(\utilde A,\utilde B) = \sum_{i=1}^{n} | \mu_A(x_i) -  \mu_B(x_i)|$
   So $\nu = \frac{2}{\alpha}* d(\utilde A,\bar{ \utilde{ A}} ) = \frac{12}{a}$
 
 \end{enumerate}
+
+
+
+%Problem 10
+\newpage
+\noindent \textbf{Problem 10}
+
+\noindent Determine analytically and show graphically the max-min composition of the two fuzzy 
+relations $\utilde{R_1}$ and $\utilde{R_2}$ defined by the following membership functions:\\ \\ $\mu_{\utilde{R_1}} = e^{-k(x-y)^2}$, $k \geq 1$
+\\ \\ $\mu_{\utilde{R_2}} = e^{-k(y-z)^2}$, $k \geq 1$
+
+\vspace{1cm}
+\noindent \underline{\textbf{\textit{Solution:}}}\\
+\noindent The max-min composition of the two relations is: \\ \\
+$\mu_{composition}(x,z) = max_y(min(e^{-k(x-y)^2}, e^{-k(y-z)^2}))$. \\ \\ \\Let's first analyze the inner part: $min(e^{-k(x-y)^2}, e^{-k(y-z)^2})$ \\ \\
+In order to find the minimum we need to compare the two terms: \\ \\
+$e^{-k(x-y)^2} = e^{-k(y-z)^2} \Rightarrow -k(x-y)^2 = -k(y-z)^2 \Rightarrow (x-y)^2 = (y-z)^2$, ($k \geq 1$) \\ \\
+If both sides are if the same sign, then: \\ $x-y = y-z \Rightarrow y = \frac{x+z}{2}$.\\\\
+If they are of different sign, then: \\ $x-y = z-y \Rightarrow x = z$.\\\\\\Now, we need to evaluate $min(e^{-k(x-y)^2}, e^{-k(y-z)^2})$ at these points: \\ \\
+If $\bm{y = \frac{x+z}{2}}$, then $min(e^{-k(x-y)^2}, e^{-k(y-z)^2}) = e^{-k(x-\frac{x+z}{2})^2} = e^{-k\frac{(x-z)^2}{4}}$ \\ \\
+If $\bm{x=z}$, then  $min(e^{-k(x-y)^2}, e^{-k(y-z)^2}) = e^{-k(z-y)^2}$. \\\\ So, $\mu_{composition}(x,z) = max(e^{-k\frac{(x-z)^2}{4}},  e^{-k(z-y)^2})$
 
 \end{document}
