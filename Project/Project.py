@@ -17,6 +17,10 @@ from nltk.stem import PorterStemmer
 import spacy
 import torch.nn.functional as F
 
+import numpy as np
+
+import time
+
 nlp = spacy.load("en_core_web_sm")
 
 contractions_dict = {
@@ -67,6 +71,31 @@ stopwords = set([
     "weren", "won", "wouldn, must"
 ])
 
+#this function is used to get the reduced amount of data needed to test time to train in relation to input size by making sure we get data for each category
+def select_rows_from_each_category(selected_data, num_rows):
+    grouped_data = selected_data.groupby('category_level_2')
+
+    final_selected_data = pd.DataFrame()
+
+    num_rows_per_category = int(num_rows / len(grouped_data))
+
+    for  group_df in grouped_data:
+        if len(group_df) < num_rows_per_category:
+            selected_rows = group_df.sample(len(group_df), replace=True)
+        else:
+            selected_rows = group_df.sample(num_rows_per_category)
+        final_selected_data = pd.concat([final_selected_data, selected_rows])
+
+    final_selected_data = final_selected_data.sample(frac=1).reset_index(drop=True)
+
+    remaining_rows_needed = num_rows - final_selected_data.shape[0]
+    if remaining_rows_needed > 0:
+        remaining_rows = selected_data.sample(remaining_rows_needed)
+        final_selected_data = pd.concat([final_selected_data, remaining_rows], ignore_index=True)
+
+    return final_selected_data
+
+
 def expand_contractions(text, contractions_dict=contractions_dict):
     contractions_pattern = re.compile('(%s)' % '|'.join(contractions_dict.keys()),
                                       flags=re.IGNORECASE | re.DOTALL)
@@ -82,70 +111,34 @@ def expand_contractions(text, contractions_dict=contractions_dict):
 
 stemmer = PorterStemmer()
 tokenizer = get_tokenizer("basic_english")
-# def preprocess_text(text):
-#     text = expand_contractions(text)
-    
-
-#     doc = nlp(text.lower())
-#     lemmatized_tokens = [token.lemma_ for token in doc if token.text not in stopwords and not token.is_punct]
-    
-#     return " ".join(lemmatized_tokens)
 
 def preprocess_text(text):
-
     text = expand_contractions(text)
-    
-    
     tokens = tokenizer(text.lower()) 
     
-    filtered_tokens = [token for token in tokens if token not in stopwords and token.isalpha()]
+    stemmed_tokens = [stemmer.stem(token) for token in tokens]
+    
+    filtered_tokens = [token for token in stemmed_tokens if token not in stopwords and token.isalpha()]
     
     return " ".join(filtered_tokens)
 
+def preprocess_url(url):
+    cleaned_url = url.replace("http://", "").replace("https://", "").replace("/", " ").replace(".", " ").replace("-", " ").replace("com", "")
 
+    return preprocess_text(cleaned_url)
 
+def preprocess_data(row):
+    
+    preprocessed_text = preprocess_text(f"{row['title']} {row['content']} ")
+    
+    preprocessed_url = preprocess_url(row['url'])
+    
+    return f"{preprocessed_text} {preprocessed_url}"
 
-
-
-file_path = 'news-classification.csv'
-columns_to_keep = ['title', 'content', 'author', 'source', 'category_level_1']
-data = pd.read_csv(file_path)
-selected_data = data[columns_to_keep].copy()
-
-# Add this part to encode labels
-label_encoder = LabelEncoder()
-selected_data['encoded_labels'] = label_encoder.fit_transform(selected_data['category_level_1'])
-
-selected_data['preprocessed_text'] = selected_data.apply(
-    lambda row: preprocess_text(f"{row['title']} {row['content']}"), axis=1)
-
-# Adjust the train_test_split to include the encoded labels
-train_set, test_set = train_test_split(selected_data[['preprocessed_text', 'author','source', 'encoded_labels']], test_size=0.2)
-
-
-
-def dataframe_to_dataset(dataframe):
-    return [(row['encoded_labels'], row['preprocessed_text']) for index, row in dataframe.iterrows()]
-
-train_iter = dataframe_to_dataset(train_set)
-test_iter = dataframe_to_dataset(test_set)
 
 def yield_tokens(data_iter):
     for _, text in data_iter:
         yield tokenizer(text)
-
-
-vocab = build_vocab_from_iterator(yield_tokens(train_iter), specials=["<unk>"])
-vocab.set_default_index(vocab["<unk>"])
-
-def stem_text(text):
-    return " ".join([stemmer.stem(word) for word in text.split()])
-
-text_pipeline = lambda x: vocab([word for word in tokenizer(x) if word in vocab])
-
-label_pipeline = lambda x: x
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def collate_batch(batch):
     label_list, text_list, offsets = [], [], [0]
@@ -159,172 +152,223 @@ def collate_batch(batch):
     text_list = torch.cat(text_list)
     return label_list.to(device), text_list.to(device), offsets.to(device)
 
+def dataframe_to_dataset(dataframe, label_column):
+    return [(row[label_column], row['preprocessed_text']) for index, row in dataframe.iterrows()]
 
-# class TextClassificationModel(nn.Module):
-#     def __init__(self, vocab_size, embed_dim, num_class):
-#         super(TextClassificationModel, self).__init__()
-#         self.embedding = nn.EmbeddingBag(vocab_size, embed_dim, sparse=False)
-#         self.fc = nn.Linear(embed_dim, num_class)
-#         self.init_weights()
 
-#     def init_weights(self):
-#         initrange = 0.5
-#         self.embedding.weight.data.uniform_(-initrange, initrange)
-#         self.fc.weight.data.uniform_(-initrange, initrange)
-#         self.fc.bias.data.zero_()
-
-#     def forward(self, text, offsets):
-#         embedded = self.embedding(text, offsets)
-#         return self.fc(embedded)
-
-class TextClassificationModel(nn.Module):
+class TextClassificationModelLSTM(nn.Module):
     def __init__(self, vocab_size, embed_dim, hidden_dim, num_class):
-        super(TextClassificationModel, self).__init__()
+        super(TextClassificationModelLSTM, self).__init__()
         self.embedding = nn.EmbeddingBag(vocab_size, embed_dim, sparse=False)
-        self.fc1 = nn.Linear(embed_dim, hidden_dim)
-        self.relu = nn.ReLU()
-        self.dropout = nn.Dropout(0.5)
-        self.batch_norm = nn.BatchNorm1d(hidden_dim)
-        self.fc2 = nn.Linear(hidden_dim, num_class)
+        self.lstm = nn.LSTM(embed_dim, hidden_dim, batch_first=True)
+        self.fc = nn.Linear(hidden_dim, num_class)
         self.init_weights()
 
     def init_weights(self):
         initrange = 0.5
         self.embedding.weight.data.uniform_(-initrange, initrange)
-        self.fc1.weight.data.uniform_(-initrange, initrange)
-        self.fc1.bias.data.zero_()
-        self.fc2.weight.data.uniform_(-initrange, initrange)
-        self.fc2.bias.data.zero_()
+        self.fc.weight.data.uniform_(-initrange, initrange)
+        self.fc.bias.data.zero_()
 
     def forward(self, text, offsets):
         embedded = self.embedding(text, offsets)
-        x = self.fc1(embedded)
-        x = self.batch_norm(x)
-        x = self.relu(x)
-        x = self.dropout(x)
-        return self.fc2(x)
+        lstm_out, _ = self.lstm(embedded.unsqueeze(1))
+        lstm_out = lstm_out[:, -1, :]
+        return self.fc(lstm_out)
 
-
-# class TextClassificationModel(nn.Module):
-#     def __init__(self, vocab_size, embed_dim, hidden_dim, num_class):
-#         super(TextClassificationModel, self).__init__()
-#         self.embedding = nn.EmbeddingBag(vocab_size, embed_dim, sparse=False)
-        
-#         # First linear layer
-#         self.fc1 = nn.Linear(embed_dim, hidden_dim)
-        
-#         # Second linear layer that maps from hidden_dim to the number of classes
-#         self.fc2 = nn.Linear(hidden_dim, num_class)
-        
-#         self.init_weights()
-
-#     def init_weights(self):
-#         initrange = 0.5
-#         self.embedding.weight.data.uniform_(-initrange, initrange)
-#         self.fc1.weight.data.uniform_(-initrange, initrange)
-#         self.fc1.bias.data.zero_()
-#         self.fc2.weight.data.uniform_(-initrange, initrange)
-#         self.fc2.bias.data.zero_()
-
-#     def forward(self, text, offsets):
-#         # Get embeddings
-#         embedded = self.embedding(text, offsets)
-        
-#         # Pass embeddings through the first linear layer and apply ReLU
-#         x = F.relu(self.fc1(embedded))
-        
-#         # Output layer
-#         return self.fc2(x)
-
-num_class = len(set([label for (label, text) in train_iter]))
-vocab_size = len(vocab)
-emsize = 64
-hidden_dim = 128  # Define the size of the hidden layer
-model = TextClassificationModel(vocab_size, emsize, hidden_dim ,num_class).to(device)
-
-
-def train(dataloader):
+def train(model, dataloader, optimizer, criterion, device):
     model.train()
-    total_acc, total_count = 0, 0
-    log_interval = 500
-    start_time = time.time()
-
-    for idx, (label, text, offsets) in enumerate(dataloader):
+    total_acc, total_loss = 0, 0
+    for label, text, offsets in dataloader:
         optimizer.zero_grad()
-        predicted_label = model(text, offsets)
-        loss = criterion(predicted_label, label)
+        output = model(text, offsets)
+        loss = criterion(output, label)
         loss.backward()
-        torch.nn.utils.clip_grad_norm_(model.parameters(), 0.1)
         optimizer.step()
-        total_acc += (predicted_label.argmax(1) == label).sum().item()
-        total_count += label.size(0)
-        if idx % log_interval == 0 and idx > 0:
-            elapsed = time.time() - start_time
-            print(
-                "| epoch {:3d} | {:5d}/{:5d} batches "
-                "| accuracy {:8.3f}".format(
-                    epoch, idx, len(dataloader), total_acc / total_count
-                )
-            )
-            total_acc, total_count = 0, 0
-            start_time = time.time()
+        
+        total_loss += loss.item()
+        total_acc += (output.argmax(1) == label).sum().item()
+    
+    return total_acc / len(dataloader.dataset), total_loss / len(dataloader)
 
-def evaluate(dataloader):
+def evaluate(model, dataloader, criterion, device):
     model.eval()
-    total_acc, total_count = 0, 0
-
+    total_acc, total_loss = 0, 0
     with torch.no_grad():
-        for idx, (label, text, offsets) in enumerate(dataloader):
-            predicted_label = model(text, offsets)
-            loss = criterion(predicted_label, label)
-            total_acc += (predicted_label.argmax(1) == label).sum().item()
-            total_count += label.size(0)
-    return total_acc / total_count
+        for label, text, offsets in dataloader:
+            output = model(text, offsets)
+            loss = criterion(output, label)
+            
+            total_loss += loss.item()
+            total_acc += (output.argmax(1) == label).sum().item()
+    
+    return total_acc / len(dataloader.dataset), total_loss / len(dataloader)
+
+file_path = 'news-classification.csv'
+columns_to_keep = ['title','content','url', 'category_level_1', 'category_level_2']
+data = pd.read_csv(file_path)
+selected_data = data[columns_to_keep].copy()
+
+#The below commented code was used to reduce the input in order to test input size in relation to training time
+# sample_size = 5000
+# selected_data = select_rows_from_each_category(selected_data, sample_size)
+
+num_rows = len(selected_data)
+filename= f"output_{num_rows}"
+output_file = open(filename, "w")
+print(f"Number of data rows {num_rows}", file=output_file)
+print(f"Number of data rows {num_rows}")
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-EPOCHS = 20  # epoch
-LR = 1e-3  # learning rate
-BATCH_SIZE = 64  # batch size for training
+EPOCHS = 20  
+LR = 0.01
 
+start_pre = time.time()
+start_total = time.time()
+
+label_encoder = LabelEncoder()
+selected_data['encoded_labels'] = label_encoder.fit_transform(selected_data['category_level_1'])
+
+selected_data['preprocessed_text'] = selected_data.apply(preprocess_data, axis=1)
+
+end_pre = time.time()
+
+print(f"Time to preprocess data: {end_pre - start_pre}", file=output_file)
+print(f"Time to preprocess data: {end_pre - start_pre}")
+
+train_set, test_set = train_test_split(selected_data[['preprocessed_text', 'encoded_labels']], test_size=0.2)
+
+train_iter = dataframe_to_dataset(train_set, 'encoded_labels')
+test_iter = dataframe_to_dataset(test_set, 'encoded_labels')
+
+
+vocab = build_vocab_from_iterator(yield_tokens(train_iter), specials=["<unk>"])
+vocab.set_default_index(vocab["<unk>"])
+
+text_pipeline = lambda x: vocab([word for word in tokenizer(x) if word in vocab])
+
+label_pipeline = lambda x: x
+
+train_dataloader = DataLoader(to_map_style_dataset(train_iter), batch_size=64, shuffle=True, collate_fn=collate_batch)
+test_dataloader = DataLoader(to_map_style_dataset(test_iter), batch_size=64, shuffle=False, collate_fn=collate_batch)
+num_classes = len(set([label for label, _ in train_iter]))
+model = TextClassificationModelLSTM(len(vocab), 64, 128, num_classes).to(device)
+
+optimizer = torch.optim.AdamW(model.parameters(), lr=LR)
 criterion = torch.nn.CrossEntropyLoss()
-optimizer = torch.optim.AdamW(model.parameters(), lr=LR, weight_decay=1e-2)
-scheduler = torch.optim.lr_scheduler.StepLR(optimizer, 1.0, gamma=0.1)
-total_accu = None
-#train_iter, test_iter = AG_NEWS()
-train_dataset = to_map_style_dataset(train_iter)
-test_dataset = to_map_style_dataset(test_iter)
-num_train = int(len(train_dataset) * 0.95)
-split_train_, split_valid_ = random_split(
-    train_dataset, [num_train, len(train_dataset) - num_train]
-)
 
-train_dataloader = DataLoader(
-    split_train_, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate_batch
-)
-valid_dataloader = DataLoader(
-    split_valid_, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate_batch
-)
-test_dataloader = DataLoader(
-    test_dataset, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate_batch
-)
+total_train_time = 0
+total_eval_time = 0
+
+print("Starting level 1 training", file=output_file)
+print("Starting level 1 training")
 
 for epoch in range(1, EPOCHS + 1):
-    epoch_start_time = time.time()
-    train(train_dataloader)
-    accu_val = evaluate(valid_dataloader)
-    if total_accu is not None and total_accu > accu_val:
-        scheduler.step()
-    else:
-        total_accu = accu_val
-    print("-" * 59)
-    print(
-        "| end of epoch {:3d} | time: {:5.2f}s | "
-        "valid accuracy {:8.3f} ".format(
-            epoch, time.time() - epoch_start_time, accu_val
-        )
-    )
-    print("-" * 59)
+    start_level_1_train = time.time()
+    train_acc, train_loss = train(model, train_dataloader, optimizer, criterion, device)
+    end_level_1_train = time.time()
+    total_train_time += end_level_1_train - start_level_1_train
+    start_level_1_eval = time.time()
+    val_acc, val_loss = evaluate(model, test_dataloader, criterion, device)
+    end_level_1_eval = time.time()
+    total_eval_time += end_level_1_eval - start_level_1_eval
+    print(f"Epoch: {epoch}, Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}, Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}")
+    if (epoch == EPOCHS): 
+        print(f"For category level 1 Accuracy: {val_acc:.4f}")
+        print(f"For category level 1 Accuracy: {val_acc:.4f}", file=output_file)
 
-print("Checking the results of test dataset.")
-accu_test = evaluate(test_dataloader)
-print("test accuracy {:8.3f}".format(accu_test))
+
+        print(f"Time to train level 1: {total_train_time}", file=output_file)
+        print(f"Time to train level 1: {total_train_time}")
+        print(f"Time to eval level 1: {total_eval_time}", file=output_file)
+        print(f"Time to eval level 1: {total_eval_time}")
+        print(f"Average inference time level 1: {total_eval_time/EPOCHS}", file=output_file)
+        print(f"Avergae inference time level 1: {total_eval_time/EPOCHS}")
+
+
+model_filename = f'model_for_level_1.pth'
+torch.save(model.state_dict(), model_filename)
+
+total_acc = 0
+for category_level_1 in selected_data['category_level_1'].unique():
+    print(f"\n#######################################################################")
+    print(f"\nTraining for category: {category_level_1}")
+    print(f"\nTraining for category: {category_level_1}", file=output_file)
+    category_data = selected_data[selected_data['category_level_1'] == category_level_1].copy()
+    
+    label_encoder_level_2 = LabelEncoder()
+    category_data['encoded_labels_level_2'] = label_encoder_level_2.fit_transform(category_data['category_level_2'])
+    
+    train_set_level_2, test_set_level_2 = train_test_split(category_data[['preprocessed_text', 'encoded_labels_level_2']], test_size=0.2)
+    
+    train_iter_level_2 = dataframe_to_dataset(train_set_level_2, 'encoded_labels_level_2')
+    test_iter_level_2 = dataframe_to_dataset(test_set_level_2, 'encoded_labels_level_2')
+    
+    vocab = build_vocab_from_iterator(yield_tokens(train_iter_level_2), specials=["<unk>"])
+    vocab.set_default_index(vocab["<unk>"])
+
+    text_pipeline = lambda x: vocab([word for word in tokenizer(x) if word in vocab])
+    label_pipeline = lambda x: x
+
+
+    train_dataloader = DataLoader(to_map_style_dataset(train_iter_level_2), batch_size=64, shuffle=True, collate_fn=collate_batch)
+
+    test_dataloader = DataLoader(to_map_style_dataset(test_iter_level_2), batch_size=64, shuffle=False, collate_fn=collate_batch)
+    num_classes = len(set([label for label, _ in train_iter_level_2]))
+    model = TextClassificationModelLSTM(len(vocab), 64, 128, num_classes).to(device)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=LR)
+    criterion = torch.nn.CrossEntropyLoss()
+
+    total_train_time = 0
+    total_eval_time = 0
+
+    val_acc = 0
+    for epoch in range(1, EPOCHS + 1):
+
+
+        start_level_2_train = time.time()
+        train_acc, train_loss = train(model, train_dataloader, optimizer, criterion, device)
+        end_level_2_train = time.time()
+        total_train_time += end_level_2_train - start_level_2_train
+        start_level_2_eval = time.time()
+        val_acc, val_loss = evaluate(model, test_dataloader, criterion, device)
+        end_level_2_eval = time.time()
+        total_eval_time += end_level_2_eval - start_level_2_eval
+        print(f"Epoch: {epoch}, Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}, Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}")
+        
+        if (epoch == EPOCHS): 
+            print(f"For subcategory {category_level_1} Accuracy: {val_acc:.4f}")
+            print(f"For subcategory {category_level_1} Accuracy: {val_acc:.4f}",file=output_file)
+
+            print(f"Time to train level 2: {total_train_time}", file=output_file)
+            print(f"Time to train level 2: {total_train_time}")
+            print(f"Time to eval level 2: {total_eval_time}", file=output_file)
+            print(f"Time to eval level 2: {total_eval_time}")
+            print(f"Average inference time level 2: {total_eval_time/EPOCHS}", file=output_file)
+            print(f"Avergae inference time level 2: {total_eval_time/EPOCHS}")
+    total_acc += val_acc
+    
+
+    model_filename = f'model_for_{category_level_1.replace(" ", "_")}_level_2.pth'
+
+    torch.save(model.state_dict(), model_filename)
+
+total_acc = total_acc /17
+print(f"avg level2: {total_acc:.4f}")
+print(f"avg level2: {total_acc:.4f}", file=output_file)
+end_total = time.time()
+
+print(f"Total runtime: {end_total - start_total}", file=output_file)
+print(f"Total runtime: {end_total - start_total}")
+output_file.close()
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,75 @@
+Number of data rows 10917
+Time to preprocess data: 102.16962170600891
+Starting level 1 training
+For category level 1 Accuracy: 0.7962
+Time to train level 1: 237.55185842514038
+
+Training for category: crime, law and justice
+For subcategory crime, law and justice Accuracy: 0.7100
+Time to train level 2: 8.551538705825806
+
+Training for category: arts, culture, entertainment and media
+For subcategory arts, culture, entertainment and media Accuracy: 0.9000
+Time to train level 2: 4.97743821144104
+
+Training for category: economy, business and finance
+For subcategory economy, business and finance Accuracy: 0.7250
+Time to train level 2: 6.242658615112305
+
+Training for category: disaster, accident and emergency incident
+For subcategory disaster, accident and emergency incident Accuracy: 0.6200
+Time to train level 2: 6.537282705307007
+
+Training for category: environment
+For subcategory environment Accuracy: 0.7917
+Time to train level 2: 10.235955953598022
+
+Training for category: education
+For subcategory education Accuracy: 0.5738
+Time to train level 2: 11.310292720794678
+
+Training for category: health
+For subcategory health Accuracy: 0.8143
+Time to train level 2: 10.892660856246948
+
+Training for category: human interest
+For subcategory human interest Accuracy: 0.8417
+Time to train level 2: 7.601202726364136
+
+Training for category: lifestyle and leisure
+For subcategory lifestyle and leisure Accuracy: 0.9833
+Time to train level 2: 5.1083056926727295
+
+Training for category: politics
+For subcategory politics Accuracy: 0.7167
+Time to train level 2: 15.847702026367188
+
+Training for category: labour
+For subcategory labour Accuracy: 0.5603
+Time to train level 2: 9.556931972503662
+
+Training for category: religion and belief
+For subcategory religion and belief Accuracy: 0.6000
+Time to train level 2: 16.531189441680908
+
+Training for category: science and technology
+For subcategory science and technology Accuracy: 0.6000
+Time to train level 2: 17.846088886260986
+
+Training for category: society
+For subcategory society Accuracy: 0.8955
+Time to train level 2: 19.00077533721924
+
+Training for category: sport
+For subcategory sport Accuracy: 0.7747
+Time to train level 2: 13.954965829849243
+
+Training for category: conflict, war and peace
+For subcategory conflict, war and peace Accuracy: 0.8875
+Time to train level 2: 13.341413021087646
+
+Training for category: weather
+For subcategory weather Accuracy: 0.8000
+Time to train level 2: 4.722913980484009
+avg level2: 0.7526
+Total runtime: 525.2212607860565

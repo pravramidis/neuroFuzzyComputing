@@ -1,0 +1,111 @@
+Number of data rows 8000
+Time to preprocess data: 78.00325560569763
+Starting level 1 training
+For category level 1 Accuracy: 0.7837
+Time to train level 1: 140.58671736717224
+Time to eval level 1: 20.7303524017334
+Average inference time level 1: 1.03651762008667
+
+Training for category: human interest
+For subcategory human interest Accuracy: 0.8202
+Time to train level 2: 5.295794248580933
+Time to eval level 2: 0.9830758571624756
+Average inference time level 2: 0.04915379285812378
+
+Training for category: environment
+For subcategory environment Accuracy: 0.8182
+Time to train level 2: 6.434615135192871
+Time to eval level 2: 1.143280029296875
+Average inference time level 2: 0.05716400146484375
+
+Training for category: crime, law and justice
+For subcategory crime, law and justice Accuracy: 0.7432
+Time to train level 2: 5.346719741821289
+Time to eval level 2: 0.9832408428192139
+Average inference time level 2: 0.04916204214096069
+
+Training for category: religion and belief
+For subcategory religion and belief Accuracy: 0.5847
+Time to train level 2: 10.440815448760986
+Time to eval level 2: 1.8853001594543457
+Average inference time level 2: 0.09426500797271728
+
+Training for category: politics
+For subcategory politics Accuracy: 0.7293
+Time to train level 2: 11.052880048751831
+Time to eval level 2: 2.116934061050415
+Average inference time level 2: 0.10584670305252075
+
+Training for category: weather
+For subcategory weather Accuracy: 0.7797
+Time to train level 2: 3.196234941482544
+Time to eval level 2: 0.5123655796051025
+Average inference time level 2: 0.02561827898025513
+
+Training for category: labour
+For subcategory labour Accuracy: 0.5922
+Time to train level 2: 6.27837347984314
+Time to eval level 2: 1.1665971279144287
+Average inference time level 2: 0.058329856395721434
+
+Training for category: health
+For subcategory health Accuracy: 0.7864
+Time to train level 2: 7.149352788925171
+Time to eval level 2: 1.3848357200622559
+Average inference time level 2: 0.06924178600311279
+
+Training for category: arts, culture, entertainment and media
+For subcategory arts, culture, entertainment and media Accuracy: 0.7955
+Time to train level 2: 3.222338914871216
+Time to eval level 2: 0.5517330169677734
+Average inference time level 2: 0.027586650848388673
+
+Training for category: society
+For subcategory society Accuracy: 0.8395
+Time to train level 2: 11.679327964782715
+Time to eval level 2: 2.0246734619140625
+Average inference time level 2: 0.10123367309570312
+
+Training for category: science and technology
+For subcategory science and technology Accuracy: 0.6864
+Time to train level 2: 12.200125932693481
+Time to eval level 2: 2.3555119037628174
+Average inference time level 2: 0.11777559518814087
+
+Training for category: conflict, war and peace
+For subcategory conflict, war and peace Accuracy: 0.9068
+Time to train level 2: 8.273770093917847
+Time to eval level 2: 1.7263379096984863
+Average inference time level 2: 0.08631689548492431
+
+Training for category: economy, business and finance
+For subcategory economy, business and finance Accuracy: 0.7458
+Time to train level 2: 4.135152101516724
+Time to eval level 2: 0.8823926448822021
+Average inference time level 2: 0.044119632244110106
+
+Training for category: sport
+For subcategory sport Accuracy: 0.6917
+Time to train level 2: 7.993053197860718
+Time to eval level 2: 1.4319536685943604
+Average inference time level 2: 0.07159768342971802
+
+Training for category: disaster, accident and emergency incident
+For subcategory disaster, accident and emergency incident Accuracy: 0.6216
+Time to train level 2: 4.008181095123291
+Time to eval level 2: 0.6577005386352539
+Average inference time level 2: 0.03288502693176269
+
+Training for category: education
+For subcategory education Accuracy: 0.5955
+Time to train level 2: 6.391469240188599
+Time to eval level 2: 1.1303861141204834
+Average inference time level 2: 0.05651930570602417
+
+Training for category: lifestyle and leisure
+For subcategory lifestyle and leisure Accuracy: 0.9778
+Time to train level 2: 2.9879117012023926
+Time to eval level 2: 0.5768465995788574
+Average inference time level 2: 0.02884232997894287
+avg level2: 0.7479
+Total runtime: 412.5002951622009
